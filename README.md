@@ -1,38 +1,11 @@
-# sv
+# BPDB - The Boiled Peanut DataBase
+## And exploration of Web Development and PostGIS (possibly self-hosted on a Raspberry Pi?)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+The BPDB was conceived by a group of friends who love boiled peanuts, and wanted to track the availability and quality of boiled peanut dishes offered around Atlanta. In December of 2025, part of the group relocated to North Carolina, necessitating a more atomized approach to BPDC (Boiled Peanut Data Collection). 
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+This is a personal passion project that involves exploration and learning of a handful of technologies including:
+> Raspbian Linux / Linux command line / shell scripting
+> Raspberry Pi 5 NAS
+> PostgresQL with Post GIS as the database
+> Web Development with my usual framework, Svelte(kit)
+> Web Mapping with 
