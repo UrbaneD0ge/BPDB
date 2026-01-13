@@ -6,7 +6,7 @@ The BPDB was conceived by a group of friends who love boiled peanuts, and wanted
 This is a personal passion project that involves exploration and learning of a handful of technologies including:
 🥜 Raspbian Linux / Linux command line / shell scripting
 🥜 Raspberry Pi 5 NAS
-🥜 PostgresQL with Post GIS as the database
+🥜 PostgreSQL with Post GIS as the database
 🥜 Web Development with my usual framework, Svelte(kit)
 🥜 Web Mapping with MapLibre + Svelte wrapper
 
