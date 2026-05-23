@@ -13,7 +13,7 @@
 
 <ol>
   {#each data.peanuts as peanut}
-    <li><b>{peanut.resto_name}</b></li>
+    <li><b>{peanut.resto_name}</b>: {peanut.product}</li>
   <ul>
     <li>ID: {peanut.id}</li>
     <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
