@@ -11,14 +11,16 @@
   export let data;
 </script>
 
-<ul>
+<ol>
   {#each data.peanuts as peanut}
-    <li>{peanut.resto_name}</li>
-    <li>{peanut.id}</li>
-    <li>{peanut.created_at}</li>
-    <li>{peanut.location}</li>
+    <li><b>{peanut.resto_name}</b></li>
+  <ul>
+    <li>ID: {peanut.id}</li>
+    <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
+    <li>Location: {peanut.location}</li>
+  </ul>
   {/each}
-</ul>
+</ol>
 
 <!-- <MapLibre
   center={[-84.38, 33.7506]}
