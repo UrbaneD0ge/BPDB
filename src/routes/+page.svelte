@@ -17,7 +17,7 @@
   <ul>
     <li>ID: {peanut.id}</li>
     <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
-    <li>Location: {peanut.location}</li>
+    <li>Location: {peanut.geopoint}</li>
   </ul>
   {/each}
 </ol>
