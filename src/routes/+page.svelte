@@ -17,28 +17,14 @@
   <ul>
     <li>ID: {peanut.id}</li>
     <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
-    <li>Location: {peanut.geopoint}</li>
+    <li>Location: {peanut?.geopoint}</li>
+    <li>Geo X: {peanut?.geo_X}</li>
+    <li>Geo Y: {peanut?.geo_Y}</li>
   </ul>
   {/each}
+
+  <!-- Display the error message if there is one -->
+  {#if data.error}
+    <p style="color: red;">Error: {data.error}</p>
+  {/if}
 </ol>
-
-<!-- <MapLibre
-  center={[-84.38, 33.7506]}
-  zoom={7}
-  class="map"
-  standardControls
-  style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json">
-
-    <DefaultMarker lngLat={[-84.38, 33.7506]}>
-        <Popup offset={[0, -10]}>
-            <div>Atlanta, GA</div>
-        </Popup>
-    </DefaultMarker>
-
-</MapLibre> -->
-
-<style>
-  :global(.map) {
-    height: 500px;
-  }
-</style>

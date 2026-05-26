@@ -1,8 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, PGDB, email_pw } from "$env/static/public"
 
+
 const supabaseUrl = PUBLIC_SUPABASE_URL;
 const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+    console.log('supabaseKey:', supabaseKey ? 'Present' : 'Missing');
+    console.log('PUBLIC_SUPABASE_URL:', PUBLIC_SUPABASE_URL ? 'Present' : 'Missing');
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -42,7 +46,9 @@ async function signInWithEmail() {
       return { error };
     }
 
-    console.log('Sign-in successful:', data);
+    console.log('Sign-in successful:',
+      // data
+    );
     return { data };
   } catch (err) {
     console.error('Unexpected sign-in error:', err);

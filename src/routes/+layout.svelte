@@ -10,7 +10,7 @@
 
 <nav>
 	<a href="/">Home</a>
-	<a href="/submit">Submit a Peanut</a>
+	<a href="/submit">Submit to the BPDB</a>
 	<a href="/auth/signup">Sign Up</a>
 	<a href="/auth/signin">Sign In</a>
 </nav>
