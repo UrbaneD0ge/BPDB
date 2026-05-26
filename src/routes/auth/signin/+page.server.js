@@ -10,6 +10,7 @@ export async function load() {
 
     // if already signed in, redirect to the home page
     if (supabase.auth.getSession()) {
+        console.log("User is already signed in, redirecting to home page...");
         redirect(303, "/");
         return {
             success: true,
