@@ -1,7 +1,7 @@
 <h1>Submit a new BP to the DB!</h1>
 <p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name, product name, and location (latitude and longitude).</p>
 
-<form action="POST">
+<form method="POST">
     <label for="resto_name">Restaurant Name:</label><br>
     <input type="text" id="resto_name" name="resto_name" required><br><br>
 
@@ -17,6 +17,7 @@
 </form>
 
 <script>
+
     // get geolocation and fill in the geopoint field
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
