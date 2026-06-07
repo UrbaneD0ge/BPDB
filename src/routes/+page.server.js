@@ -8,32 +8,6 @@ export async function load() {
 
   const serverSupabase = createClient(PUBLIC_SUPABASE_URL, PGAPIKEY);
 
-  // const { data: userData, error: userError } = await serverSupabase.auth.getUser();
-  // if (userError) {
-  //   console.error('Error getting user:', userError);
-  // } else {
-  //   console.log('Current user:', userData?.user);
-  // }
-
-  // const { data, error } = await serverSupabase.functions.invoke('peanuts-geopoints', { body: { name: 'Functions'}})
-
-  // if(error) {
-  //   console.error('Error invoking Supabase function:', error);
-  //   return {
-  //     peanuts: [],
-  //     error: error.message || 'Error fetching peanuts data'
-  //   };
-  // }
-  // console.log('Peanuts data:', data);
-  // return {
-  //   peanuts: data ?? [],
-  //   error: null
-  // };
-
-
-  // // SELECT Statement
-  // const select = `id, ST_Y(geopoint) as lat, ST_X(geopoint) as lng`;
-
   try {
 
     // THE QUERY HERSELF
