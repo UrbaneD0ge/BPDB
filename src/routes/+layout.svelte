@@ -6,6 +6,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
 <nav>
@@ -23,6 +24,6 @@
 
 <style>
 .container {
-		padding: 4rem;
+		padding: 2rem;
 	}
 </style>

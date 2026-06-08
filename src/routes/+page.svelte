@@ -5,19 +5,17 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 export let data;
 </script>
 
-<h1>Welcome to the BPDB</h1>
-<p>Boiled Peanut DataBase</p>
+<h1>Welcome to the BPDB: Boiled Peanut DataBase</h1>
 
 <main>
 
   <ol>
     {#each data.peanuts as peanut}
-    <li><b>{peanut.resto_name}</b>: {peanut.product}</li>
+    <li><a href={`/${peanut.id}`}>{peanut.resto_name}</a>: "{peanut.product}"</li>
     <ul>
-      <li>ID: {peanut.id}</li>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
-      <li>Location: {peanut?.y}, {peanut?.x}</li>
-    </ul>
+      <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
+    </ul><br>
     {/each}
 
     <!-- Display the error message if there is one -->
@@ -52,7 +50,7 @@ style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 20px;
+    /* padding: 20px; */
   }
   ol {
     list-style-type: none;
