@@ -1,9 +1,13 @@
 <script>
-    import MapLibre, { Marker, Popup } from 'svelte-maplibre';
-    import 'maplibre-gl/dist/maplibre-gl.css';
     import { page } from '$app/stores';
+
+    let { data} = $props();
 </script>
 
-<svelte:head>
-    <title>{page?.data.peanut.resto_name}</title>
-</svelte:head>
+<!-- <svelte:head>
+    <title>{data?.resto_name}</title>
+</svelte:head> -->
+
+<!-- TODO: Get the review stats from the individual peanut tables -->
+
+    <h1>Restaurant: {data.resto_name}</h1>

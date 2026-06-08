@@ -21,7 +21,7 @@ export async function load() {
         error: error.message || 'Error fetching peanuts data'
       };
     }
-    console.log('Peanuts data:', data);
+    // console.log('Peanuts data:', data);
     return {
       peanuts: data ?? [],
       error: null
