@@ -1,20 +1,21 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#3E253D",
-        "titleBar.activeBackground": "#573356",
-        "titleBar.activeForeground": "#FCF9FC",
-        "titleBar.inactiveBackground": "#3E253D",
-        "titleBar.inactiveForeground": "#FCF9FC",
-        "statusBar.background": "#3E253D",
-        "statusBar.foreground": "#FCF9FC",
-        "statusBar.debuggingBackground": "#3E253D",
-        "statusBar.debuggingForeground": "#FCF9FC",
-        "statusBar.noFolderBackground": "#3E253D",
-        "statusBar.noFolderForeground": "#FCF9FC"
-    },
     "cSpell.words": [
         "PGAPIKEY",
         "resto",
         "supabase"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#511C1C",
+        "titleBar.activeBackground": "#712727",
+        "titleBar.activeForeground": "#FEFBFB",
+        "titleBar.inactiveBackground": "#511C1C",
+        "titleBar.inactiveForeground": "#FEFBFB",
+        "statusBar.background": "#511C1C",
+        "statusBar.foreground": "#FEFBFB",
+        "statusBar.debuggingBackground": "#511C1C",
+        "statusBar.debuggingForeground": "#FEFBFB",
+        "statusBar.noFolderBackground": "#511C1C",
+        "statusBar.noFolderForeground": "#FEFBFB"
+    },
+    "windowColors.baseColor": "#5c2020"
 }
