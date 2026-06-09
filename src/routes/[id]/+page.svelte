@@ -1,13 +1,21 @@
 <script>
     import { page } from '$app/stores';
 
-    let { data} = $props();
+    let { data } = $props();
+
+    console.log('Page data:', data);
+
+    let peanut = data?.peanut;
 </script>
 
-<!-- <svelte:head>
-    <title>{data?.resto_name}</title>
-</svelte:head> -->
+<svelte:head>
+    <title>Peanut rating: {peanut.resto_name} {peanut.product}</title>
+</svelte:head>
 
-<!-- TODO: Get the review stats from the individual peanut tables -->
+<h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
+<h2>Peanut: {peanut.product}</h2>
 
-    <h1>Restaurant: {data.resto_name}</h1>
+<!-- TODO: Get the review stats from the individual peanut tables as a subquery -->
+
+<!-- TODO: Display the restaurant location on the map -->
+
