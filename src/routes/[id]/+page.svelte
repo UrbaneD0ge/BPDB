@@ -3,9 +3,15 @@
 
     let { data } = $props();
 
-    console.log('Page data:', data);
+    // svelte-ignore state_referenced_locally
+    // console.log(data);
 
-    let peanut = data?.peanut;
+    let peanut = data.data[0].peanut;
+    let reviews = data.data[0].reviews;
+
+    // console.log(peanut);
+    console.log(reviews);
+
 </script>
 
 <svelte:head>
@@ -13,7 +19,41 @@
 </svelte:head>
 
 <h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
-<h2>Peanut: {peanut.product}</h2>
+
+<p>Location: {peanut.geopoint}</p>
+<p>Product: {peanut.product}</p>
+<p>Timestamp: {peanut.created_at}</p>
+
+<table>
+    <tbody>
+        <tr>
+            <th>Review ID</th>
+            <th>Overall Rating</th>
+            <th>Done</th>
+            <th>Brine</th>
+            <th>Salty</th>
+            <th>Spicy</th>
+            <th>Price</th>
+            <th>Notes</th>
+        </tr>
+    </tbody>
+
+    {#each reviews as review}
+    <tbody>
+        <tr>
+            <td>{review.id}</td>
+            <td><b>{review.overall}</b></td>
+            <td>{review.done}</td>
+            <td>{review.brine}</td>
+            <td>{review.salty}</td>
+            <td>{review.spicy}</td>
+            <td>{review.price}</td>
+            <td>{review.notes || '-'}</td>
+        </tr>
+    </tbody>
+    {/each}
+</table>
+
 
 <!-- TODO: Get the review stats from the individual peanut tables as a subquery -->
 
