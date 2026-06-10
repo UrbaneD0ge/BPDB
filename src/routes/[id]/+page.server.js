@@ -12,7 +12,7 @@ export async function load({ url }) {
 
   const { data, error } = await supabase.rpc('get_peanut_and_reviews', { p_id: url.pathname[1] });
 
-  console.log('Supabase response:', { data, error });
+  // console.log('Supabase response:', { data, error });
 
   return {
     data: data ? data : null,
