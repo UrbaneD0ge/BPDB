@@ -1,12 +1,10 @@
 # BPDB - The Boiled Peanut DataBase
-### And exploration of Web Development and PostGIS (possibly self-hosted on a Raspberry Pi?)
+### And exploration of Web Development and PostGIS
 
 The BPDB was conceived by a group of friends who love boiled peanuts, and wanted to track the availability and quality of boiled peanut dishes offered around Atlanta. In December of 2025, part of the group relocated to North Carolina, necessitating a more atomized approach to BPDC (Boiled Peanut Data Collection). 
 
 This is a personal passion project that involves exploration and learning of a handful of technologies including:
-🥜 Raspbian Linux / Linux command line / shell scripting
-🥜 Raspberry Pi 5 NAS
-🥜 PostgreSQL with Post GIS as the database
+🥜 PostgreSQL with Post GIS as the database via SupaBase
 🥜 Web Development with my usual framework, Svelte(kit)
 🥜 Web Mapping with MapLibre + Svelte wrapper
 
