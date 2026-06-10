@@ -23,7 +23,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 <h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
 
 <p>Product: {peanut.product}</p>
-<p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p>
+<!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
 <p>Initially Reviewed: {new Date(peanut.created_at).toLocaleDateString()}</p>
 
 <table>
@@ -65,6 +65,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
     </table>
 
 <!-- TODO: Display the restaurant location on the map -->
+ <div class="map-container">
   <MapLibre
     class="map"
     center={[ peanut.geopoint.x, peanut.geopoint.y ]}
@@ -75,7 +76,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
     </Marker>
 
   </MapLibre>
-
+</div>
 
 <style>
     table {
@@ -106,8 +107,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
         background-color: #f5f5f5;
     }
 
-      /* .map {
-    height: 400px;
-    width: 400px;
-  } */
+    .map-container {
+        margin-top: 20px;
+        height: 400px;
+    }
+
 </style>
