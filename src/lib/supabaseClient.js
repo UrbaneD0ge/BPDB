@@ -5,8 +5,8 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, PGDB, email_pw } 
 const supabaseUrl = PUBLIC_SUPABASE_URL;
 const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-    console.log('supabaseKey:', supabaseKey ? 'Present' : 'Missing');
-    console.log('PUBLIC_SUPABASE_URL:', PUBLIC_SUPABASE_URL ? 'Present' : 'Missing');
+// console.log('supabaseKey:', supabaseKey ? 'Present' : 'Missing');
+// console.log('PUBLIC_SUPABASE_URL:', PUBLIC_SUPABASE_URL ? 'Present' : 'Missing');
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
