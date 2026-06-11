@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { supabase } from "$lib/supabaseClient";
+import { applyAction } from '$app/forms';
 
 export async function load({ url }) {
 
@@ -16,3 +17,12 @@ export async function load({ url }) {
   };
 
 };
+
+export const actions = {
+  default: async (event) => {
+
+    // Take in a new rating and submit it to the DB
+    const formData = await event.request.formData();
+
+  }
+}

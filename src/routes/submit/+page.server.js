@@ -18,7 +18,7 @@ export const actions = {
         const formData = await event.request.formData();
         const resto_name = formData.get('resto_name');
         const product_name = formData.get('product_name');
-        const address = formData.get('address')
+        const address = formData.get('address');
         const latitude = formData.get('latitude');
         const longitude = formData.get('longitude');
 

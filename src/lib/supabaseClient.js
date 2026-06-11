@@ -1,7 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, PGDB, email_pw } from "$env/static/public"
 
-
 const supabaseUrl = PUBLIC_SUPABASE_URL;
 const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
@@ -36,12 +35,12 @@ async function signUpNewUser({ email, userName, password }) {
     }
 }
 
-async function signInWithEmail() {
+async function signInWithEmail({email, password}) {
   console.log("Signing in with email and password...");
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: 'kipling.dunlap@gmail.com',
-      password: 'yourMom1234!',
+      email: email,
+      password: password,
     });
 
     if (error) {
@@ -59,4 +58,12 @@ async function signInWithEmail() {
   }
 }
 
-export { signUpNewUser, signInWithEmail };
+async function signOut() {
+  const { err } = await supabase.auth.signOut()
+  return {
+    data: null,
+    user: null
+  }
+}
+
+export { signUpNewUser, signInWithEmail, signOut };

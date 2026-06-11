@@ -4,7 +4,7 @@
 
 	// console.log(data.session)
 
-	let user = $derived(data.session);
+	// let user = $derived(data.session);
 
 	import "../app.css";
 </script>
