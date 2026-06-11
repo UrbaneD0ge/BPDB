@@ -8,7 +8,7 @@ export const actions = {
 
         const session = await supabase.auth.getSession();
         if (!session.data.session) {
-            console.Console.error('User is not logged in');
+            console.error('User is not logged in');
             return {
                 success: false,
                 message: 'User is not logged in'
@@ -34,14 +34,14 @@ export const actions = {
             console.log('Inserting peanut with data:', {
                 p_resto_name: resto_name,
                 p_product: product_name,
-                // address: address,
+                address: address,
                 p_lon: parseFloat(longitude),
                 p_lat: parseFloat(latitude)
             });
             const { data, error } = await supabase.rpc('insert_peanut', {
                 p_resto_name: resto_name,
                 p_product: product_name,
-                // address: address,
+                p_address: address, // TODO: Update the insert function
                 p_lon: parseFloat(longitude),
                 p_lat: parseFloat(latitude)
             });
