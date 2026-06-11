@@ -3,7 +3,8 @@ import Loader from '$lib/Loader.svelte';
 import { onMount } from 'svelte';
 
 let data;
-let isLoading = true;
+let isLoading = $state(true);
+let coords = $state({ lat: null, lon: null });
 
 onMount(() => {
     // get geolocation and fill in the geopoint field
@@ -13,6 +14,7 @@ onMount(() => {
             const lon = position.coords.longitude;
             document.getElementById('geopoint_lat').value = lat;
             document.getElementById('geopoint_lon').value = lon;
+            coords = { lat, lon };
             isLoading = false;
         });
         console.log('Geolocation found.');
@@ -34,17 +36,31 @@ onMount(() => {
     <label for="product">Product Name:</label><br>
     <input type="text" id="product" name="product_name" required><br><br>
 
+<fieldset>
 
- <div class="geopoint-container">
-    <label for="geopoint_lat">Latitude:</label>
-    <input hidden type="text" id="geopoint_lat" name="latitude" placeholder="e.g. 33.7506" required>
-    <label for="geopoint_lon">Longitude:</label>
-    <input hidden type="text" id="geopoint_lon" name="longitude" placeholder="e.g. -84.38" required>
+    <!-- TODO: This should be an address picker eventually -->
+    <label for="address">Peanut Address:</label><br>
+    <input type="text" id="address" name="address" required><br><br>
 
-    {#if isLoading}
+    <div class="geopoint-container flex w-100 * justify-around">
+        <div class="mr-4">
+            <label for="geopoint_lat">Latitude:</label>
+            <div>{coords.lat?.toFixed(3)}</div>
+            <input hidden type="text" id="geopoint_lat" name="latitude" required>
+        </div>
+
+        <div>
+            <label for="geopoint_lon">Longitude:</label>
+            <div>{coords.lon?.toFixed(3)}</div>
+            <input hidden type="text" id="geopoint_lon" name="longitude" required>
+        </div>
+        {#if isLoading}
         <Loader />
-    {/if}
- </div>
+        {/if}
+    </div>
+
+</fieldset>
+
 <br><br>
     <input type="submit" value="Submit">
     {#if data?.error}
@@ -57,16 +73,19 @@ onMount(() => {
         display: flex;
         flex-direction: column;
     }
+
     label {
         font-weight: bold;
         width: 25%;
     }
+
     input[type="text"] {
         padding: 8px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 4px;
     }
+
     input[type="submit"] {
         padding: 10px;
         background-color: #4CAF50;
@@ -75,12 +94,13 @@ onMount(() => {
         border-radius: 4px;
         cursor: pointer;
     }
+
     input[type="submit"]:hover {
         background-color: #45a049;
     }
 
-    .geopoint-container {
+    /* .geopoint-container {
         display: flex;
         justify-content: flex-start;
-    }
+    } */
 </style>

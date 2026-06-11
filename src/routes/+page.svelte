@@ -7,11 +7,12 @@ export let data;
 
 <h1>Welcome to the BPDB: Boiled Peanut DataBase</h1>
 
-<main>
+<main class="flex justify-between items-start">
 
+  <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
-    <li><a href={`/${peanut.id}`}>{peanut.resto_name}</a>: "{peanut.product}"</li>
+    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
       <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
@@ -25,15 +26,18 @@ export let data;
   </ol>
 
   <MapLibre
-class="map"
-center={[-84.3880, 33.7490]}
-zoom={12}
-style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
+  class="h-120 w-3/4"
+  center={[-84.3880, 33.7490]}
+  zoom={12}
+  style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
-{#each data.peanuts as peanut}
+  {#each data.peanuts as peanut}
     <Marker lnglat={[peanut.x, peanut.y]} anchor="bottom">
+        {#snippet content()}
+          <div class="text-3xl">🥜</div>
+        {/snippet}
       <Popup openOn="click" offset={[0, -60]}>
-        <div style="background: white; padding: 5px; border-radius: 3px; border: 1px solid black;">
+        <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
           <strong>{peanut.resto_name}</strong><br>
           {peanut.product}<br>
           Submitted: {new Date(peanut.created_at).toLocaleDateString()}
@@ -45,21 +49,17 @@ style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
 </main>
 
-<style>
-  main {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    /* padding: 20px; */
-  }
+<style lang="postcss">
+@reference "tailwindcss";
+
   ol {
     list-style-type: none;
     padding-left: 0;
     width: 35%;
   }
 
-  :global(.map){
+  /* :global(.map){
     height: 600px;
     width: 65%;
-  }
+  } */
  </style>

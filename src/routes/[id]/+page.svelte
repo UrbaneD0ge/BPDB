@@ -6,12 +6,11 @@ import 'maplibre-gl/dist/maplibre-gl.css';
     let { data } = $props();
 
     // svelte-ignore state_referenced_locally
-    // console.log(data);
-
     let peanut = data.data[0].peanut;
-    let reviews = data.data[0].reviews;
-
     // console.log(peanut);
+
+    // svelte-ignore state_referenced_locally
+    let reviews = data.data[0].reviews;
     // console.log(reviews);
 
 </script>
@@ -20,13 +19,34 @@ import 'maplibre-gl/dist/maplibre-gl.css';
     <title>Peanut rating: {peanut.resto_name} {peanut.product}</title>
 </svelte:head>
 
-<h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
+<div class="flex flex-row justify-between gap-4">
 
-<p>Product: {peanut.product}</p>
-<!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
-<p>Initially Reviewed: {new Date(peanut.created_at).toLocaleDateString()}</p>
+    <div>
+        <h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
 
-<table>
+        <p>Product: {peanut.product}</p>
+        <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
+        <p>Initially Reviewed: {new Date(peanut.created_at).toLocaleDateString()}</p>
+    </div>
+
+<!-- TODO: Display the restaurant location on the map -->
+  <MapLibre
+    class="h-60 w-80"
+    center={[ peanut.geopoint.x, peanut.geopoint.y ]}
+    zoom={15}
+    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+    >
+
+    <Marker lnglat={[peanut.geopoint.x, peanut.geopoint.y]} anchor="bottom">
+     {#snippet content()}
+        <div class="text-3xl">🥜</div>
+    {/snippet}
+    </Marker>
+
+  </MapLibre>
+</div>
+
+<table class="table-auto w-full border-collapse border border-gray-300">
     <tbody>
         <tr>
             <!-- <th>Review ID</th> -->
@@ -64,25 +84,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
     {/if}
     </table>
 
-<!-- TODO: Display the restaurant location on the map -->
- <div class="map-container">
-  <MapLibre
-    class="map"
-    center={[ peanut.geopoint.x, peanut.geopoint.y ]}
-    zoom={15}
-    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
-    <Marker lnglat={[peanut.geopoint.x, peanut.geopoint.y]} anchor="bottom">
-    </Marker>
-
-  </MapLibre>
-</div>
-
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+<style lang="postcss">
+@reference "tailwindcss";
 
     th, td {
         border: 1px solid #ddd;
@@ -109,7 +113,5 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
     .map-container {
         margin-top: 20px;
-        height: 400px;
     }
-
 </style>
