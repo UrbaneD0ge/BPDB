@@ -10,15 +10,18 @@ const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function signUpNewUser() {
+async function signUpNewUser({ email, userName, password }) {
     console.log("Signing up new user...");
 
     try {
         const { data, error } = await supabase.auth.signUp({
-            email: 'kipling.dunlap@gmail.com',
-            password: 'yourMom1234!',
+            email: email,
+            password: password,
             options: {
-                emailRedirectTo: 'http://localhost:5173/auth/confirm',
+                data: {
+                    username: userName,
+                },
+                emailRedirectTo: '/auth/confirm',
             },
         });
         if (error) {
