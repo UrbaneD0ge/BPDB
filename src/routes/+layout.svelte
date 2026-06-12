@@ -1,5 +1,4 @@
 <script>
-	import favicon from '$lib/assets/favicon.svg';
 	let { children, data } = $props();
 
 	// console.log(data.session)
@@ -10,7 +9,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
