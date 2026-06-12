@@ -170,6 +170,6 @@
 </form>
 
 <style lang="postcss">
-@reference "tailwindcss"
+@reference "tailwindcss";
 
 </style>
