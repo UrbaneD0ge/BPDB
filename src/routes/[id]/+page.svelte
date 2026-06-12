@@ -7,7 +7,7 @@ let { data } = $props();
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
-console.log(data.data[0].reviews);
+console.log(peanut);
 
 </script>
 
@@ -21,9 +21,10 @@ console.log(data.data[0].reviews);
         <h1>Restaurant {peanut.id}: {peanut.resto_name}</h1>
 
         <p>Product: {peanut.product}</p>
+        <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
         <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p>
-        <p>{ !ratings ? '0' : ratings.length} rating So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
+        <p>{ ratings[0] === null ? '0' : ratings.length} rating{ratings.length > 1 ? 's' : ''} So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
@@ -52,7 +53,7 @@ console.log(data.data[0].reviews);
             <th>Brine</th>
             <th>Salty</th>
             <th>Spicy</th>
-            <th>Price</th>
+            <!-- <th>Price</th> -->
             <th>Notes</th>
         </tr>
     </tbody>
@@ -67,7 +68,7 @@ console.log(data.data[0].reviews);
                 <td>{rating?.brine}</td>
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
-                <td>{rating?.price}</td>
+                <!-- <td>{rating?.price}</td> -->
                 <td>{rating?.notes || '-'}</td>
             </tr>
         </tbody>

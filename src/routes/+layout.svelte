@@ -16,9 +16,13 @@
 	<div>
 		<a href="/">Home</a>
 		<a href="/submit">Submit to the BPDB</a>
+		{#if !data.session}
 		<a href="/auth/signup">Sign Up</a>
 		<a href="/auth/signin">Sign In</a>
-		<a href="/auth/signout">Sign Out</a>
+		{/if}
+		{#if data.session}
+		<form class="inline" method="POST" action="/auth/signout"><button class="hover:underline cursor-pointer" type="submit">Sign Out</button></form>
+		{/if}
 	</div>
 
 	<div>
@@ -39,4 +43,9 @@
 		padding: 2rem;
 		margin: 0 auto;
 	}
+
+form > button {
+	color: white;
+	/* display: inline; */
+}
 </style>

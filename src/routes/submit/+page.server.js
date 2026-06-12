@@ -42,7 +42,7 @@ export const actions = {
             const { data, error } = await event.locals.supabase.rpc('insert_peanut', {
                 p_resto_name: resto_name,
                 p_product: product_name,
-                // p_price: price, // MUST UPDATE RPC
+                p_price: price,
                 p_address: address,
                 p_lon: parseFloat(longitude),
                 p_lat: parseFloat(latitude)

@@ -1,12 +1,15 @@
 import { redirect } from '@sveltejs/kit';
 
 
-export const load = async ({ locals: { supabase } }) => {
-  console.log('Signing Out!')
+export const actions = {
 
-  // Use server-side Supabase client to destroy JWT and clear auth cookies
-  await supabase.auth.signOut();
+  default: async ({ locals: { supabase } }) => {
+    console.log('Signing Out!')
 
-  // Redirect after successful signout
-  throw redirect(303, '/');
+    // Use server-side Supabase client to destroy JWT and clear auth cookies
+    await supabase.auth.signOut();
+
+    // Redirect after successful signout
+    throw redirect(303, '/');
+  }
 };
