@@ -1,10 +1,9 @@
-import { supabase } from "$lib/supabaseClient";
-
 export const actions = {
     default: async (event) => {
 
-        const session = await supabase.auth.getSession();
-        if (!session.data.session) {
+        // Validate user with secure getUser() instead of getSession()
+        const { data: { user }, error: authError } = await event.locals.supabase.auth.getUser();
+        if (authError || !user) {
             console.error('User is not logged in');
             return {
                 success: false,
@@ -36,7 +35,7 @@ export const actions = {
                 overall: overall,
                 notes: notes
             });
-            const { data, error } = await supabase.from('ratings').insert({
+            const { data, error } = await event.locals.supabase.from('ratings').insert({
                 resto_prod: resto_prod,
                 user_id: user_id,
                 servings: servings,

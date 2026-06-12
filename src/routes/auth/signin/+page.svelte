@@ -11,4 +11,6 @@
     <button type="submit" value="Sign In">Sign In</button>
 
     <p>Don't have an account? <a href="/auth/signup">Sign up here</a>.</p>
+
+    <!-- TODO: Get form messages/errors! -->
 </form>

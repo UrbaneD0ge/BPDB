@@ -6,8 +6,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let { data } = $props();
 
 let peanut = $derived(data?.data[0]?.peanut);
-let reviews = $derived(data?.data[0]?.reviews);
-// console.log(reviews);
+let ratings = $derived(data?.data[0]?.reviews);
+console.log(data.data[0].reviews);
 
 </script>
 
@@ -22,8 +22,8 @@ let reviews = $derived(data?.data[0]?.reviews);
 
         <p>Product: {peanut.product}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
-        <p>Initially Reviewed: {new Date(peanut.created_at).toLocaleDateString()}</p>
-        <p>{ reviews.includes(null) ? '0' : reviews.length} Review{reviews.length > 1 ? 's' : ''} So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
+        <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p>
+        <p>{ !ratings ? '0' : ratings.length} rating So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
@@ -46,7 +46,7 @@ let reviews = $derived(data?.data[0]?.reviews);
 <table class="table-auto w-full border-collapse border border-gray-300">
     <tbody>
         <tr>
-            <!-- <th>Review ID</th> -->
+            <!-- <th>rating ID</th> -->
             <th>Overall</th>
             <th>Done</th>
             <th>Brine</th>
@@ -57,25 +57,25 @@ let reviews = $derived(data?.data[0]?.reviews);
         </tr>
     </tbody>
 
-    {#if reviews[0] !== null}
-        {#each reviews as review}
+    {#if ratings !== undefined}
+        {#each ratings as rating}
         <tbody>
             <tr>
-                <!-- <td>{review.id}</td> -->
-                <td><b>{review?.overall}</b></td>
-                <td>{review?.done}</td>
-                <td>{review?.brine}</td>
-                <td>{review?.salty}</td>
-                <td>{review?.spicy}</td>
-                <td>{review?.price}</td>
-                <td>{review?.notes || '-'}</td>
+                <!-- <td>{rating.id}</td> -->
+                <td><b>{rating?.overall}</b></td>
+                <td>{rating?.done}</td>
+                <td>{rating?.brine}</td>
+                <td>{rating?.salty}</td>
+                <td>{rating?.spicy}</td>
+                <td>{rating?.price}</td>
+                <td>{rating?.notes || '-'}</td>
             </tr>
         </tbody>
         {/each}
     {:else}
         <tbody>
             <tr>
-                <td colspan="8"><i>No reviews yet.</i></td>
+                <td colspan="8"><i>No ratings yet.</i></td>
             </tr>
         </tbody>
     {/if}
