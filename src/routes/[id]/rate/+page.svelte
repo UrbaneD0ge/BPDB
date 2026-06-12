@@ -163,7 +163,7 @@
     <fieldset>Notes:</fieldset>
     <div class="flex items-center">
         <!-- <label for="notes">Notes</label> -->
-        <input id="notes" name="notes" type="textarea" class="">
+        <input id="notes" name="notes" type="textarea" class=" bg-gray-200 border-2">
     </div>
 
     <input class="bg-green-600  text-white " type="submit" value="submit">
@@ -171,4 +171,5 @@
 
 <style lang="postcss">
 @reference "tailwindcss"
+
 </style>

@@ -18,6 +18,7 @@
 		"vite": "^7.2.6"
 	},
 	"dependencies": {
+		"@opentelemetry/api": "^1.9.1",
 		"@supabase/ssr": "^0.10.3",
 		"@supabase/supabase-js": "^2.106.1",
 		"@tailwindcss/vite": "^4.3.0",
