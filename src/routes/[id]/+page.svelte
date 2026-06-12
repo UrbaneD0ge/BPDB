@@ -109,8 +109,4 @@ console.log(reviews);
     td:hover {
         background-color: #f5f5f5;
     }
-
-    .map-container {
-        margin-top: 20px;
-    }
 </style>
