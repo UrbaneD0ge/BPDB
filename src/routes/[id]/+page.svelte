@@ -5,12 +5,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 let { data } = $props();
 
-// svelte-ignore state_referenced_locally
-let peanut = data.data[0].peanut;
-
-// svelte-ignore state_referenced_locally
-let reviews = data.data[0].reviews;
-console.log(reviews);
+let peanut = $derived(data?.data[0]?.peanut);
+let reviews = $derived(data?.data[0]?.reviews);
+// console.log(reviews);
 
 </script>
 

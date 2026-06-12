@@ -22,7 +22,7 @@
 	</div>
 
 	<div>
-		<a class="italic" href='/user/${data.session.user.id}'>{data.session.user.email}</a>
+		<a class="italic" href='/user/${data.session?.user.id}' data-sveltekit-preload-data="false">{data.session?.user.email}</a>
 	</div>
 </nav>
 

@@ -3,17 +3,21 @@ import { supabase } from "$lib/supabaseClient";
 import { applyAction } from '$app/forms';
 
 export async function load({ url }) {
+    const id = url.pathname.slice(1);
 
-    // console.log('Fetching peanut data for ID:', url.pathname.slice(1));
+    // Skip processing for non-ID requests
+    if (id === 'favicon.ico' || !id || id.includes('.')) {
+        throw error(404, 'Not found');
+    }
 
-    // GET THE DATA WHERE THE ID MATCHES THE URLS PATHNAME
-  const { data, error } = await supabase.rpc('get_peanut_and_reviews', { p_id: url.pathname.slice(1) });
+    console.log('Fetching peanut data for ID:', id);
 
-  console.log('Supabase response:', { data, error });
+    const { data, error: dbError } = await supabase.rpc('get_peanut_and_reviews', { p_id: id });
 
-  return {
-    data: data ? data : null,
-    error: error ? error.message : null
-  };
+    console.log('Get peanut and reviews:', { data, error: dbError });
 
-};
+    return {
+        data: data ? data : null,
+        error: dbError ? dbError.message : null
+    };
+}
