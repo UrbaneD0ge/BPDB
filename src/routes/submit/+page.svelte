@@ -36,6 +36,9 @@ onMount(() => {
     <label for="product">Product Name:</label><br>
     <input type="text" id="product" name="product_name" required><br><br>
 
+    <label for="price">Menu Price:</label><br>
+    <input type="number" step="0.01" id="price" name="price" required><br><br>
+
 <fieldset>
 
     <!-- TODO: This should be an address picker eventually -->
