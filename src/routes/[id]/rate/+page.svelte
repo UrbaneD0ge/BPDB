@@ -1,30 +1,174 @@
 <script>
     import { page } from '$app/state';
+    let { data } = $props();
+
+    // console.log(data.session.user.id)
 </script>
 
 
 <svelte:head>
-    <title>Peanut rating:</title>
+    <title>Peanut rating</title>
 </svelte:head>
 
-<form class="flex flex-col">
+<form class="flex flex-col items-center" method="POST">
     <div>
-        <input id="resto" type="number" name="restaurant" value={page.params.id} hidden>
+        <input id="resto" type="number" name="resto_prod" value={page.params.id} hidden>
+        <input id="user_id" type="text" name="user_id" value={data.session.user.id} hidden>
     </div>
     <br>
-    <div>
-        <fieldset for="overall">Overall:
-        <input id="1" name="overall" type="radio">
-        <input id="2" name="overall" type="radio">
-        <input id="3" name="overall" type="radio">
-        <input id="4" name="overall" type="radio">
-        <input id="5" name="overall" type="radio">
-        <input id="6" name="overall" type="radio">
-        <input id="7" name="overall" type="radio">
-        <input id="8" name="overall" type="radio">
-        <input id="9" name="overall" type="radio">
-        <input id="10" name="overall" type="radio">
-        </fieldset>
+    <fieldset>Overall:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="overall" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="overall" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="overall" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="overall" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="overall" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="overall" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="overall" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="overall" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="overall" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="overall" type="radio" class="scale-180 m-8">
     </div>
     <br>
+    <fieldset>Serving Size:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="servings" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="servings" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="servings" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="servings" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="servings" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="servings" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="servings" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="servings" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="servings" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="servings" type="radio" class="scale-180 m-8">
+    </div>
+    <br>
+    <fieldset>Brine Flavor:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="brine" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="brine" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="brine" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="brine" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="brine" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="brine" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="brine" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="brine" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="brine" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="brine" type="radio" class="scale-180 m-8">
+    </div>
+    <br>
+    <fieldset>Saltiness:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="salty" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="salty" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="salty" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="salty" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="salty" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="salty" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="salty" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="salty" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="salty" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="salty" type="radio" class="scale-180 m-8">
+    </div>
+    <br>
+    <fieldset>Doneness:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="done" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="done" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="done" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="done" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="done" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="done" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="done" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="done" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="done" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="done" type="radio" class="scale-180 m-8">
+    </div>
+    <br>
+    <fieldset>Spicy:</fieldset>
+    <div class="flex items-center">
+            <label for="1">1</label>
+            <input id="1" value="1" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="2">2</label>
+            <input id="2" value="2" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="3">3</label>
+            <input id="3" value="3" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="4">4</label>
+            <input id="4" value="4" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="5">5</label>
+            <input id="5" value="5" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="6">6</label>
+            <input id="6" value="6" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="7">7</label>
+            <input id="7" value="7" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="8">8</label>
+            <input id="8" value="8" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="9">9</label>
+            <input id="9" value="9" name="spicy" type="radio" class="scale-180 m-8">
+            <label for="10">10</label>
+        <input id="10" value="10" name="spicy" type="radio" class="scale-180 m-8">
+    </div>
+    <br>
+    <fieldset>Notes:</fieldset>
+    <div class="flex items-center">
+        <!-- <label for="notes">Notes</label> -->
+        <input id="notes" name="notes" type="textarea" class="">
+    </div>
+
+    <input class="bg-green-600  text-white " type="submit" value="submit">
 </form>
+
+<style lang="postcss">
+@reference "tailwindcss"
+</style>

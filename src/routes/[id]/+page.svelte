@@ -7,11 +7,10 @@ let { data } = $props();
 
 // svelte-ignore state_referenced_locally
 let peanut = data.data[0].peanut;
-// console.log(peanut);
 
 // svelte-ignore state_referenced_locally
 let reviews = data.data[0].reviews;
-// console.log(reviews);
+console.log(reviews);
 
 </script>
 
@@ -27,7 +26,7 @@ let reviews = data.data[0].reviews;
         <p>Product: {peanut.product}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
         <p>Initially Reviewed: {new Date(peanut.created_at).toLocaleDateString()}</p>
-        <p>{reviews.length} Review{reviews.length > 1 ? 's' : ''} So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
+        <p>{ reviews.includes(null) ? '0' : reviews.length} Review{reviews.length > 1 ? 's' : ''} So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
@@ -97,7 +96,6 @@ let reviews = data.data[0].reviews;
 
     th {
         background-color: #f2f2f2;
-
     }
 
     td:first-child {

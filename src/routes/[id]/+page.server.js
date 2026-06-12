@@ -17,12 +17,3 @@ export async function load({ url }) {
   };
 
 };
-
-export const actions = {
-  default: async (event) => {
-
-    // Take in a new rating and submit it to the DB
-    const formData = await event.request.formData();
-
-  }
-}
