@@ -1,8 +1,9 @@
 <script>
 import Loader from '$lib/Loader.svelte';
 import { onMount } from 'svelte';
+import { enhance } from "$app/forms";
 
-let data;
+let { data, form } = $props();
 let isLoading = $state(true);
 let coords = $state({ lat: null, lon: null });
 
@@ -29,21 +30,21 @@ onMount(() => {
 <h1>Submit a new BP to the DB!</h1>
 <p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name, product name, and location (latitude and longitude).</p>
 
-<form method="POST">
+<form method="POST" use:enhance>
     <label for="resto_name">Restaurant Name:</label><br>
-    <input type="text" id="resto_name" name="resto_name" required><br><br>
+    <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br><br>
 
     <label for="product">Product Name:</label><br>
-    <input type="text" id="product" name="product_name" required><br><br>
+    <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" required><br><br>
 
     <label for="price">Menu Price:</label><br>
-    <input type="number" step="0.01" id="price" name="price" required><br><br>
+    <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br><br>
 
 <fieldset>
 
     <!-- TODO: This should be an address picker eventually -->
     <label for="address">Peanut Address:</label><br>
-    <input type="text" id="address" name="address" required><br><br>
+    <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required><br><br>
 
     <div class="geopoint-container flex w-100 * justify-around">
         <div class="mr-4">
@@ -63,7 +64,9 @@ onMount(() => {
     </div>
 
 </fieldset>
-
+    {#if form?.error}
+        <p class="error-message">{form.error}</p>
+    {/if}
 <br><br>
     <input type="submit" value="Submit">
     {#if data?.error}
@@ -80,6 +83,13 @@ onMount(() => {
     label {
         font-weight: bold;
         width: 25%;
+    }
+
+    input[type="number"] {
+        /* background-color: #ccc; */
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 4px;
     }
 
     input[type="text"] {

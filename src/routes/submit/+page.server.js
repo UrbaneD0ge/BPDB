@@ -1,4 +1,6 @@
 /** @satisfies {import('./$types').Actions} */
+import { redirect } from '@sveltejs/kit';
+
 export const actions = {
     default: async (event) => {
 
@@ -31,14 +33,14 @@ export const actions = {
         }
 
         try {
-            console.log('Inserting peanut with data:', {
-                p_resto_name: resto_name,
-                p_product: product_name,
-                price: price,
-                address: address,
-                p_lon: parseFloat(longitude),
-                p_lat: parseFloat(latitude)
-            });
+            // console.log('Inserting peanut with data:', {
+            //     p_resto_name: resto_name,
+            //     p_product: product_name,
+            //     price: price,
+            //     address: address,
+            //     p_lon: parseFloat(longitude),
+            //     p_lat: parseFloat(latitude)
+            // });
             const { data, error } = await event.locals.supabase.rpc('insert_peanut', {
                 p_resto_name: resto_name,
                 p_product: product_name,
@@ -46,11 +48,18 @@ export const actions = {
                 p_address: address,
                 p_lon: parseFloat(longitude),
                 p_lat: parseFloat(latitude)
-            });
+            }).select('*');
+
 
             if (error) {
                 throw error;
-            }
+            } return {
+                success: true,
+                message: 'Peanut submitted successfully',
+                data: data,
+            };
+
+
         } catch (error) {
             console.error('Error inserting peanut:', error);
             return {
@@ -58,10 +67,8 @@ export const actions = {
                 message: 'Error inserting peanut: ' + (error.message || 'Unknown error')
             };
         }
-
-        return {
-            success: true,
-            message: 'Peanut submitted successfully'
-        };
+// TODO: Redirect to the new ID/rate page
+        // console.log(data)
+        // throw redirect(303, '/')
     }
 };
