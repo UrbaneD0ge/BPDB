@@ -5,18 +5,20 @@ import { error } from "@sveltejs/kit";
 export const actions = {
     default: async (event) => {
         const formData = await event.request.formData();
-        const email = formData.get('email')
-        const userName = formData.get('userName')
-        const password = formData.get('password')
+        const email = formData.get('email');
+        const display_name = formData.get('display_name') || '';
+        const password = formData.get('password');
 
-        const result = await signUpNewUser({ email, userName, password })
-        
+        console.log('New user with: ', { email, display_name, password });
+
+        const result = await signUpNewUser({ email, display_name, password });
+
         if (result.error) {
             return {
                 success: false,
                 error: result.error.message || 'Sign-up failed',
             };
-        }
+        };
 
         return {
             success: true,

@@ -15,7 +15,16 @@ export const GET = async (event) => {
    * `next` is preserved for now, because it's needed in the error case.
    */
   const redirectTo = new URL(url)
-  redirectTo.pathname = next
+
+  // Extract pathname if `next` is a full URL, otherwise use as-is
+  let redirectPathname = next
+  try {
+    const nextUrl = new URL(next)
+    redirectPathname = nextUrl.pathname + nextUrl.search
+  } catch {
+    // `next` is not a valid URL, treat it as a path
+  }
+  redirectTo.pathname = redirectPathname
   redirectTo.searchParams.delete('token_hash')
   redirectTo.searchParams.delete('type')
 
