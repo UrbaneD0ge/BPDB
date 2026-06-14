@@ -2,7 +2,11 @@
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-export let data;
+// export let data;
+let { data } = $props();
+
+console.log(data.peanuts)
+
 </script>
 
 <h1>Welcome to the BPDB: Boiled Peanut DataBase</h1>
@@ -12,7 +16,7 @@ export let data;
   <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
-    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"</a></li>
+    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
       <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->

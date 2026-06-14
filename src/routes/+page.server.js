@@ -13,7 +13,6 @@ export async function load() {
     // THE QUERY HERSELF
     const { data, error } = await supabase.rpc('get_peanuts_xy');
 
-
     if (error) {
       console.error('Error fetching peanuts data:', error);
       return {
