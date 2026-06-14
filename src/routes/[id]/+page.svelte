@@ -24,7 +24,7 @@ console.log(peanut);
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
         <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p>
-        <p>{ ratings[0] === null ? '0' : ratings.length} rating{ratings.length > 1 ? 's' : ''} So Far: <a href='/{peanut.id}/rate'>Add Yours!</a></p>
+        <p>{ ratings[0] === null ? '0' : ratings.length} rating{ratings.length > 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate'>Add Yours!</a>{/if}</p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->

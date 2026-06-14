@@ -40,7 +40,7 @@ onMount(() => {
     <label for="price">Menu Price:</label><br>
     <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br><br>
 
-<fieldset>
+<fieldset class="bg-stone-300 rounded-lg p-2">
 
     <!-- TODO: This should be an address picker eventually -->
     <label for="address">Peanut Address:</label><br>
@@ -86,8 +86,8 @@ onMount(() => {
     }
 
     input[type="number"] {
-        /* background-color: #ccc; */
-        border: 1px solid #ccc;
+        background-color: whitesmoke;
+        border: 1px solid whitesmoke;
         padding: 8px;
         border-radius: 4px;
     }
@@ -95,7 +95,8 @@ onMount(() => {
     input[type="text"] {
         padding: 8px;
         margin-bottom: 15px;
-        border: 1px solid #ccc;
+        border: 1px solid whitesmoke;
+        background-color: whitesmoke;
         border-radius: 4px;
     }
 

@@ -1,3 +1,10 @@
+import { redirect } from '@sveltejs/kit';
+
+// TODO: Add a load function that redirects if the user is not logged in
+
+import { redirect } from '@sveltejs/kit';
+
+
 export const actions = {
     default: async (event) => {
 
@@ -5,6 +12,7 @@ export const actions = {
         const { data: { user }, error: authError } = await event.locals.supabase.auth.getUser();
         if (authError || !user) {
             console.error('User is not logged in');
+            throw redirect(303, '/auth/signin');
             return {
                 success: false,
                 message: 'User is not logged in'

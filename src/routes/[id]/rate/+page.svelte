@@ -13,7 +13,7 @@
 <form class="flex flex-col items-center" method="POST">
     <div>
         <input id="resto" type="number" name="resto_prod" value={page.params.id} hidden>
-        <input id="user_id" type="text" name="user_id" value={data.session.user.id} hidden>
+        <input id="user_id" type="text" name="user_id" value={data.session?.user.id} hidden>
     </div>
     <br>
     <fieldset>Overall:</fieldset>

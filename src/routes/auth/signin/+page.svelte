@@ -9,8 +9,13 @@
     <input type="password" id="password" name="password" required><br><br>
 
     <button type="submit" value="Sign In">Sign In</button>
-
-    <p>Don't have an account? <a href="/auth/signup">Sign up here</a>.</p>
+<br><br>
+    <p class="my-2">Don't have an account? <a href="/auth/signup" class="underline">Sign up here</a>.</p>
 
     <!-- TODO: Get form messages/errors! -->
 </form>
+
+<style lang="postcss">
+@reference "tailwindcss"
+
+</style>
