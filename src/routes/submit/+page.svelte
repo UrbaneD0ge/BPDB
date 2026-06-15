@@ -10,7 +10,7 @@ let isLoading = $state(false);
 let coords = $state({ lat: null, lon: null });
 let geoStatus = $state('-');
 
-$inspect(coords)
+// $inspect(coords)
 
 // Address search
   function URLencode(str) {
@@ -18,6 +18,36 @@ $inspect(coords)
       return '%' + c.charCodeAt(0).toString(16);
     });
   };
+
+async function reverseGC(coords) {
+    if (!coords || coords.lat == null || coords.lon == null) {
+        geoStatus = 'No coordinates to reverse geocode';
+        return;
+    }
+
+    isLoading = true;
+    geoStatus = 'Finding your peanuts...';
+
+    try {
+        const reverseAPI = `https://nominatim.openstreetmap.org/reverse?lat=${coords.lat}&lon=${coords.lon}&format=json`;
+        console.log(reverseAPI);
+        const response = await fetch(reverseAPI, { headers: { 'Accept': 'application/json' } });
+        const data = await response.json();
+        console.log(data);
+        if (data && data.display_name) {
+            geoStatus = 'Address found';
+            // populate address input if present
+            if (typeof address !== 'undefined' && address) address.value = data.display_name;
+        } else {
+            geoStatus = 'No address found for these coordinates';
+        }
+    } catch (e) {
+        console.error(e);
+        geoStatus = 'Reverse geocoding failed';
+    } finally {
+        isLoading = false;
+    }
+}
 
 function addySearch() {
     isLoading = true;
@@ -34,22 +64,20 @@ function addySearch() {
     fetch(uriToFetch)
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         if (data.candidates[0]) {
             // console.log(latitude, longitude);
             geoStatus = 'Location found!';
             coords.lat = data.candidates[0]?.location.y;
             coords.lon = data.candidates[0]?.location.x;
-        //   document.getElementById('geopoint_lat').value = latitude;
-        //   document.getElementById('geopoint_lon').value = longitude;
-          //   placeName = data.candidates[0].address.toUpperCase();
-          // data[0].display_name.replace(/, Atlanta.*/gis, '');
-          //   getNPU(latitude, longitude).catch((e) => console.error(e));
+            //   document.getElementById('geopoint_lat').value = latitude;
+            //   document.getElementById('geopoint_lon').value = longitude;
+            //   placeName = data.candidates[0].address.toUpperCase();
+            // data[0].display_name.replace(/, Atlanta.*/gis, '');
+            //   getNPU(latitude, longitude).catch((e) => console.error(e));
           isLoading = false;
         } else {
           geoStatus = 'Not found.. Example: 123 Peachtree St NE';
-          //   results.innerText = '🤔';
-          //   npuLink.removeAttribute('href');
           isLoading = false;
         }
       });
@@ -58,6 +86,7 @@ function addySearch() {
 // Find the user by GPS
 function geoLocate() {
     console.log('Geolocating!')
+    isLoading = true;
     geoStatus = 'Using your device location...'
     // Get the location of the user and put address in the input field
     if (!navigator.geolocation) {
@@ -74,8 +103,7 @@ function geoLocate() {
         geoStatus =
         'Location found: ' + coords.lat.toFixed(2) + ', ' + coords.lon.toFixed(2);
 
-        // document.getElementById('geopoint_lat').value = latitude;
-        // document.getElementById('geopoint_lon').value = longitude;
+        reverseGC(coords);
 
         // coords = { latitude, longitude };
         isLoading = false;
@@ -124,6 +152,10 @@ function geoLocate() {
             <h4> -- OR --</h4>
         </div>
 
+                    {#if isLoading}
+                    <Loader />
+                    {/if}
+
         <div>
             <button
         onclick={(e) => {e.preventDefault(); geoLocate()}}
@@ -145,10 +177,6 @@ function geoLocate() {
                 <!-- <div>{coords.lon?.toFixed(3)}</div> -->
                 <input type="text" id="geopoint_lon" name="longitude" value={coords.lon} required>
             </div>
-
-            {#if isLoading}
-            <Loader />
-            {/if}
 
             <div>
             <!-- HERE'S THE MAP 🗺️ -->

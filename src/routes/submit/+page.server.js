@@ -1,4 +1,3 @@
-/** @satisfies {import('./$types').Actions} */
 import { redirect } from '@sveltejs/kit';
 
 export const actions = {
@@ -53,11 +52,16 @@ export const actions = {
 
             if (error) {
                 throw error;
-            } return {
-                success: true,
-                message: 'Peanut submitted successfully',
-                data: data,
-            };
+            }
+            // return {
+            //     success: true,
+            //     message: 'Peanut submitted successfully',
+            //     data: data,
+            // };
+
+            // TODO: Redirect to the new ID/rate page
+            console.log(data)
+            throw redirect(303, `/${data.id}/rate`);
 
 
         } catch (error) {
@@ -66,9 +70,6 @@ export const actions = {
                 success: false,
                 message: 'Error inserting peanut: ' + (error.message || 'Unknown error')
             };
-        }
-// TODO: Redirect to the new ID/rate page
-        // console.log(data)
-        // throw redirect(303, '/')
+        };
     }
 };

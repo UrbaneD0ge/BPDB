@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 // export let data;
 let { data } = $props();
 
-console.log(data.peanuts)
+// console.log(data.peanuts)
 
 </script>
 
@@ -32,7 +32,7 @@ console.log(data.peanuts)
   <MapLibre
   class="h-120 w-3/4"
   center={[-84.3880, 33.7490]}
-  zoom={12}
+  zoom={10}
   style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
   {#each data.peanuts as peanut}
