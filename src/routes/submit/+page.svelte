@@ -10,6 +10,8 @@ let isLoading = $state(false);
 let coords = $state({ lat: null, lon: null });
 let geoStatus = $state('-');
 
+$inspect(coords)
+
 // Address search
   function URLencode(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -29,11 +31,10 @@ function addySearch() {
     // console.log(addressEncoded);
     let uriToFetch = `https://gis.atlantaga.gov/dpcd/rest/services/SiteAddressPoint/GeocodeServer/findAddressCandidates?Address=${addressEncoded}&City=Atlanta&matchOutOfRange=true&outSR=4326&f=pjson`;
 
-    console.log(uriToFetch);
     fetch(uriToFetch)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.candidates[0]) {
             // console.log(latitude, longitude);
             geoStatus = 'Location found!';
@@ -65,23 +66,26 @@ function geoLocate() {
     }
 
     function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    // console.log(latitude, longitude);
-    geoStatus =
-    'Location found: ' + latitude.toFixed(2) + ', ' + longitude.toFixed(2);
-    // // pass geoStatus as a prop to NPU.svelte
-    // getNPU(latitude, longitude);
-    document.getElementById('geopoint_lat').value = latitude;
-    document.getElementById('geopoint_lon').value = longitude;
-    coords = { latitude, longitude };
-    isLoading = false;
-    return latitude, longitude;
+        coords.lat = position.coords.latitude;
+        coords.lon = position.coords.longitude;
+        // coords.lat = latitude;
+        // coords.lon = longitude;
+        // console.log(latitude, longitude);
+        geoStatus =
+        'Location found: ' + coords.lat.toFixed(2) + ', ' + coords.lon.toFixed(2);
+
+        // document.getElementById('geopoint_lat').value = latitude;
+        // document.getElementById('geopoint_lon').value = longitude;
+
+        // coords = { latitude, longitude };
+        isLoading = false;
+        // return latitude, longitude;
     }
 
     function error() {
-    geoStatus = 'Unable to retrieve your location';
+        geoStatus = 'Unable to retrieve your location';
     }
+
     navigator.geolocation.getCurrentPosition(success, error);
     return;
 };
@@ -92,7 +96,7 @@ function geoLocate() {
 <h1>Submit a new BP to the DB!</h1>
 <p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p>
 
-<form method="POST" use:enhance>
+<form method="POST"use:enhance>
     <label for="resto_name">Restaurant Name:</label><br>
     <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br><br>
 
@@ -103,60 +107,73 @@ function geoLocate() {
     <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br><br>
 
     <!-- 🛰️ !! GEOLOCATION BLOCK !! 📍 -->
-<fieldset class="bg-stone-300 rounded-lg p-2">
+    <fieldset class="bg-stone-300 rounded-lg p-2">
 
-    <!-- TODO: This should be an address picker eventually -->
-    <label for="address">Restaurant Address:</label><br>
-    <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
+        <div>
+            <!-- TODO: This should be an address picker eventually -->
+            <label for="address">Restaurant Address:</label><br>
+            <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
 
-    <button
-    onclick={(e) => {e.preventDefault(); addySearch()}}
-    class="rounded-full bg-yellow-500 p-2 m-2"
-    >Address Search</button>
+            <button
+        onclick={(e) => {e.preventDefault(); addySearch()}}
+        class="rounded-full bg-yellow-500 p-2 m-2"
+        >Address Search</button>
+</div>
 
-    <div>
-        <h4> -- OR --</h4>
-    </div>
-
-    <button
-    onclick={(e) => {e.preventDefault(); geoLocate()}}
-    class="rounded-full bg-green-500 p-2 m-2"
-    id="locate"
-    >Locate Me</button>
-    <span>{geoStatus}</span>
-    <br><br>
-
-    <div class="geopoint-container flex w-100 * justify-around">
-        <div class="mr-4">
-            <label for="geopoint_lat">Latitude:</label>
-            <div>{coords.lat?.toFixed(3)}</div>
-            <input type="text" id="geopoint_lat" name="latitude" required>
+        <div>
+            <h4> -- OR --</h4>
         </div>
 
         <div>
-            <label for="geopoint_lon">Longitude:</label>
-            <div>{coords.lon?.toFixed(3)}</div>
-            <input type="text" id="geopoint_lon" name="longitude" required>
+            <button
+        onclick={(e) => {e.preventDefault(); geoLocate()}}
+        class="rounded-full bg-green-500 p-2 m-2"
+        id="locate"
+        >Locate Me</button>
+        <span>{geoStatus}</span>
+        <br><br>
+
+        <div class="geopoint-container w-100">
+            <div>
+                <label for="geopoint_lat">Latitude:</label>
+                <!-- <div>{coords.lat?.toFixed(3)}</div> -->
+                <input type="text" id="geopoint_lat" name="latitude" value={coords.lat} required>
+            </div>
+
+            <div>
+                <label for="geopoint_lon">Longitude:</label>
+                <!-- <div>{coords.lon?.toFixed(3)}</div> -->
+                <input type="text" id="geopoint_lon" name="longitude" value={coords.lon} required>
+            </div>
+
+            {#if isLoading}
+            <Loader />
+            {/if}
+
+            <div>
+            <!-- HERE'S THE MAP 🗺️ -->
+            <!-- TODO: Adjust map center and zoom when Peanut is updated. -->
+                <MapLibre
+                class="h-60 w-80"
+                center={[-84.378, 33.748]}
+                zoom={10}
+                style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+                >
+
+                {#if coords.lat !== null}
+                <Marker lnglat={[ coords.lon, coords.lat ]} anchor="bottom">
+                    {#snippet content()}
+                    <div class="text-3xl">🥜</div>
+                    {/snippet}
+                </Marker>
+                {/if}
+
+                </MapLibre>
+            </div>
         </div>
-        {#if isLoading}
-        <Loader />
-        {/if}
-    </div>
-  <MapLibre
-    class="h-60 w-80"
-    center={[ coords.lat, coords.lon ]}
-    zoom={15}
-    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
-    >
+</div>
+    </fieldset>
 
-    <Marker lnglat={[ coords.lat, coords.lon ]} anchor="bottom">
-     {#snippet content()}
-        <div class="text-3xl">🥜</div>
-    {/snippet}
-    </Marker>
-
-  </MapLibre>
-</fieldset>
     {#if form?.error}
         <p class="error-message">{form.error}</p>
     {/if}
