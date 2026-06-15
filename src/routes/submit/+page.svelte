@@ -2,33 +2,95 @@
 import Loader from '$lib/Loader.svelte';
 import { onMount } from 'svelte';
 import { enhance } from "$app/forms";
+import { MapLibre, Marker } from 'svelte-maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 let { data, form } = $props();
-let isLoading = $state(true);
+let isLoading = $state(false);
 let coords = $state({ lat: null, lon: null });
+let geoStatus = $state('-');
 
-onMount(() => {
-    // get geolocation and fill in the geopoint field
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            document.getElementById('geopoint_lat').value = lat;
-            document.getElementById('geopoint_lon').value = lon;
-            coords = { lat, lon };
-            isLoading = false;
-        });
-        console.log('Geolocation found.');
-    } else {
-        console.warn('Geolocation is not supported by this browser.');
-        isLoading = false;
+// Address search
+  function URLencode(str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  };
+
+function addySearch() {
+    isLoading = true;
+    // Get the location of the user and put address in the input field
+    if (address.value == '') {
+      geoStatus = 'Please enter an address';
+      isLoading = false;
+      return;
     }
-});
+    let addressEncoded = URLencode(address.value);
+    // console.log(addressEncoded);
+    let uriToFetch = `https://gis.atlantaga.gov/dpcd/rest/services/SiteAddressPoint/GeocodeServer/findAddressCandidates?Address=${addressEncoded}&City=Atlanta&matchOutOfRange=true&outSR=4326&f=pjson`;
+
+    console.log(uriToFetch);
+    fetch(uriToFetch)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.candidates[0]) {
+            // console.log(latitude, longitude);
+            geoStatus = 'Location found!';
+            coords.lat = data.candidates[0]?.location.y;
+            coords.lon = data.candidates[0]?.location.x;
+        //   document.getElementById('geopoint_lat').value = latitude;
+        //   document.getElementById('geopoint_lon').value = longitude;
+          //   placeName = data.candidates[0].address.toUpperCase();
+          // data[0].display_name.replace(/, Atlanta.*/gis, '');
+          //   getNPU(latitude, longitude).catch((e) => console.error(e));
+          isLoading = false;
+        } else {
+          geoStatus = 'Not found.. Example: 123 Peachtree St NE';
+          //   results.innerText = '🤔';
+          //   npuLink.removeAttribute('href');
+          isLoading = false;
+        }
+      });
+  }
+
+// Find the user by GPS
+function geoLocate() {
+    console.log('Geolocating!')
+    geoStatus = 'Using your device location...'
+    // Get the location of the user and put address in the input field
+    if (!navigator.geolocation) {
+        geoStatus = 'Geolocation is not supported by your browser';
+        return;
+    }
+
+    function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    // console.log(latitude, longitude);
+    geoStatus =
+    'Location found: ' + latitude.toFixed(2) + ', ' + longitude.toFixed(2);
+    // // pass geoStatus as a prop to NPU.svelte
+    // getNPU(latitude, longitude);
+    document.getElementById('geopoint_lat').value = latitude;
+    document.getElementById('geopoint_lon').value = longitude;
+    coords = { latitude, longitude };
+    isLoading = false;
+    return latitude, longitude;
+    }
+
+    function error() {
+    geoStatus = 'Unable to retrieve your location';
+    }
+    navigator.geolocation.getCurrentPosition(success, error);
+    return;
+};
+
 </script>
 
 
 <h1>Submit a new BP to the DB!</h1>
-<p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name, product name, and location (latitude and longitude).</p>
+<p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p>
 
 <form method="POST" use:enhance>
     <label for="resto_name">Restaurant Name:</label><br>
@@ -40,35 +102,66 @@ onMount(() => {
     <label for="price">Menu Price:</label><br>
     <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br><br>
 
+    <!-- 🛰️ !! GEOLOCATION BLOCK !! 📍 -->
 <fieldset class="bg-stone-300 rounded-lg p-2">
 
     <!-- TODO: This should be an address picker eventually -->
-    <label for="address">Peanut Address:</label><br>
-    <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required><br><br>
+    <label for="address">Restaurant Address:</label><br>
+    <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
+
+    <button
+    onclick={(e) => {e.preventDefault(); addySearch()}}
+    class="rounded-full bg-yellow-500 p-2 m-2"
+    >Address Search</button>
+
+    <div>
+        <h4> -- OR --</h4>
+    </div>
+
+    <button
+    onclick={(e) => {e.preventDefault(); geoLocate()}}
+    class="rounded-full bg-green-500 p-2 m-2"
+    id="locate"
+    >Locate Me</button>
+    <span>{geoStatus}</span>
+    <br><br>
 
     <div class="geopoint-container flex w-100 * justify-around">
         <div class="mr-4">
             <label for="geopoint_lat">Latitude:</label>
             <div>{coords.lat?.toFixed(3)}</div>
-            <input hidden type="text" id="geopoint_lat" name="latitude" required>
+            <input type="text" id="geopoint_lat" name="latitude" required>
         </div>
 
         <div>
             <label for="geopoint_lon">Longitude:</label>
             <div>{coords.lon?.toFixed(3)}</div>
-            <input hidden type="text" id="geopoint_lon" name="longitude" required>
+            <input type="text" id="geopoint_lon" name="longitude" required>
         </div>
         {#if isLoading}
         <Loader />
         {/if}
     </div>
+  <MapLibre
+    class="h-60 w-80"
+    center={[ coords.lat, coords.lon ]}
+    zoom={15}
+    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+    >
 
+    <Marker lnglat={[ coords.lat, coords.lon ]} anchor="bottom">
+     {#snippet content()}
+        <div class="text-3xl">🥜</div>
+    {/snippet}
+    </Marker>
+
+  </MapLibre>
 </fieldset>
     {#if form?.error}
         <p class="error-message">{form.error}</p>
     {/if}
 <br><br>
-    <input type="submit" value="Submit">
+    <input class="rounded-full bg-green-500 p-2 m-2" type="submit" value="Submit">
     {#if data?.error}
         <p style="color: red;">{data.error}{data?.message}</p>
     {/if}
@@ -100,16 +193,16 @@ onMount(() => {
         border-radius: 4px;
     }
 
-    input[type="submit"] {
+    button, input[type="submit"] {
         padding: 10px;
-        background-color: #4CAF50;
+        /* background-color: #4CAF50; */
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
     }
 
-    input[type="submit"]:hover {
+    button:hover, input[type="submit"]:hover {
         background-color: #45a049;
     }
 

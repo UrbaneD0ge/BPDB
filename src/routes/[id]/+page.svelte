@@ -30,16 +30,18 @@ console.log(peanut);
 <!-- TODO: Display the restaurant location on the map -->
   <MapLibre
     class="h-60 w-80"
-    center={[ peanut.geopoint.x, peanut.geopoint.y ]}
+    center={[ '33.74', '-84.34' ]}
     zoom={15}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
     >
 
+{#if !coords.lat.includes(null) }
     <Marker lnglat={[peanut.geopoint.x, peanut.geopoint.y]} anchor="bottom">
      {#snippet content()}
         <div class="text-3xl">🥜</div>
     {/snippet}
     </Marker>
+{/if}
 
   </MapLibre>
 </div>
