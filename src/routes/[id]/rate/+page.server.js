@@ -1,10 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 
-// TODO: Add a load function that redirects if the user is not logged in
-
-import { redirect } from '@sveltejs/kit';
-
-
 export const actions = {
     default: async (event) => {
 
