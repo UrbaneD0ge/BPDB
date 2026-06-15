@@ -37,7 +37,7 @@ async function reverseGC(coords) {
         if (data && data.display_name) {
             geoStatus = 'Address found';
             // populate address input if present
-            if (typeof address !== 'undefined' && address) address.value = data.display_name;
+            if (typeof address !== 'undefined' && address) address.value = data.address.house_number + ' ' + data.address.road;
         } else {
             geoStatus = 'No address found for these coordinates';
         }
@@ -59,23 +59,19 @@ function addySearch() {
     }
     let addressEncoded = URLencode(address.value);
     // console.log(addressEncoded);
-    let uriToFetch = `https://gis.atlantaga.gov/dpcd/rest/services/SiteAddressPoint/GeocodeServer/findAddressCandidates?Address=${addressEncoded}&City=Atlanta&matchOutOfRange=true&outSR=4326&f=pjson`;
+    // let uriToFetch = `https://gis.atlantaga.gov/dpcd/rest/services/SiteAddressPoint/GeocodeServer/findAddressCandidates?Address=${addressEncoded}&City=Atlanta&matchOutOfRange=true&outSR=4326&f=pjson`;
+    let uriToFetch = `https://nominatim.openstreetmap.org/search?q=${addressEncoded}&format=json`;
 
     fetch(uriToFetch)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.candidates[0]) {
+        if (data.length > 0) {
             // console.log(latitude, longitude);
             geoStatus = 'Location found!';
-            coords.lat = data.candidates[0]?.location.y;
-            coords.lon = data.candidates[0]?.location.x;
-            //   document.getElementById('geopoint_lat').value = latitude;
-            //   document.getElementById('geopoint_lon').value = longitude;
-            //   placeName = data.candidates[0].address.toUpperCase();
-            // data[0].display_name.replace(/, Atlanta.*/gis, '');
-            //   getNPU(latitude, longitude).catch((e) => console.error(e));
-          isLoading = false;
+            coords.lat = data[0].lat;
+            coords.lon = data[0].lon;
+            isLoading = false;
         } else {
           geoStatus = 'Not found.. Example: 123 Peachtree St NE';
           isLoading = false;
