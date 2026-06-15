@@ -7,8 +7,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 let { data, form } = $props();
 let isLoading = $state(false);
-let coords = $state({ lat: null, lon: null });
+let coords = $state({ lat: 33.748, lon: -84.378 });
 let geoStatus = $state('-');
+let zoom = $state(8)
 
 // $inspect(coords)
 
@@ -36,6 +37,7 @@ async function reverseGC(coords) {
         console.log(data);
         if (data && data.display_name) {
             geoStatus = 'Address found';
+            zoom = 15;
             // populate address input if present
             if (typeof address !== 'undefined' && address) address.value = data.address.house_number + ' ' + data.address.road;
         } else {
@@ -69,6 +71,7 @@ function addySearch() {
         if (data.length > 0) {
             // console.log(latitude, longitude);
             geoStatus = 'Location found!';
+            zoom = 15;
             coords.lat = data[0].lat;
             coords.lon = data[0].lon;
             isLoading = false;
@@ -179,8 +182,8 @@ function geoLocate() {
             <!-- TODO: Adjust map center and zoom when Peanut is updated. -->
                 <MapLibre
                 class="h-60 w-80"
-                center={[-84.378, 33.748]}
-                zoom={10}
+                center={[coords.lon, coords.lat]}
+                zoom={zoom}
                 style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
                 >
 
