@@ -22,7 +22,7 @@
 
     </form>
 
-<style lang="postcss">
+<!-- <style lang="postcss">
 @reference "tailwindcss"
 
-</style>
+</style> -->
