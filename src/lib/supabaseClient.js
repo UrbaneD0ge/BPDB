@@ -26,6 +26,7 @@ async function signUpNewUser({ email, display_name, password }) {
                 },
             },
         });
+
         if (error) {
             console.error('Sign-up error:', error);
             return { error };
@@ -51,9 +52,6 @@ async function signInWithEmail({email, password}) {
       return { error };
     }
 
-    console.log('Sign-in successful:',
-      // data
-    );
     return { data };
   } catch (err) {
     console.error('Unexpected sign-in error:', err);

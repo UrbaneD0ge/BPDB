@@ -1,6 +1,7 @@
+import { redirect } from "@sveltejs/kit";
 import { supabase } from "$lib/supabaseClient";
 import { signUpNewUser } from "$lib/supabaseClient";
-import { error } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 
 export const actions = {
     default: async (event) => {
@@ -9,21 +10,23 @@ export const actions = {
         const display_name = formData.get('display_name') || '';
         const password = formData.get('password');
 
-        console.log('New user with: ', { email, display_name, password });
+        // console.log('New user with: ', { email, display_name, password });
 
-        const result = await signUpNewUser({ email, display_name, password });
+        const { data, error } = await signUpNewUser({ email, display_name, password });
 
-        if (result.error) {
+        if (error) {
             return {
                 success: false,
-                error: result.error.message || 'Sign-up failed',
+                message: error.message,
+                error: error || 'Sign-up failed',
             };
-        };
+        }
 
         return {
             success: true,
-            message: 'Sign-up successful! Please check your email to confirm.',
-            data: result.data,
+            data: data,
         };
+
+        throw redirect(303, '/')
     }
 };
