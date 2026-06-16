@@ -3,7 +3,7 @@ let {data, error} = $props()
 
 let ratings = $derived(data.data)
 let user = $derived(data.session.user.email)
-// console.log(user)
+$inspect(data)
 </script>
 
 {#if data.error}

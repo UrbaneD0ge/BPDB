@@ -1,3 +1,7 @@
+<script>
+    let { form } = $props();
+</script>
+
 <h1>Sign In</h1>
 <p>Use the form below to sign in to your account.</p>
 
@@ -13,6 +17,9 @@
         <p class="my-2">Don't have an account? <a href="/auth/signup" class="underline">Sign up here</a>.</p>
 
         <!-- TODO: Get form messages/errors! -->
+         {#if form?.message || form?.error }
+            {form?.error}{form?.message}
+         {/if}
     </form>
 
 <!-- <style lang="postcss">
