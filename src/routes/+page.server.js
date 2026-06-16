@@ -1,12 +1,12 @@
-import { supabase } from "$lib/supabaseClient";
+import { supabase, signInWithEmail, signUpNewUser } from "$lib/supabaseClient";
 import { createClient } from '@supabase/supabase-js'
-import { signInWithEmail, signUpNewUser } from "$lib/supabaseClient";
-import { PGAPIKEY } from "$env/static/private";
+// import { PGAPIKEY } from "$env/static/private";
 import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
 
 export async function load() {
 
-  const serverSupabase = createClient(PUBLIC_SUPABASE_URL, PGAPIKEY);
+  const serverSupabase = createClient(PUBLIC_SUPABASE_URL,        PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    { auth: { suppressGetSessionWarning: true } });
 
   try {
 
