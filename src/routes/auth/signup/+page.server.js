@@ -18,6 +18,6 @@ export const actions = {
             };
         }
         // TODO: Handle duplicate email sign-ups!
-        throw redirect(303, '/');
+        throw redirect(303, '/auth/signin');
     }
 };
