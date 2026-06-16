@@ -25,19 +25,11 @@
         <p class="error-message">{JSON.stringify(form.user)}</p>
     {/if}
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700" type="submit" value="Sign Up" onclick={!disabled} disabled={disabled}>Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={!disabled} disabled={disabled}>Send Signup Email</button>
 </form>
 
 <style lang="postcss">
 @reference "tailwindcss";
-input[type="submit"] {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 .error-message {
     color: #dc2626;

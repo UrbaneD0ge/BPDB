@@ -9,7 +9,7 @@ let { data } = $props();
 
 </script>
 
-<h1>Welcome to the BPDB: Boiled Peanut DataBase</h1>
+<h1>BPDB: Boiled Peanut DataBase</h1>
 
 <main class="flex justify-between items-start">
 
@@ -17,7 +17,7 @@ let { data } = $props();
   <ol>
     {#each data.peanuts as peanut}
     <h3>{peanut.avg_overall || '-'}</h3>
-    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price}` : ''}</a></li>
+    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
       <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->

@@ -37,6 +37,6 @@ export const GET = async (event) => {
   }
 
   // return the user to an error page with some instructions
-  redirectTo.pathname = '/auth/error'
+  redirectTo.pathname = '/auth/welcome'
   redirect(303, redirectTo)
 }
