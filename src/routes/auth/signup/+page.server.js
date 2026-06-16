@@ -1,7 +1,5 @@
-import { redirect } from "@sveltejs/kit";
-import { supabase } from "$lib/supabaseClient";
-import { signUpNewUser } from "$lib/supabaseClient";
 import { error, redirect } from "@sveltejs/kit";
+import { supabase, signUpNewUser } from "$lib/supabaseClient";
 
 export const actions = {
     default: async (event) => {
