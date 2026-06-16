@@ -16,6 +16,7 @@ let { data } = $props();
   <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
+    <h3>{peanut.avg_overall || '-'}</h3>
     <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
