@@ -22,6 +22,9 @@ export const handle = async ({ event, resolve }) => {
         }
       },
     },
+    auth: {
+      suppressGetSessionWarning: true,
+    }
   })
 
   /**
@@ -30,6 +33,7 @@ export const handle = async ({ event, resolve }) => {
    * JWT before returning the session.
    */
   event.locals.safeGetSession = async () => {
+    await event.locals.supabase.auth.getUser();
     const {
       data: { session },
     } = await event.locals.supabase.auth.getSession()

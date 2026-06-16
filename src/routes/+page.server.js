@@ -5,8 +5,7 @@ import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from "$env/stati
 
 export async function load() {
 
-  const serverSupabase = createClient(PUBLIC_SUPABASE_URL,        PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-    { auth: { suppressGetSessionWarning: true } });
+  const serverSupabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY);
 
   try {
 

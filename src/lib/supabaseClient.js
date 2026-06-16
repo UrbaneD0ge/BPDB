@@ -7,7 +7,7 @@ const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 // console.log('supabaseKey:', supabaseKey ? 'Present' : 'Missing');
 // console.log('PUBLIC_SUPABASE_URL:', PUBLIC_SUPABASE_URL ? 'Present' : 'Missing');
 
-export const supabase = createClient(supabaseUrl, supabaseKey, { auth: { suppressGetSessionWarning: true}});
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function signUpNewUser({ email, display_name, password }) {
     console.log("Signing up new user...");

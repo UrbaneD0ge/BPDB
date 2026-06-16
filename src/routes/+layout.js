@@ -26,6 +26,7 @@ export const load = async ({ fetch, data, depends }) => {
    * safe, and on the server, it reads `session` from the `LayoutData`, which
    * safely checked the session using `safeGetSession`.
    */
+  await supabase.auth.getUser();
   const {
     data: { session },
   } = await supabase.auth.getSession()
