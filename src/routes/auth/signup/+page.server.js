@@ -10,8 +10,6 @@ export const actions = {
         const display_name = formData.get('display_name') || '';
         const password = formData.get('password');
 
-        // console.log('New user with: ', { email, display_name, password });
-
         const { data, error } = await signUpNewUser({ email, display_name, password });
 
         if (error) {
@@ -21,12 +19,7 @@ export const actions = {
                 error: error || 'Sign-up failed',
             };
         }
-
-        return {
-            success: true,
-            data: data,
-        };
-
-        throw redirect(303, '/')
+        // TODO: Handle duplicate email sign-ups!
+        throw redirect(303, '/');
     }
 };
