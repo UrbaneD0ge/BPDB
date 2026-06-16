@@ -188,7 +188,7 @@ function geoLocate() {
                 >
 
                 {#if coords.lat !== null}
-                <Marker lnglat={[ coords.lon, coords.lat ]} anchor="bottom">
+                <Marker lnglat={([ coords.lon, coords.lat ])} anchor="bottom">
                     {#snippet content()}
                     <div class="text-3xl">🥜</div>
                     {/snippet}

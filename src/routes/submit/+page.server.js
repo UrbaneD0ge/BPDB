@@ -31,45 +31,31 @@ export const actions = {
             };
         }
 
-        try {
-            // console.log('Inserting peanut with data:', {
-            //     p_resto_name: resto_name,
-            //     p_product: product_name,
-            //     price: price,
-            //     address: address,
-            //     p_lon: parseFloat(longitude),
-            //     p_lat: parseFloat(latitude)
-            // });
-            const { data, error } = await event.locals.supabase.rpc('insert_peanut', {
-                p_resto_name: resto_name,
-                p_product: product_name,
-                p_price: price,
-                p_address: address,
-                p_lon: parseFloat(longitude),
-                p_lat: parseFloat(latitude)
-            }).select('*');
+        const { data, error } = await event.locals.supabase.rpc('insert_peanut', {
+            p_resto_name: resto_name,
+            p_product: product_name,
+            p_price: price,
+            p_address: address,
+            p_lon: parseFloat(longitude),
+            p_lat: parseFloat(latitude)
+        });
 
-
-            if (error) {
-                throw error;
-            }
-            // return {
-            //     success: true,
-            //     message: 'Peanut submitted successfully',
-            //     data: data,
-            // };
-
-            // TODO: Redirect to the new ID/rate page
-            console.log(data)
-            throw redirect(303, `/${data.id}/rate`);
-
-
-        } catch (error) {
+        if (error) {
             console.error('Error inserting peanut:', error);
             return {
                 success: false,
                 message: 'Error inserting peanut: ' + (error.message || 'Unknown error')
             };
-        };
+        }
+
+        if (!data || !data.id) {
+            console.error('Insert returned unexpected data:', data);
+            return {
+                success: false,
+                message: 'Insert succeeded but did not return an id'
+            };
+        }
+
+        throw redirect(303, `/${data.id}/rate`);
     }
 };

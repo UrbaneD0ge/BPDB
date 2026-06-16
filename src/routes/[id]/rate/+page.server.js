@@ -59,5 +59,6 @@ export const actions = {
                 message: 'Error rating peanut: ' + (error.message || 'Unknown error')
             };
         }
+    throw redirect(303, `/${resto_prod}`);
   }
 }
