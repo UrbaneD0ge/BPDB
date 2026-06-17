@@ -18,7 +18,6 @@ export const actions = {
         console.log(user)
 
         const formData = await event.request.formData();
-        const user_id = user.id
         const resto_name = formData.get('resto_name');
         const product_name = formData.get('product_name');
         const price = formData.get('price');

@@ -3,7 +3,7 @@ let {data, error} = $props()
 
 let ratings = $derived(data.data)
 let user = $derived(data?.session.user)
-// $inspect(data.session.user)
+$inspect(data.data)
 </script>
 
 {#if data.error}
@@ -29,7 +29,7 @@ let user = $derived(data?.session.user)
     </tbody>
 
     {#if ratings[0] !== null}
-        {#each ratings as rating}
+        {#each ratings as rating (rating.id)}
         <tbody>
             <tr>
                 <!-- <td>{rating.id}</td> -->
