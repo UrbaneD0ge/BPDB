@@ -10,7 +10,7 @@ export async function load() {
   try {
 
     // THE QUERY HERSELF
-    const { data, error } = await supabase.rpc('get_peanuts_xy');
+    const { data, error } = await supabase.rpc('get_peanuts_xy').order('avg_overall', { ascending:false, nullsFirst:false });
 
     if (error) {
       console.error('Error fetching peanuts data:', error);

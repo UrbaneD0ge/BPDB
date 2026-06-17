@@ -2,16 +2,17 @@
 let {data, error} = $props()
 
 let ratings = $derived(data.data)
-let user = $derived(data.session.user.email)
-$inspect(data)
+let user = $derived(data?.session.user)
+// $inspect(data.session.user)
 </script>
 
 {#if data.error}
 <h3>{data?.error}</h3>
 {/if}
 
-<h1>User: {user}</h1>
-<h2>Ratings so far: {data.data.length > 1 ? data.data.length : 'None!'}</h2>
+<h1>User: {user.user_metadata.display_name}</h1>
+<h2>eMail: {user.email}</h2>
+<h3>Ratings so far: {data.data.length > 1 ? data.data.length : 'None!'}</h3>
 
 <table class="table-auto w-full border-collapse border border-gray-300">
     <tbody>

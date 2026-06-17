@@ -4,6 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 // export let data;
 let { data } = $props();
+const star = '🥜';
 
 // console.log(data.peanuts)
 
@@ -16,7 +17,7 @@ let { data } = $props();
   <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
-    <h3>{peanut.avg_overall || '-'}</h3>
+    <h3>{peanut.avg_overall || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
     <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
@@ -45,7 +46,8 @@ let { data } = $props();
         <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
           <strong>{peanut.resto_name}</strong><br>
           {peanut.product}<br>
-          Submitted: {new Date(peanut.created_at).toLocaleDateString()}
+          Overall Rating: {peanut.avg_overall}
+          <!-- Submitted: {new Date(peanut.created_at).toLocaleDateString()} -->
         </div>
       </Popup>
     </Marker>

@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import {  redirect } from "@sveltejs/kit";
 import { supabase, signUpNewUser } from "$lib/supabaseClient";
 
 export const actions = {
@@ -8,16 +8,21 @@ export const actions = {
         const display_name = formData.get('display_name') || '';
         const password = formData.get('password');
 
-        const { data, error } = await signUpNewUser({ email, display_name, password });
+        const { data, error } = await signUpNewUser({
+            email,
+            display_name,
+            password
+        });
 
         if (error) {
+            // throw redirect(303, '/auth/signup')
             return {
                 success: false,
-                message: error.message,
-                error: error || 'Sign-up failed',
+                message: error.message || 'Sign-up failed',
             };
         }
-        // TODO: Handle duplicate email sign-ups!
+        console.log('Redirect!')
+        // Redirect after successful signup
         throw redirect(303, '/auth/signin');
     }
 };

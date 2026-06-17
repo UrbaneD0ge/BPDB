@@ -1,16 +1,16 @@
 <script>
     import { enhance } from "$app/forms";
-  import { preventDefault } from "svelte/legacy";
+    import { preventDefault } from "svelte/legacy";
 
     let { data, form } = $props();
-    let disabled = $state(false);
+    // let disabled = $state(false);
 
-    $inspect(form, disabled)
+    $inspect(form);
 </script>
 
 <h1>Sign Up</h1>
 <p>Sign up to be a BPDB contributor!</p>
-<form method="POST">
+<form method="POST" use:enhance>
     <label for="display_name">Display Name:</label><br>
     <input type="text" id="display_name" name="display_name" autocomplete="off" required><br><br>
 
@@ -22,10 +22,10 @@
     <input type="password" id="password" name="password" autocomplete="current-password" required><br><br>
 
     {#if form }
-        <p class="error-message">{JSON.stringify(form.user)}</p>
+        <p class="error-message">Error: {form?.message}</p>
     {/if}
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={!disabled} disabled={disabled}>Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onsubmit={(e)=> e.preventDefault()} >Send Signup Email</button>
 </form>
 
 <style lang="postcss">

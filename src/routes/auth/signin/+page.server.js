@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { supabase, signInWithPassword } from "$lib/supabaseClient.js";
 
 export const actions = {
     default: async (event) => {
@@ -16,14 +17,14 @@ export const actions = {
         if (error) {
             return {
                 success: false,
-                error: error.message || 'Sign-in failed',
+                message: error.message || 'Sign-in failed',
             };
         }
 
         if (!data.user) {
             return {
                 success: false,
-                error: "Invalid credentials",
+                message: "Invalid credentials",
             };
         }
 
