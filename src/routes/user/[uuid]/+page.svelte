@@ -3,8 +3,12 @@ let {data, error} = $props()
 
 let ratings = $derived(data.data)
 let user = $derived(data?.session.user)
-$inspect(data.data)
+// $inspect(ratings)
 </script>
+
+<svelte:head>
+    <title>User: {user.user_metadata.display_name}'s ratings</title>
+</svelte:head>
 
 {#if data.error}
 <h3>{data?.error}</h3>
@@ -18,6 +22,7 @@ $inspect(data.data)
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
+            <th>Restaurant<br>"Product"</th>
             <th>Overall</th>
             <th>Done</th>
             <th>Brine</th>
@@ -25,6 +30,7 @@ $inspect(data.data)
             <th>Spicy</th>
             <th>Price</th>
             <th>Notes</th>
+            <th>Edit/Delete</th>
         </tr>
     </tbody>
 
@@ -33,6 +39,7 @@ $inspect(data.data)
         <tbody>
             <tr>
                 <!-- <td>{rating.id}</td> -->
+                 <td><a href="/{rating.resto_prod}">{rating.Peanuts.resto_name}</a><br>"{rating.Peanuts.product}"</td>
                 <td><b>{rating?.overall}</b></td>
                 <td>{rating?.done}</td>
                 <td>{rating?.brine}</td>
@@ -40,6 +47,8 @@ $inspect(data.data)
                 <td>{rating?.spicy}</td>
                 <td>{rating?.price}</td>
                 <td>{rating?.notes || '-'}</td>
+                <td><form action="?/delete" method="POST"><input type="
+                    number" value={rating.id} name='id' hidden><button type="submit">🗑️</button></form></td>
             </tr>
         </tbody>
         {/each}
