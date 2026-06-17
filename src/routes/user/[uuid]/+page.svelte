@@ -28,7 +28,7 @@ let user = $derived(data?.session.user)
             <th>Brine</th>
             <th>Salty</th>
             <th>Spicy</th>
-            <th>Price</th>
+            <!-- <th>Price</th> -->
             <th>Notes</th>
             <th>Edit/Delete</th>
         </tr>
@@ -45,10 +45,10 @@ let user = $derived(data?.session.user)
                 <td>{rating?.brine}</td>
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
-                <td>{rating?.price}</td>
+                <!-- <td>{rating?.price}</td> -->
                 <td>{rating?.notes || '-'}</td>
                 <td><form action="?/delete" method="POST"><input type="
-                    number" value={rating.id} name='id' hidden><button type="submit">🗑️</button></form></td>
+                    number" value={rating.id} name='id' hidden><button class="p-2 bg-red-600 rounded-md" type="submit">🗑️</button></form></td>
             </tr>
         </tbody>
         {/each}
