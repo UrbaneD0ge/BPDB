@@ -31,12 +31,13 @@ export const GET = async (event) => {
   if (token_hash && type) {
     const { error } = await supabase.auth.verifyOtp({ token_hash, type })
     if (!error) {
+      console.log('No Error?')
       redirectTo.searchParams.delete('next')
       redirect(303, redirectTo)
     }
   }
 
-  // return the user to an error page with some instructions
+  console.log('Error?')
   redirectTo.pathname = '/auth/welcome'
   redirect(303, redirectTo)
 }

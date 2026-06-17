@@ -4,10 +4,37 @@ import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 let { data } = $props();
+// $inspect(data);
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
-// console.log(peanut);
+
+let avgOverall = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.overall || 0), 0) / ratings.length).toFixed(2);
+});
+
+let avgDone = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.done || 0), 0) / ratings.length).toFixed(2);
+});
+
+let avgBrine = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.brine || 0), 0) / ratings.length).toFixed(2);
+});
+
+let avgSalty = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.salty || 0), 0) / ratings.length).toFixed(2);
+});
+
+let avgSpicy = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.spicy || 0), 0) / ratings.length).toFixed(2);
+});
+
+
 
 </script>
 
@@ -19,6 +46,7 @@ let ratings = $derived(data?.data[0]?.reviews);
 
     <div>
         <h1>{peanut.resto_name}: "{peanut.product}"</h1>
+        <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
         <p>Address: {peanut.address}</p>
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
@@ -73,6 +101,16 @@ let ratings = $derived(data?.data[0]?.reviews);
             </tr>
         </tbody>
         {/each}
+        <tbody>
+            <tr class="italic">
+                <td>{avgOverall}</td>
+                <td>{avgDone}</td>
+                <td>{avgBrine}</td>
+                <td>{avgSalty}</td>
+                <td>{avgSpicy}</td>
+                <td>-</td>
+            </tr>
+        </tbody>
     {:else}
         <tbody>
             <tr>
@@ -104,7 +142,7 @@ let ratings = $derived(data?.data[0]?.reviews);
         text-align: left;
     }
 
-    td:hover {
+    tr:hover {
         background-color: #f5f5f5;
     }
 </style>

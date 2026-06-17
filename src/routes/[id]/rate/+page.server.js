@@ -27,17 +27,17 @@ export const actions = {
         const notes = formData.get('notes');
 
         try {
-            console.log('Inserting new rating with data: ', {
-                resto_prod: resto_prod,
-                user_id: user_id,
-                servings: servings,
-                brine: brine,
-                salty: salty,
-                done: done,
-                spicy: spicy,
-                overall: overall,
-                notes: notes
-            });
+            // console.log('Inserting new rating with data: ', {
+            //     resto_prod: resto_prod,
+            //     user_id: user_id,
+            //     servings: servings,
+            //     brine: brine,
+            //     salty: salty,
+            //     done: done,
+            //     spicy: spicy,
+            //     overall: overall,
+            //     notes: notes
+            // });
             const { data, error } = await event.locals.supabase.from('ratings').insert({
                 resto_prod: resto_prod,
                 user_id: user_id,

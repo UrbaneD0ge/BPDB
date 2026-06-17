@@ -6,8 +6,6 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let { data } = $props();
 const star = '🥜';
 
-// console.log(data.peanuts)
-
 </script>
 
 <h1>BPDB: Boiled Peanut DataBase</h1>

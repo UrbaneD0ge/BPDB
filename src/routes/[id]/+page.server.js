@@ -10,11 +10,11 @@ export async function load({ url }) {
         throw error(404, 'Not found');
     }
 
-    console.log('Fetching peanut data for ID:', id);
+    // console.log('Fetching peanut data for ID:', id);
 
     const { data, error: dbError } = await supabase.rpc('get_peanut_and_reviews', { p_id: id });
 
-    console.log('Get peanut and reviews:', { data, error: dbError });
+    // console.log('Get peanut and reviews:', { data, error: dbError });
 
     return {
         data: data ? data : null,

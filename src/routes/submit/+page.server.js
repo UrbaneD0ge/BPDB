@@ -11,11 +11,14 @@ export const actions = {
             console.error('User is not logged in');
             return {
                 success: false,
-                message: 'User is not logged in'
+                message: 'User is not logged in',
             };
-        }
+        };
+
+        console.log(user)
 
         const formData = await event.request.formData();
+        const user_id = user.id
         const resto_name = formData.get('resto_name');
         const product_name = formData.get('product_name');
         const price = formData.get('price');
@@ -23,7 +26,7 @@ export const actions = {
         const latitude = formData.get('latitude');
         const longitude = formData.get('longitude');
 
-        if (!resto_name || !product_name || !latitude || !longitude) {
+        if (!user_id || !resto_name || !product_name || !latitude || !longitude) {
             console.error(resto_name, product_name, address, latitude, longitude);
             return {
                 success: false,
