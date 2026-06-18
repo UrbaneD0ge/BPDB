@@ -32,9 +32,9 @@ let mapBounds = $derived.by(() => {
   <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
-    <div class="border rounded-lg p-4 mb-4 shadow-md">
+    <div class="border border-black rounded-lg bg-gray-600 text-white p-4 mb-4 shadow-md">
     <h3>{peanut.avg_overall || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
-    <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
+    <li><a class="text-green-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
       <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
