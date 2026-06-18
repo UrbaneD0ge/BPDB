@@ -1,10 +1,26 @@
 <script>
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
+
 let {data, error} = $props()
 
 let ratings = $derived(data.data);
 let user = $derived(data?.session.user)
-$inspect(ratings);
+let mapBounds = $derived.by(() => {
+    if (!ratings?.length) return undefined;
+
+    const lngs = ratings.map((r) => r.lng);
+    const lats = ratings.map((r) => r.lat);
+
+    return [
+        Math.min(...lngs),
+        Math.min(...lats),
+        Math.max(...lngs),
+        Math.max(...lats)
+    ];
+});
+
+$inspect(user);
 </script>
 
 <svelte:head>
@@ -24,7 +40,10 @@ $inspect(ratings);
 
   <MapLibre
     class="h-60 w-80 rounded-lg shadow-lg"
-    center={[ -84.3880, 33.7490 ]}
+    // center={[ -84.3880, 33.7490 ]}
+    bounds={mapBounds}
+    fitBoundsOptions={{ padding: 50 }}
+    attributionControl={false}
     zoom={15}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
     >
@@ -34,8 +53,18 @@ $inspect(ratings);
      {#snippet content()}
         <div class="text-3xl">🥜</div>
     {/snippet}
+      <Popup openOn="click" offset={[0, -60]}>
+        <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
+          <strong>{rating.resto_name}</strong><br>
+          {rating.product}<br>
+          Overall Rating: {rating.avg_overall}
+          <!-- Submitted: {new Date(rating.created_at).toLocaleDateString()} -->
+        </div>
+      </Popup>
+
     </Marker>
 {/each}
+
   </MapLibre>
 </div>
 
@@ -51,7 +80,9 @@ $inspect(ratings);
             <th>Spicy</th>
             <!-- <th>Price</th> -->
             <th>Notes</th>
+            {#if data.session?.user.id === user.id }
             <th>Delete</th>
+            {/if}
         </tr>
     </tbody>
 
@@ -68,8 +99,9 @@ $inspect(ratings);
                 <td>{rating?.spicy}</td>
                 <!-- <td>{rating?.price}</td> -->
                 <td>{rating?.notes || '-'}</td>
-                <td><form action="?/delete" method="POST"><input type="
-                    number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️</button></form></td>
+                {#if rating.rating_user_id === user.id }
+                <td><form action="?/delete" method="POST"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                {/if}
             </tr>
         </tbody>
         {/each}

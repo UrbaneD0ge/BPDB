@@ -6,6 +6,23 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let { data } = $props();
 const star = '🥜';
 
+let mapBounds = $derived.by(() => {
+    if (!data.peanuts?.length) return undefined;
+    // Filter out peanuts without valid coordinates
+    const validPeanuts = data.peanuts.filter(p => p.x !== null && p.y !== null);
+    if (validPeanuts.length === 0) return undefined;
+
+    const lons = validPeanuts.map((r) => r.x);
+    const lats = validPeanuts.map((r) => r.y);
+
+    return [
+        Math.min(...lons),
+        Math.min(...lats),
+        Math.max(...lons),
+        Math.max(...lats)
+    ];
+});
+
 </script>
 
 <h1>BPDB: Boiled Peanut DataBase</h1>
@@ -33,7 +50,9 @@ const star = '🥜';
 
   <MapLibre
   class="h-120 w-3/4 rounded-lg shadow-lg"
-  center={[-84.3880, 33.7490]}
+  // center={[-84.3880, 33.7490]}
+  bounds={mapBounds}
+  fitBoundsOptions={{ padding: 125 }}
   zoom={10}
   style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
