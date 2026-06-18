@@ -5,10 +5,12 @@ export async function load({ url }) {
     // console.log(uuid)
 
     // also fetch resto_name and product from Peanuts where ratings.resto_prod = Peanuts.id
-    const { data, error } = await supabase
-        .from('ratings')
-        .select('*,Peanuts(resto_name,product)')
-        .eq('user_id', uuid);
+    // const { data, error } = await supabase
+    //     .from('ratings')
+    //     .select('*,Peanuts(resto_name,product)')
+    //     .eq('user_id', uuid);
+
+        const { data, error } = await supabase.rpc('get_user_peanuts_with_reviews', { target_user_id: uuid });
 
     return {
     data: data ? data : null,

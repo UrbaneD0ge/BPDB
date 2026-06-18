@@ -15,12 +15,14 @@ const star = '🥜';
   <!-- TODO: Sort by Average Rating -->
   <ol>
     {#each data.peanuts as peanut}
+    <div class="border rounded-lg p-4 mb-4 shadow-md">
     <h3>{peanut.avg_overall || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
     <li><a class="text-blue-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
       <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
     </ul><br>
+    </div>
     {/each}
 
     <!-- Display the error message if there is one -->
@@ -30,7 +32,7 @@ const star = '🥜';
   </ol>
 
   <MapLibre
-  class="h-120 w-3/4"
+  class="h-120 w-3/4 rounded-lg shadow-lg"
   center={[-84.3880, 33.7490]}
   zoom={10}
   style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >

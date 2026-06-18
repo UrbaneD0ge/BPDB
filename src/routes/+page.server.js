@@ -1,6 +1,5 @@
 import { supabase, signInWithEmail, signUpNewUser } from "$lib/supabaseClient";
-import { createClient } from '@supabase/supabase-js'
-// import { PGAPIKEY } from "$env/static/private";
+import { createClient } from '@supabase/supabase-js';
 import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
 
 export async function load() {

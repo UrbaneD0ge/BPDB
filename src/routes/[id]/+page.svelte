@@ -42,7 +42,7 @@ let avgSpicy = $derived.by(() => {
     <title>Peanut rating: {peanut.resto_name} {peanut.product}</title>
 </svelte:head>
 
-<div class="flex flex-row justify-between gap-4">
+<div class="flex flex-row items-center justify-between gap-4">
 
     <div>
         <h1>{peanut.resto_name}: "{peanut.product}"</h1>
@@ -56,7 +56,7 @@ let avgSpicy = $derived.by(() => {
 
 <!-- TODO: Display the restaurant location on the map -->
   <MapLibre
-    class="h-60 w-80"
+    class="h-60 w-80 rounded-lg shadow-lg"
     center={[ peanut.geopoint.x, peanut.geopoint.y ]}
     zoom={15}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
@@ -72,7 +72,7 @@ let avgSpicy = $derived.by(() => {
   </MapLibre>
 </div>
 
-<table class="table-auto w-full border-collapse border border-gray-300">
+<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden">
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
