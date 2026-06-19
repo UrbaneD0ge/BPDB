@@ -38,15 +38,6 @@
 
 <style lang="postcss">
 @reference "tailwindcss";
-/* :global(body) {
-	background-image: url('/peanut_single.png');
-	background-repeat: repeat;
-	background-attachment: fixed;
-} */
-
-.container {
-		margin: 0 auto;
-	}
 
 form > button {
 	color: white;
