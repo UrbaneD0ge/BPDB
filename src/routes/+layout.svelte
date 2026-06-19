@@ -30,7 +30,7 @@
 	</div>
 </nav>
 
-<div class="container">
+<div class="p-1 lg:p-4">
 
 {@render children()}
 
@@ -38,9 +38,13 @@
 
 <style lang="postcss">
 @reference "tailwindcss";
+/* :global(body) {
+	background-image: url('/peanut_single.png');
+	background-repeat: repeat;
+	background-attachment: fixed;
+} */
 
 .container {
-		padding: 2rem;
 		margin: 0 auto;
 	}
 
@@ -48,4 +52,6 @@ form > button {
 	color: white;
 	/* display: inline; */
 }
+
+
 </style>

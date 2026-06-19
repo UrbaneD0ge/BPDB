@@ -27,13 +27,12 @@ let mapBounds = $derived.by(() => {
 
 <h1>BPDB: Boiled Peanut DataBase</h1>
 
-<main class="flex justify-between items-start">
+<main class="flex flex-col-reverse lg:flex-row justify-between items-start m-4 gap-4">
 
-  <!-- TODO: Sort by Average Rating -->
-  <ol>
+  <ol class="flex flex-col w-full lg:w-1/3">
     {#each data.peanuts as peanut}
     <div class="border border-black rounded-lg bg-gray-600 text-white p-4 mb-4 shadow-md">
-    <h3>{peanut.avg_overall || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
+    <h3>{peanut.avg_overall.toFixed(2) || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
     <li><a class="text-green-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
     <ul>
       <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
@@ -49,11 +48,11 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="h-120 w-3/4 rounded-lg shadow-lg"
+  class="w-full h-80 lg:h-200 lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
-  zoom={10}
+  zoom={5}
   style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
 
   {#each data.peanuts as peanut}
@@ -75,17 +74,7 @@ let mapBounds = $derived.by(() => {
 
 </main>
 
-<style lang="postcss">
+<!-- <style lang="postcss">
 @reference "tailwindcss";
 
-  ol {
-    list-style-type: none;
-    padding-left: 0;
-    width: 35%;
-  }
-
-  /* :global(.map){
-    height: 600px;
-    width: 65%;
-  } */
- </style>
+ </style> -->
