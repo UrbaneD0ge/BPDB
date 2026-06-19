@@ -25,23 +25,23 @@ let mapBounds = $derived.by(() => {
 
 </script>
 
-<h1>BPDB: Boiled Peanut DataBase</h1>
+<h1 class="font-rounded-extrabold">BPDB: Boiled Peanut DataBase</h1>
 
-<main class="flex flex-col-reverse lg:flex-row justify-between items-start m-4 gap-4">
+<main class="flex flex-col-reverse lg:flex-row justify-between items-start m-4 gap-4 font-rounded-regular">
 
   <ol class="flex flex-col w-full lg:w-1/3">
     {#each data.peanuts as peanut}
 
-    <div class="flex flex-row border border-black rounded-lg bg-gray-600 text-white p-4 mb-4 shadow-md">
+    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-4 mb-4 shadow-md">
       <div class="flex flex-col items-center justify-center w-30">
-        <h3 class="text-3xl">{peanut.avg_overall.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
+        <h3 class="text-3xl font-rounded-extrabold">{peanut.avg_overall.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
       </div>
 
       <div>
         <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"</a></li>
         <ul>
-        <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : ''}</li>
-          <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
+        <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : '  -  '}</li>
+          <li class="font-rounded-light">Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
           <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
         </ul><br>
       </div>
@@ -81,7 +81,27 @@ let mapBounds = $derived.by(() => {
 
 </main>
 
-<!-- <style lang="postcss">
+<style lang="postcss">
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;800&display=swap');
 @reference "tailwindcss";
 
- </style> -->
+/* Ensure the font utility used in markup resolves to a real global class. */
+  :global(.font-rounded-light) {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  }
+
+  :global(.font-rounded-regular) {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  }
+
+  :global(.font-rounded-extrabold) {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  }
+
+ </style>

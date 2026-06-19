@@ -1,20 +1,25 @@
 <script>
   import { fade } from 'svelte/transition';
+  // import peanutglobe from '/peanutglobe.svg';
 </script>
 
-<div class="loader" transition:fade></div>
+<div class="loader" transition:fade>
+  <img src="/peanutglobe.svg" alt="Loading" />
+</div>
 
 <style>
   .loader {
-    border: 5px solid #e0c300;
-    border-top: 5px solid #f3f3f3;
-    border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    animation: spin 1s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 5px;
-    box-sizing: content-box;
-    position: static;
+  }
+
+  .loader img {
+    src: url('/peanutglobe.svg');
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
   }
 
   @keyframes spin {

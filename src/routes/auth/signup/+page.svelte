@@ -32,8 +32,15 @@
 @reference "tailwindcss";
 
 .error-message {
-    color: #dc2626;
+    color: #af1d1d;
     font-size: 0.9rem;
     margin-top: 0.25rem;
 }
+
+/* input {
+    background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+    padding: 8px;
+    border-radius: 4px;
+} */
 </style>

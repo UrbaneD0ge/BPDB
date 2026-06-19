@@ -5,15 +5,59 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="hover" class="font-rounded-regular">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
 
 <style lang="postcss">
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;800&display=swap');
 @reference "tailwindcss";
 
+@theme {
+	--font-rounded-light: "M PLUS Rounded 1c", sans-serif;
+	--font-rounded-regular: "M PLUS Rounded 1c", sans-serif;
+	--font-rounded-extrabold: "M PLUS Rounded 1c", sans-serif;
+}
+
+
+	:global(.m-plus-rounded-1c-light) {
+	font-family: "M PLUS Rounded 1c", sans-serif;
+	font-weight: 300;
+	font-style: normal;
+	}
+
+	:global(.m-plus-rounded-1c-regular) {
+	font-family: "M PLUS Rounded 1c", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	}
+
+	:global(.m-plus-rounded-1c-extrabold) {
+	font-family: "M PLUS Rounded 1c", sans-serif;
+	font-weight: 800;
+	font-style: normal;
+	}
+
+	form {
+		max-width: 800px;
+		margin: 2rem auto;
+		padding: 1rem;
+		background-color: #4a5565e6;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	input {
+		font-family: "M PLUS Rounded 1c regular", sans-serif;
+		font-weight: 500;
+		font-style: normal;
+		background-color: whitesmoke;
+	}
+
+
 	h1 {
+		font-weight: 800;
 		font-size: 2rem;
 		margin-bottom: 1rem;
 	}
@@ -55,13 +99,12 @@
 	}
 
 	body {
-		background-color: #937e44;
-		font-family: Arial, sans-serif;
+		background-color: #a38226;
 		margin: 0;
 		padding: 0;
 		background-image: url('/peanut_tile.svg');
 		/* backdrop-filter: blur(5 px); */
 		background-repeat: repeat;
 		background-attachment: fixed;
-}
+	}
 </style>

@@ -34,8 +34,6 @@ let avgSpicy = $derived.by(() => {
     return (ratings.reduce((sum, r) => sum + (r?.spicy || 0), 0) / ratings.length).toFixed(2);
 });
 
-
-
 </script>
 
 <svelte:head>
@@ -45,7 +43,7 @@ let avgSpicy = $derived.by(() => {
 <div class="flex flex-row items-center justify-between gap-4">
 
     <div>
-        <h1>{peanut.resto_name}: "{peanut.product}"</h1>
+        <h1 class="font-rounded-extrabold">{peanut.resto_name}: "{peanut.product}"</h1>
         <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
         <p>Address: {peanut.address}</p>
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>

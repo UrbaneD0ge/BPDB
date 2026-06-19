@@ -12,7 +12,7 @@
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
-<nav class="flex justify-between">
+<nav class="flex justify-between font-rounded-light">
 	<div>
 		<a href="/">Home</a>
 		<a href="/submit">Submit to the BPDB</a>
@@ -30,19 +30,13 @@
 	</div>
 </nav>
 
-<div class="p-1 lg:p-4">
+<div class="p-1 lg:p-10">
 
-{@render children()}
+	{@render children()}
 
 </div>
 
-<style lang="postcss">
+<!-- <style lang="postcss">
 @reference "tailwindcss";
 
-form > button {
-	color: white;
-	/* display: inline; */
-}
-
-
-</style>
+</style> -->
