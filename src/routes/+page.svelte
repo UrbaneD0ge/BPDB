@@ -31,13 +31,20 @@ let mapBounds = $derived.by(() => {
 
   <ol class="flex flex-col w-full lg:w-1/3">
     {#each data.peanuts as peanut}
-    <div class="border border-black rounded-lg bg-gray-600 text-white p-4 mb-4 shadow-md">
-    <h3>{peanut.avg_overall.toFixed(2) || '-'} {star.repeat(parseInt(peanut.avg_overall))}</h3>
-    <li><a class="text-green-500 hover:underline" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"{peanut.price ? ` - $${peanut.price.toFixed(2)}` : ''}</a></li>
-    <ul>
-      <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
-      <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
-    </ul><br>
+
+    <div class="flex flex-row border border-black rounded-lg bg-gray-600 text-white p-4 mb-4 shadow-md">
+      <div class="flex flex-col items-center justify-center w-30">
+        <h3 class="text-3xl">{peanut.avg_overall.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
+      </div>
+
+      <div>
+        <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"</a></li>
+        <ul>
+        <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : ''}</li>
+          <li>Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
+          <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
+        </ul><br>
+      </div>
     </div>
     {/each}
 
