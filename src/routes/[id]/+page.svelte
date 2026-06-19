@@ -106,7 +106,7 @@ let avgSpicy = $derived.by(() => {
                 <td>{avgBrine}</td>
                 <td>{avgSalty}</td>
                 <td>{avgSpicy}</td>
-                <td>-</td>
+                <td>-- Averages --</td>
             </tr>
         </tbody>
     {:else}

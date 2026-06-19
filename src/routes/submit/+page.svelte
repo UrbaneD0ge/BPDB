@@ -8,7 +8,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 let { data, form } = $props();
 let {addyLoading, geoLoading} = $state(true);
 let coords = $state({ lat: 35, lon: -88 });
-let geoStatus = $state('-');
+let geoStatus = $state('');
 let zoom = $state(2);
 
 // $inspect(coords)
@@ -140,7 +140,7 @@ function geoLocate() {
             <!-- TODO: This should be an address picker eventually -->
             <label for="address">Restaurant Address:</label>
 
-            <div class="flex lg:flex-row items-center justify-betweetn w-full lg:w-2/3 gap-4">
+            <div class="flex lg:flex-row items-center justify-between text-nowrap w-full gap-4">
 
                 <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
 
@@ -248,7 +248,6 @@ function geoLocate() {
 
     input[type="text"] {
         padding: 8px;
-        margin-bottom: 15px;
         border: 1px solid whitesmoke;
         background-color: whitesmoke;
         border-radius: 4px;

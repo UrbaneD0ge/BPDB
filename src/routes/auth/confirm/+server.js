@@ -33,11 +33,11 @@ export const GET = async (event) => {
     if (!error) {
       console.log('No Error?')
       redirectTo.searchParams.delete('next')
-      redirect(303, redirectTo)
+      throw redirect(303, redirectTo)
     }
   }
 
   console.log('Error?')
   redirectTo.pathname = '/auth/welcome'
-  redirect(303, redirectTo)
+  throw redirect(303, redirectTo)
 }

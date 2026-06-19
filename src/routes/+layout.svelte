@@ -21,7 +21,9 @@
 		<a href="/auth/signin">Sign In</a>
 		{/if}
 		{#if data.session}
-		<form class="inline" method="POST" action="/auth/signout"><button class="hover:underline cursor-pointer" type="submit">Sign Out</button></form>
+		<form class="inline bg-transparent! text-white" method="POST" action="/auth/signout">
+			<input class="hover:underline cursor-pointer" type="submit" value="Sign Out">
+		</form>
 		{/if}
 	</div>
 

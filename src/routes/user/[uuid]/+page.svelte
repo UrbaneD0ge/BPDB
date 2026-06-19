@@ -20,7 +20,7 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-$inspect(user);
+// $inspect(user);
 </script>
 
 <svelte:head>
@@ -32,10 +32,11 @@ $inspect(user);
 {#if data.error}
 <h3>{data?.error}</h3>
 {/if}
+
 <div>
     <h1>User: {user.user_metadata.display_name}</h1>
     <h2>eMail: {user.email}</h2>
-    <h3>Ratings so far: {ratings.length > 1 ? ratings.length : 'None!'}</h3>
+    <h2>Ratings so far: {ratings.length > 1 ? ratings.length : 'None!'}</h2>
 </div>
 
   <MapLibre
@@ -44,7 +45,7 @@ $inspect(user);
     bounds={mapBounds}
     fitBoundsOptions={{ padding: 50 }}
     attributionControl={false}
-    zoom={15}
+    zoom={0}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
     >
 
@@ -68,7 +69,7 @@ $inspect(user);
   </MapLibre>
 </div>
 
-<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden">
+<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden mt-5">
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
@@ -86,7 +87,7 @@ $inspect(user);
         </tr>
     </tbody>
 
-    {#if 1}
+    {#if ratings.length > 0}
         {#each ratings as rating (rating.rating_id)}
         <tbody>
             <tr>
@@ -116,6 +117,10 @@ $inspect(user);
 
     <style lang="postcss">
 @reference "tailwindcss";
+
+    h2 {
+        font-size: 1.5em;
+    }
 
     th, td {
         border: 1px solid #ddd;

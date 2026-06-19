@@ -1,5 +1,4 @@
-import {  redirect } from "@sveltejs/kit";
-import { supabase, signUpNewUser } from "$lib/supabaseClient";
+import { redirect } from "@sveltejs/kit";
 
 export const actions = {
     default: async (event) => {
@@ -8,20 +7,26 @@ export const actions = {
         const display_name = formData.get('display_name') || '';
         const password = formData.get('password');
 
-        const { data, error } = await signUpNewUser({
+        const emailRedirectTo = new URL('/auth/confirm', event.url.origin).toString();
+
+        const { error } = await event.locals.supabase.auth.signUp({
             email,
-            display_name,
-            password
+            password,
+            options: {
+                emailRedirectTo,
+                data: {
+                    display_name
+                }
+            }
         });
 
         if (error) {
-            // throw redirect(303, '/auth/signup')
             return {
                 success: false,
                 message: error.message || 'Sign-up failed',
             };
         }
-        console.log('Redirect!')
+
         // Redirect after successful signup
         throw redirect(303, '/auth/signin');
     }
