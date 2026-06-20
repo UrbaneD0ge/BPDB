@@ -69,7 +69,7 @@ let mapBounds = $derived.by(() => {
   </MapLibre>
 </div>
 
-<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden mt-5">
+<table class="lg:w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden mt-5">
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
@@ -101,7 +101,7 @@ let mapBounds = $derived.by(() => {
                 <!-- <td>{rating?.price}</td> -->
                 <td>{rating?.notes || '-'}</td>
                 {#if rating.rating_user_id === user.id }
-                <td><form action="?/delete" method="POST"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
                 {/if}
             </tr>
         </tbody>
@@ -148,4 +148,18 @@ let mapBounds = $derived.by(() => {
         text-decoration: underline;
     }
 
+    @media (max-width: 640px) {
+
+        th {
+            padding: 2px;
+        }
+
+        td {
+            padding: 0;
+        }
+
+        td:nth-of-type(7), th:nth-of-type(7) {
+            display: none;
+        }
+    }
 </style>
