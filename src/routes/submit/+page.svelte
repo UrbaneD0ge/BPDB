@@ -140,7 +140,7 @@ function geoLocate() {
             <!-- TODO: This should be an address picker eventually -->
             <label for="address">Restaurant Address:</label>
 
-            <div class="flex lg:flex-row items-center justify-between text-nowrap w-full gap-4">
+
 
                 <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
 
@@ -153,7 +153,7 @@ function geoLocate() {
                     Address Search
                     {/if}
                 </button>
-            </div>
+
         </div>
 
 
@@ -196,7 +196,7 @@ function geoLocate() {
                         <!-- HERE'S THE MAP 🗺️ -->
                         <!-- TODO: Adjust map center and zoom when Peanut is updated. -->
                             <MapLibre
-                            class="h-60 w-80 rounded-lg"
+                            class="h-80 w-90 rounded-lg"
                             center={[coords.lon, coords.lat]}
                             zoom={zoom}
                             style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
