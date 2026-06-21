@@ -27,7 +27,7 @@ let mapBounds = $derived.by(() => {
     <title>User: {user.user_metadata.display_name}'s ratings</title>
 </svelte:head>
 
-<div class="flex flex-row items-center justify-between gap-4">
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
 
 {#if data.error}
 <h3>{data?.error}</h3>

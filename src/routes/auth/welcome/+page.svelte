@@ -18,8 +18,14 @@
 <p>Here are some simple tips for utilizing this site:</p>
 
 <ul>
-    <li>Sign up for an account!<br>An account is required to submit ratings, but anyone can browse existing ones.</li>
-    <li>Rate menu items, not restaurants:<br>Sometimes a restaurant may have two varieties of boiled peanuts, the BPDB handles this by treating each vendor and its peanut offerings as separate listings. To keep things accurate, always refer to the menu or signage when submitting a new peanut!</li>
+    <li>
+        <h4>Sign up for an account:</h4>
+        <p>An account is required to submit ratings, but anyone can browse existing ones.</p>
+    </li>
+    <li>
+        <h4>Rate menu items, not restaurants:</h4>
+        <p>Sometimes a restaurant may have two varieties of boiled peanuts, the BPDB handles this by treating each vendor and its peanut offerings as separate listings. To keep things accurate, always refer to the menu or signage when submitting a new peanut.</p>
+    </li>
 </ul>
 
 <style lang="postcss">
@@ -27,6 +33,11 @@
 
 h3 {
     font-size: xx-large;
+}
+
+h4 {
+    font-size: x-large;
+    font-weight: 600;
 }
 
 p {

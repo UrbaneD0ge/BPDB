@@ -1,5 +1,4 @@
 <script>
-import { page } from '$app/state';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
