@@ -14,6 +14,16 @@ export const actions = {
             password
         });
 
+            // console
+            // .log({ error,
+            // session
+            // : data?.session })
+            // console
+            // .log(
+            // 'getSession:'
+            // ,
+            // await supabase.auth.getSession())
+
         if (error) {
             return {
                 success: false,
@@ -30,6 +40,9 @@ export const actions = {
 
         // Redirect after successful signin
         throw redirect(303, "/");
+        localStorage.setItem('t', '1');
+        localStorage.getItem('t');
+        return { data };
     }
 };
 

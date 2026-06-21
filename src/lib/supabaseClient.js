@@ -45,13 +45,13 @@ async function signUpNewUser({ email, display_name, password }) {
         }
         console.log('Sign-up successful:', data);
         return { data };
-    } catch (err) {
-        console.error('Unexpected sign-up error:', err);
-        return { error: err };
+    } catch (error) {
+        console.error('Unexpected sign-up error:', error);
+        return { error: error };
     }
 }
 
-async function signInWithEmail({email, password}) {
+async function signInWithPassword({email, password}) {
   console.log("Signing in with email and password...");
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -65,18 +65,19 @@ async function signInWithEmail({email, password}) {
     }
 
     return { data };
-  } catch (err) {
-    console.error('Unexpected sign-in error:', err);
-    return { error: err };
+  } catch (error) {
+    console.error('Unexpected sign-in error:', error);
+    return { error: error };
   }
 }
 
 async function signOut() {
-  const { err } = await supabase.auth.signOut()
+  const { error } = await supabase.auth.signOut()
   return {
     data: null,
-    user: null
+    user: null,
+    error: error || null
   }
 }
 
-export { signUpNewUser, signInWithEmail, signOut };
+export { signUpNewUser, signInWithPassword, signOut };

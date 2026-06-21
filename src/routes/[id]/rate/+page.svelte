@@ -410,8 +410,8 @@ label {
 
 @media (max-width: 640px) {
     input[type="radio"] {
-        margin: 0.6rem .8rem;
-        scale: 2.5;
+        margin: 0.6rem .7rem;
+        scale: 2.25;
     }
 
     textarea {
