@@ -40,7 +40,7 @@ let mapBounds = $derived.by(() => {
 </div>
 
   <MapLibre
-    class="h-60 w-80 rounded-lg shadow-lg"
+    class="h-60 w-full lg:w-1/4 rounded-lg shadow-lg my-4"
     // center={[ -84.3880, 33.7490 ]}
     bounds={mapBounds}
     fitBoundsOptions={{ padding: 50 }}

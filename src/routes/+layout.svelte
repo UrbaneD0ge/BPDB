@@ -12,7 +12,7 @@
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
-<nav class="flex justify-between font-rounded-light">
+<nav class="flex justify-between font-rounded-light fixed w-full z-10">
 	<div>
 		<a href="/">Home</a>
 		<a href="/submit">Submit to the BPDB</a>
@@ -32,7 +32,7 @@
 	</div>
 </nav>
 
-<div class="p-1 lg:p-10">
+<div class="p-1 pt-15 lg:p-15">
 
 	{@render children()}
 
