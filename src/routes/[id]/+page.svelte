@@ -13,9 +13,9 @@ let avgOverall = $derived.by(() => {
     return (ratings.reduce((sum, r) => sum + (r?.overall || 0), 0) / ratings.length).toFixed(2);
 });
 
-let avgDone = $derived.by(() => {
+let avgServings = $derived.by(() => {
     if (!ratings || ratings.length === 0) return 0;
-    return (ratings.reduce((sum, r) => sum + (r?.done || 0), 0) / ratings.length).toFixed(2);
+    return (ratings.reduce((sum, r) => sum + (r?.servings || 0), 0) / ratings.length).toFixed(2);
 });
 
 let avgBrine = $derived.by(() => {
@@ -33,6 +33,11 @@ let avgSpicy = $derived.by(() => {
     return (ratings.reduce((sum, r) => sum + (r?.spicy || 0), 0) / ratings.length).toFixed(2);
 });
 
+let avgDone = $derived.by(() => {
+    if (!ratings || ratings.length === 0) return 0;
+    return (ratings.reduce((sum, r) => sum + (r?.done || 0), 0) / ratings.length).toFixed(2);
+});
+
 </script>
 
 <svelte:head>
@@ -48,7 +53,7 @@ let avgSpicy = $derived.by(() => {
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
         <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p>
-        <p>{ ratings[0] === null ? '0' : ratings.length} rating{ratings.length > 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
+        <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length > 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
@@ -74,11 +79,11 @@ let avgSpicy = $derived.by(() => {
         <tr>
             <!-- <th>rating ID</th> -->
             <th>Overall</th>
-            <th>Done</th>
+            <th>Doneness</th>
             <th>Brine</th>
             <th>Salty</th>
             <th>Spicy</th>
-            <!-- <th>Price</th> -->
+            <th>Portion</th>
             <th>Notes</th>
         </tr>
     </tbody>
@@ -93,7 +98,7 @@ let avgSpicy = $derived.by(() => {
                 <td>{rating?.brine}</td>
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
-                <!-- <td>{rating?.price}</td> -->
+                <td>{rating?.servings}</td>
                 <td>{rating?.notes || '-'}</td>
             </tr>
         </tbody>
@@ -101,6 +106,7 @@ let avgSpicy = $derived.by(() => {
         <tbody>
             <tr class="italic">
                 <td>{avgOverall}</td>
+                <td>{avgServings}</td>
                 <td>{avgDone}</td>
                 <td>{avgBrine}</td>
                 <td>{avgSalty}</td>

@@ -75,11 +75,11 @@ let mapBounds = $derived.by(() => {
             <!-- <th>rating ID</th> -->
             <th>Restaurant<br>"Product"</th>
             <th>Overall</th>
-            <th>Done</th>
+            <th>Doneness</th>
             <th>Brine</th>
             <th>Salty</th>
             <th>Spicy</th>
-            <!-- <th>Price</th> -->
+            <th>Portion</th>
             <th>Notes</th>
             {#if data.session?.user.id === user.id }
             <th>Delete</th>
@@ -98,7 +98,7 @@ let mapBounds = $derived.by(() => {
                 <td>{rating?.brine}</td>
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
-                <!-- <td>{rating?.price}</td> -->
+                <td>{rating?.servings}</td>
                 <td>{rating?.notes || '-'}</td>
                 {#if rating.rating_user_id === user.id }
                 <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>

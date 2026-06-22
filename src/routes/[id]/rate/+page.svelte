@@ -26,56 +26,7 @@
     <br>
 
     <div>
-        <fieldset>Overall:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="overall" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="overall" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Serving Size:</fieldset>
+        <fieldset>Portion:</fieldset>
         <div class="flex items-center">
             <div class="flex flex-col-reverse items-center">
                 <label for="1">1</label>
@@ -232,54 +183,6 @@
         <div class="flex items-center">
             <div class="flex flex-col-reverse items-center">
                 <label for="1">1</label>
-                <input id="1" value="1" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="crunch" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="crunch" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Doneness:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
                 <input id="1" value="1" name="done" type="radio">
             </div>
             <div class="flex flex-col-reverse items-center">
@@ -365,6 +268,54 @@
             <div class="flex flex-col-reverse items-center">
                 <label for="10">10</label>
                 <input id="10" value="10" name="spicy" type="radio">
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <fieldset>Overall:</fieldset>
+        <div class="flex items-center">
+            <div class="flex flex-col-reverse items-center">
+                <label for="1">1</label>
+                <input id="1" value="1" name="overall" type="radio">
+            </div>
+
+            <div class="flex flex-col-reverse items-center">
+                <label for="2">2</label>
+                <input id="2" value="2" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="3">3</label>
+                <input id="3" value="3" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="4">4</label>
+                <input id="4" value="4" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="5">5</label>
+                <input id="5" value="5" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="6">6</label>
+                <input id="6" value="6" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="7">7</label>
+                <input id="7" value="7" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="8">8</label>
+                <input id="8" value="8" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="9">9</label>
+                <input id="9" value="9" name="overall" type="radio">
+            </div>
+            <div class="flex flex-col-reverse items-center">
+                <label for="10">10</label>
+                <input id="10" value="10" name="overall" type="radio">
             </div>
         </div>
     </div>

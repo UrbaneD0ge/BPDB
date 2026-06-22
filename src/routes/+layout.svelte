@@ -25,7 +25,7 @@
 			<a href="/auth/welcome">Welcome</a>
 		{/if}
 
-		{#if page.route.id !== '/submit'}
+		{#if page.route.id !== '/submit' && data.session}
 			<a href="/submit">Submit</a>
 		{/if}
 

@@ -5,11 +5,11 @@
     let { data, form } = $props();
     // let disabled = $state(false);
 
-    $inspect(form);
+    // $inspect(form);
 </script>
 
 <h1>Sign Up</h1>
-<p>Sign up to be a BPDB contributor!</p>
+<h2 class="font-medium text-2xl">Sign up to be a BPDB contributor!</h2><br>
 <form method="POST" use:enhance>
     <label for="display_name">Display Name:</label><br>
     <input type="text" id="display_name" name="display_name" autocomplete="off" required><br><br>
@@ -25,7 +25,7 @@
         <p class="error-message">Error: {form?.message}</p>
     {/if}
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onsubmit={(e)=> e.preventDefault()} >Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={(e)=> { e.preventDefault(); window.alert('Check your email for confirmation link!'); }} >Send Signup Email</button>
 </form>
 
 <style lang="postcss">
@@ -36,11 +36,4 @@
     font-size: 0.9rem;
     margin-top: 0.25rem;
 }
-
-/* input {
-    background-color: whitesmoke;
-    border: 1px solid whitesmoke;
-    padding: 8px;
-    border-radius: 4px;
-} */
 </style>

@@ -15,21 +15,42 @@ export const actions = {
             };
         };
 
-        console.log(user)
+        // console.log(user)
 
         const formData = await event.request.formData();
-        const resto_name = formData.get('resto_name');
-        const product_name = formData.get('product_name');
-        const price = formData.get('price');
-        const address = formData.get('address');
-        const latitude = formData.get('latitude');
-        const longitude = formData.get('longitude');
+        let resto_name = formData.get('resto_name')?.trim();
+        let product_name = formData.get('product_name')?.trim();
+        let price = formData.get('price')?.trim();
+        let address = formData.get('address')?.trim();
+        let latitude = formData.get('latitude')?.trim();
+        let longitude = formData.get('longitude')?.trim();
 
-        if (!user_id || !resto_name || !product_name || !latitude || !longitude) {
-            console.error(resto_name, product_name, address, latitude, longitude);
+        // Validate required fields
+        if (!resto_name || !product_name || !latitude || !longitude) {
+            console.error('Validation failed:', { resto_name, product_name, address, latitude, longitude });
             return {
                 success: false,
-                message: 'Missing required fields or user not logged in'
+                message: 'Missing required fields'
+            };
+        }
+
+        // Validate latitude and longitude are valid numbers
+        const lat = parseFloat(latitude);
+        const lon = parseFloat(longitude);
+        if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+            console.error('Invalid coordinates:', { latitude, longitude });
+            return {
+                success: false,
+                message: 'Invalid latitude or longitude values'
+            };
+        }
+
+        // Validate price if provided
+        if (price && isNaN(parseFloat(price))) {
+            console.error('Invalid price:', price);
+            return {
+                success: false,
+                message: 'Invalid price value'
             };
         }
 
