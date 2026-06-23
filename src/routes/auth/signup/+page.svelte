@@ -11,21 +11,21 @@
 <h1>Sign Up</h1>
 <h2 class="font-medium text-2xl">Sign up to be a BPDB contributor!</h2><br>
 <form method="POST" use:enhance>
-    <label for="display_name">Display Name:</label><br>
-    <input type="text" id="display_name" name="display_name" autocomplete="off" required><br><br>
+    <label for="display_name">Display Name:</label>
+    <input type="text" id="display_name" name="display_name" autocomplete="off" class="invalid:border-red-700! invalid:border-4" required><br><br>
 
-    <label for="email">eMail:</label><br>
-    <input type="email" id="email" name="email" autocomplete="email" required><br><br>
+    <label for="email">eMail:</label>
+    <input type="email" id="email" name="email" class="invalid:border-red-700! invalid:border-4" autocomplete="email" required><br><br>
 
 
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" autocomplete="current-password" required><br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" class="invalid:border-red-700! invalid:border-4" required><br><br>
 
     {#if form }
         <p class="error-message">Error: {form?.message}</p>
     {/if}
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={(e)=> { e.preventDefault(); window.alert('Check your email for confirmation link!'); }} >Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={(e)=> { e.preventDefault(); if (email.value != '' && password.value != ''){window.alert('Check your email for confirmation link!');} }} >Send Signup Email</button>
 </form>
 
 <style lang="postcss">

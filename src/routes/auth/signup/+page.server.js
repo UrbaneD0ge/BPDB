@@ -9,6 +9,13 @@ export const actions = {
 
         const emailRedirectTo = new URL('/auth/confirm', event.url.origin).toString();
 
+        if (!email || !password) {
+            return {
+                success: false,
+                message: 'Email and password are required',
+            };
+        }
+
         const { error } = await event.locals.supabase.auth.signUp({
             email,
             password,

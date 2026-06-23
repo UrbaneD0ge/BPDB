@@ -36,7 +36,7 @@ async function reverseGC(coords) {
         const data = await response.json();
         console.log(data);
         if (data && data.display_name) {
-            geoStatus = 'Address found';
+            geoStatus = 'Address found: ' + data.name;
             zoom = 15;
             // populate address input if present
             if (typeof address !== 'undefined' && address) address.value = data.address.house_number + ' ' + data.address.road;
@@ -86,6 +86,7 @@ function addySearch() {
 function geoLocate() {
     console.log('Geolocating!')
     geoLoading = true;
+    address.value = '';
     geoStatus = 'Using your device location...'
     // Get the location of the user and put address in the input field
     if (!navigator.geolocation) {
@@ -119,19 +120,22 @@ function geoLocate() {
 
 </script>
 
+<svelte:head>
+    <title>Submit a Peanut</title>
+</svelte:head>
 
 <h1>Submit a new BP to the DB!</h1>
-<p>Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p>
 
 <form method="POST"use:enhance>
-    <label for="resto_name">Restaurant Name:</label><br>
+    <p class="text-white">Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p><br>
+    <label for="resto_name">Restaurant Name:</label>
     <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br><br>
 
-    <label for="product">Product Name:</label><br>
-    <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" required><br><br>
+    <label for="product">Product Name:</label>
+    <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" required><br>
 
-    <label for="price">Menu Price:</label><br>
-    <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br><br>
+    <label for="price">Menu Price:</label>
+    <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br>
 
     <!-- 🛰️ !! GEOLOCATION BLOCK !! 📍 -->
     <fieldset class="bg-stone-300 rounded-lg p-2">
@@ -140,20 +144,19 @@ function geoLocate() {
             <!-- TODO: This should be an address picker eventually -->
             <label for="address">Restaurant Address:</label>
 
-
-
+                <div class="flex flex-row justify-between items-center gap-2">
                 <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
 
                 <button
                 onclick={(e) => {e.preventDefault(); addySearch()}}
-                class="rounded-full bg-yellow-500 p-2 m-2"
+                class="rounded-full bg-yellow-500 text-nowrap p-2 m-2"
                 >{#if addyLoading}
                     <Loader />
                     {:else}
                     Address Search
                     {/if}
                 </button>
-
+                </div>
         </div>
 
 
@@ -181,14 +184,15 @@ function geoLocate() {
                         onclick={(e) => {e.preventDefault(); geoLocate()}}
                         class="rounded-full bg-green-500 lg:p-2 lg:m-2"
                         id="locate"
-                        >{#if geoLoading}
-            <Loader />
-        {:else}
-        Locate Me
-        {/if}</button>
+                        >
+                    {#if geoLoading}
+                        <Loader />
+                    {:else}
+                    Locate Me
+                    {/if}</button>
 
                 <!-- GEOSTATUS AND MAP -->
-                    <div class="flex flex-col lg:flex-row-reverse items-center justify-end w-full lg:w-2/3 gap-4">
+                    <div class="flex flex-col md:flex-row-reverse items-center justify-end w-full md:w-2/3 gap-4">
 
                         <span class="p-2">{geoStatus}</span>
 
@@ -196,7 +200,7 @@ function geoLocate() {
                         <!-- HERE'S THE MAP 🗺️ -->
                         <!-- TODO: Adjust map center and zoom when Peanut is updated. -->
                             <MapLibre
-                            class="h-80 w-90 rounded-lg"
+                            class="h-80 w-80 lg:w-90 rounded-lg"
                             center={[coords.lon, coords.lat]}
                             zoom={zoom}
                             style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
@@ -221,7 +225,7 @@ function geoLocate() {
     {#if form?.error}
         <p class="error-message">{form.error}</p>
     {/if}
-<br><br>
+<br>
     <button class="text-xl font-rounded-extrabold bg-green-500 p-2" type="submit" value="Submit">Submit Peanut!</button>
     {#if data?.error}
         <p style="color: red;">{data.error}{data?.message}</p>
@@ -236,7 +240,6 @@ function geoLocate() {
 
     label {
         font-weight: bold;
-        width: 25%;
     }
 
     input[type="number"] {

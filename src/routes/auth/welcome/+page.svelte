@@ -53,11 +53,6 @@ h3 {
     font-size: xx-large;
 }
 
-h4 {
-    font-size: x-large;
-    font-weight: 600;
-}
-
 p {
     font-size: x-large;
 }

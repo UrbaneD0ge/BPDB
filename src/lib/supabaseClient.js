@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, NEXT_PUBLIC_SITE_URL } from "$env/static/public"
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from "$env/static/public"
 
 const supabaseUrl = PUBLIC_SUPABASE_URL;
 const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
@@ -9,17 +9,17 @@ const supabaseKey = PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-const getURL = () => {
-  let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
-    'http://localhost:3000/'
-  // Make sure to include `https://` when not localhost.
-  url = url.startsWith('http') ? url : `https://${url}`
-  // Make sure to include a trailing `/`.
-  url = url.endsWith('/') ? url : `${url}/`
-  return url
-}
+// const getURL = () => {
+//   let url =
+//     process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+//     process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+//     'http://localhost:3000/'
+//   // Make sure to include `https://` when not localhost.
+//   url = url.startsWith('http') ? url : `https://${url}`
+//   // Make sure to include a trailing `/`.
+//   url = url.endsWith('/') ? url : `${url}/`
+//   return url
+// }
 
 async function signUpNewUser({ email, display_name, password }) {
     console.log("Signing up new user...");
