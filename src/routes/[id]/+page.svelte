@@ -44,21 +44,21 @@ let avgDone = $derived.by(() => {
     <title>Peanut rating: {peanut.resto_name} {peanut.product}</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 my-4">
 
-    <div>
+    <div class="text-white w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
         <h1 class="font-rounded-extrabold">{peanut.resto_name}: "{peanut.product}"</h1>
         <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
         <p>Address: {peanut.address}</p>
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
-        <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p>
+        <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p><br>
         <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length > 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
   <MapLibre
-    class="h-60 w-full lg:w-1/4 rounded-lg shadow-lg my-4"
+    class="min-h-60 lg:h-75  w-full lg:w-2/5 rounded-lg shadow-lg"
     center={[ peanut.geopoint.x, peanut.geopoint.y ]}
     zoom={15}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"

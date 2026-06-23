@@ -67,7 +67,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="w-full h-80 lg:h-200 lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="w-full h-80 lg:h-180 lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}

@@ -1,13 +1,13 @@
 <script>
 	import { page } from '$app/state';
+	import "../app.css";
 	let { children, data } = $props();
 
 	// console.log(data.session)
 	// let user = $derived(data.session);
 
-	// $inspect(page.route);
+	$inspect(page.params.uuid, data.session.user.id);
 
-	import "../app.css";
 </script>
 
 <svelte:head>
@@ -45,7 +45,9 @@
 			</button>
 			<div id="user-menu-popover" popover="auto" class="user-menu-popover rounded bg-[#333] p-2 text-white shadow-lg">
 
-				<a href='/user/${data.session.user.id}' data-sveltekit-preload-data="false" class="m-0! p-4 bg-gray-600/90 rounded-lg text-nowrap">My Ratings</a>
+				{#if page.params.uuid != `$${data.session.user.id}`}
+				<a href='/user/${data.session.user.id}' data-sveltekit-preload-data="false" class="m-0! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
+				{/if}
 
 				<form method="POST" action="/auth/signout">
 					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out">

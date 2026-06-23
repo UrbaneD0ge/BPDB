@@ -27,20 +27,21 @@ let mapBounds = $derived.by(() => {
     <title>User: {user.user_metadata.display_name}'s ratings</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 my-4 w-full">
 
 {#if data.error}
 <h3>{data?.error}</h3>
 {/if}
 
-<div>
+<div class="text-white min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
     <h1>User: {user.user_metadata.display_name}</h1>
     <h2>eMail: {user.email}</h2>
-    <h2>Ratings so far: {ratings.length > 1 ? ratings.length : 'None!'}</h2>
+    <h2>Joined: {new Date(user.created_at).toLocaleDateString()}</h2><br>
+    <h2>Ratings so far: <b>{ratings.length > 1 ? ratings.length : 'None!'}</b></h2>
 </div>
 
   <MapLibre
-    class="h-60 w-full lg:w-1/4 rounded-lg shadow-lg my-4"
+    class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg my-4"
     // center={[ -84.3880, 33.7490 ]}
     bounds={mapBounds}
     fitBoundsOptions={{ padding: 50 }}
@@ -69,7 +70,7 @@ let mapBounds = $derived.by(() => {
   </MapLibre>
 </div>
 
-<table class="lg:w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden mt-5">
+<table class="lg:w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg shadow-lg overflow-hidden mt-5">
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
