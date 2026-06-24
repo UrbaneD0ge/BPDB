@@ -6,7 +6,7 @@
 	// console.log(data.session)
 	// let user = $derived(data.session);
 
-	$inspect(page.params.uuid, data.session.user.id);
+	// $inspect(page.params.uuid, data.session.user.id);
 
 </script>
 
