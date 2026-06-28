@@ -25,7 +25,7 @@
         <p class="error-message">Error: {form?.message}</p>
     {/if}
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" onclick={(e)=> { e.preventDefault(); if (email.value != '' && password.value != ''){window.alert('Check your email for confirmation link!');} }} >Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" >Send Signup Email</button>
 </form>
 
 <style lang="postcss">
