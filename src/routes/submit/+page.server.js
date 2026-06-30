@@ -1,4 +1,20 @@
 import { redirect } from '@sveltejs/kit';
+import * as z from 'zod';
+
+const peanutSchema = z.object({
+    resto_name: z.string().min(1, "Please enter a restaurant name").trim(),
+    product_name: z.string().min(1, "Please enter a product name").trim(),
+    price: z.string().refine((val) => !val || !isNaN(parseFloat(val)), {
+        message: "Invalid price value"
+    }),
+    address: z.string().min(1, "Please enter an address").trim(),
+    latitude: z.string().min(1, "Latitude is required").refine((val) => !isNaN(parseFloat(val)), {
+        message: "Invalid latitude value"
+    }),
+    longitude: z.string().min(1, "Longitude is required").refine((val) => !isNaN(parseFloat(val)), {
+        message: "Invalid longitude value"
+    })
+});
 
 export const actions = {
     default: async (event) => {
@@ -26,11 +42,12 @@ export const actions = {
         let longitude = formData.get('longitude')?.trim();
 
         // Validate required fields
-        if (!resto_name || !product_name || !latitude || !longitude) {
-            console.error('Validation failed:', { resto_name, product_name, address, latitude, longitude });
+        const validation = peanutSchema.safeParse({ resto_name, product_name, price, address, latitude, longitude });
+        if (!validation.success) {
+            console.error('Validation failed:', validation.error.issues);
             return {
                 success: false,
-                message: 'Missing required fields'
+                message: validation.error.issues.map(e => e.message).join(', ')
             };
         }
 

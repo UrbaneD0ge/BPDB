@@ -129,7 +129,7 @@ function geoLocate() {
 <form method="POST"use:enhance>
     <p class="text-white">Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p><br>
     <label for="resto_name">Restaurant Name:</label>
-    <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br><br>
+    <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br>
 
     <label for="product">Product Name:</label>
     <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" required><br>

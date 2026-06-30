@@ -1,4 +1,11 @@
 import { redirect } from "@sveltejs/kit";
+import * as z from "zod";
+
+const signUpSchema = z.object({
+    email: z.string().email("Please enter a valid email address").trim(),
+    display_name: z.string().min(1, "Please enter a display name").trim(),
+    password: z.string().min(7, "Password must be at least 7 characters long"),
+});
 
 export const actions = {
     default: async (event) => {
@@ -9,10 +16,11 @@ export const actions = {
 
         const emailRedirectTo = new URL('/auth/confirm', event.url.origin).toString();
 
-        if (!email || !password) {
+        const validation = signUpSchema.safeParse({ email, display_name, password });
+        if (!validation.success) {
             return {
                 success: false,
-                message: 'Email and password are required',
+                message: validation.error.issues.map(e => e.message).join(', '),
             };
         }
 
