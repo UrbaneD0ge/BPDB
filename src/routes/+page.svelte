@@ -34,7 +34,7 @@ let mapBounds = $derived.by(() => {
 
     <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-4 mb-4 shadow-md gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <h3 class="text-3xl font-rounded-extrabold">{peanut.avg_overall.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
+        <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
       </div>
 
       <div>
