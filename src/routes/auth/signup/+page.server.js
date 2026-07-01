@@ -2,25 +2,28 @@ import { redirect } from "@sveltejs/kit";
 import * as z from "zod";
 
 const signUpSchema = z.object({
-    email: z.string().email("Please enter a valid email address").trim(),
-    display_name: z.string().min(1, "Please enter a display name").trim(),
+    display_name: z.string("Please enter a display name").min(1, "Please enter a display name").trim(),
+    email: z.string().email("Please enter a valid email address"),
     password: z.string().min(7, "Password must be at least 7 characters long"),
 });
 
 export const actions = {
     default: async (event) => {
         const formData = await event.request.formData();
+        const display_name = formData.get('display_name') || null;
         const email = formData.get('email');
-        const display_name = formData.get('display_name') || '';
         const password = formData.get('password');
 
         const emailRedirectTo = new URL('/auth/confirm', event.url.origin).toString();
 
-        const validation = signUpSchema.safeParse({ email, display_name, password });
+        const validation = signUpSchema.safeParse({ display_name, email, password });
         if (!validation.success) {
+            console.error(z.flattenError(validation.error));
             return {
                 success: false,
-                message: validation.error.issues.map(e => e.message).join(', '),
+                // message: validation.error.issues.map(e => e.message).join(', '),
+                fieldErrors: z.flattenError(validation.error),
+                data: { display_name, email }
             };
         }
 

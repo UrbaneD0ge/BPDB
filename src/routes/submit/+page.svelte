@@ -11,7 +11,7 @@ let coords = $state({ lat: 35, lon: -88 });
 let geoStatus = $state('');
 let zoom = $state(2);
 
-// $inspect(coords)
+$inspect(form);
 
 // Address search
   function URLencode(str) {
@@ -127,25 +127,27 @@ function geoLocate() {
 <h1>Submit a new BP to the DB!</h1>
 
 <form method="POST"use:enhance>
+
     <p class="text-white">Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p><br>
-    <label for="resto_name">Restaurant Name:</label>
-    <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" required><br>
 
-    <label for="product">Product Name:</label>
-    <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" required><br>
+    <label for="resto_name">Restaurant Name: <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.resto_name}</span></label>
+    <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" value={form?.data?.resto_name} ><br>
 
-    <label for="price">Menu Price:</label>
-    <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" required><br>
+    <label for="product">Product Name: <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.product_name}</span></label>
+    <input type="text" id="product" name="product_name" placeholder="Boiled Peanut item as it appears on the menu" value={form?.data?.product_name} ><br>
+
+    <label for="price">Menu Price: <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.price}</span></label>
+    <input type="number" min="0.00" step="0.01" id="price" name="price" placeholder="4.50" value={form?.data?.price} ><br>
 
     <!-- 🛰️ !! GEOLOCATION BLOCK !! 📍 -->
     <fieldset class="bg-stone-300 rounded-lg p-2">
 
         <div>
             <!-- TODO: This should be an address picker eventually -->
-            <label for="address">Restaurant Address:</label>
+            <label for="address">Restaurant Address: <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.address}</span></label>
 
                 <div class="flex flex-row justify-between items-center gap-2">
-                <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" required>
+                <input type="text" id="address" name="address" placeholder="1600 Peanutsvania Avenue" value={form?.data?.address} >
 
                 <button
                 onclick={(e) => {e.preventDefault(); addySearch()}}
@@ -168,13 +170,13 @@ function geoLocate() {
                     <div>
                         <label for="geopoint_lat">Latitude:</label>
                         <!-- <div>{coords.lat?.toFixed(3)}</div> -->
-                        <input type="text" id="geopoint_lat" name="latitude" value={coords.lat} required>
+                        <input type="hidden" id="geopoint_lat" name="latitude" value={coords.lat}>
                     </div>
 
                     <div>
                         <label for="geopoint_lon">Longitude:</label>
                         <!-- <div>{coords.lon?.toFixed(3)}</div> -->
-                        <input type="text" id="geopoint_lon" name="longitude" value={coords.lon} required>
+                        <input type="hidden" id="geopoint_lon" name="longitude" value={coords.lon}>
                     </div>
 
                 </div>
@@ -195,6 +197,7 @@ function geoLocate() {
                     <div class="flex flex-col md:flex-row-reverse items-center justify-end w-full md:w-2/3 gap-4">
 
                         <span class="p-2">{geoStatus}</span>
+                        <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.geopoint}</span>
 
                         <div>
                         <!-- HERE'S THE MAP 🗺️ -->
@@ -263,5 +266,13 @@ function geoLocate() {
         border-radius: 4px;
         cursor: pointer;
     }
+
+    .error-message {
+    color: #af1d1d;
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: normal;
+}
 
 </style>

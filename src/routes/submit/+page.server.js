@@ -8,18 +8,17 @@ const peanutSchema = z.object({
         message: "Invalid price value"
     }),
     address: z.string().min(1, "Please enter an address").trim(),
-    latitude: z.string().min(1, "Latitude is required").refine((val) => !isNaN(parseFloat(val)), {
+
+    latitude: z.coerce.number().gt(-90, "Latitude must be greater than -90").lt(90, "Latitude must be less than 90").refine((val) => !isNaN(parseFloat(val)), {
         message: "Invalid latitude value"
     }),
-    longitude: z.string().min(1, "Longitude is required").refine((val) => !isNaN(parseFloat(val)), {
+    longitude: z.coerce.number().gt(-180, "Longitude must be greater than -180").lt(180, "Longitude must be less than 180").refine((val) => !isNaN(parseFloat(val)), {
         message: "Invalid longitude value"
     })
 });
 
 export const actions = {
     default: async (event) => {
-
-        // console.log('Received form submission');
 
         // Validate user with secure getUser() instead of getSession()
         const { data: { user }, error: authError } = await event.locals.supabase.auth.getUser();
@@ -29,36 +28,28 @@ export const actions = {
                 success: false,
                 message: 'User is not logged in',
             };
-        };
+        }
 
         // console.log(user)
 
-        const formData = await event.request.formData();
-        let resto_name = formData.get('resto_name')?.trim();
-        let product_name = formData.get('product_name')?.trim();
-        let price = formData.get('price')?.trim();
-        let address = formData.get('address')?.trim();
-        let latitude = formData.get('latitude')?.trim();
-        let longitude = formData.get('longitude')?.trim();
+        const formData = Object.fromEntries(await event.request.formData());
+        let resto_name = formData.resto_name?.trim();
+        let product_name = formData.product_name?.trim();
+        let price = formData.price?.trim();
+        let address = formData.address?.trim();
+        let latitude = formData.latitude?.trim();
+        let longitude = formData.longitude?.trim();
 
         // Validate required fields
-        const validation = peanutSchema.safeParse({ resto_name, product_name, price, address, latitude, longitude });
+        const validation = peanutSchema.safeParse(formData);
         if (!validation.success) {
-            console.error('Validation failed:', validation.error.issues);
+            console.error(validation.error);
+            console.log(validation);
             return {
                 success: false,
-                message: validation.error.issues.map(e => e.message).join(', ')
-            };
-        }
-
-        // Validate latitude and longitude are valid numbers
-        const lat = parseFloat(latitude);
-        const lon = parseFloat(longitude);
-        if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-            console.error('Invalid coordinates:', { latitude, longitude });
-            return {
-                success: false,
-                message: 'Invalid latitude or longitude values'
+                message: validation.error.issues.map(e => e.message).join(', '),
+                fieldErrors: z.flattenError(validation.error),
+                data: formData
             };
         }
 
