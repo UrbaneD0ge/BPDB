@@ -1,12 +1,30 @@
 import { redirect } from "@sveltejs/kit";
 import { supabase, signInWithPassword } from "$lib/supabaseClient.js";
+import * as z from "zod";
+
+const signInSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+});
 
 export const actions = {
     default: async (event) => {
         // get credentials from the form submission
-        const formData = await event.request.formData();
-        const email = formData.get('email')
-        const password = formData.get('password')
+        const formData = Object.fromEntries(await event.request.formData());
+        const email = formData.email;
+        const password = formData.password;
+
+        // Validate the form data
+        const result = signInSchema.safeParse(formData);
+        if (!result.success) {
+            console.log(result.error);
+            return {
+                success: false,
+                message: "Invalid input",
+                fieldErrors: z.flattenError(result.error),
+                data: formData
+            };
+        }
 
         // Use server-side Supabase client with SSR cookie handler
         const { data, error } = await event.locals.supabase.auth.signInWithPassword({
@@ -14,15 +32,6 @@ export const actions = {
             password
         });
 
-            // console
-            // .log({ error,
-            // session
-            // : data?.session })
-            // console
-            // .log(
-            // 'getSession:'
-            // ,
-            // await supabase.auth.getSession())
 
         if (error) {
             return {
@@ -40,9 +49,6 @@ export const actions = {
 
         // Redirect after successful signin
         throw redirect(303, "/");
-        localStorage.setItem('t', '1');
-        localStorage.getItem('t');
-        return { data };
     }
 };
 

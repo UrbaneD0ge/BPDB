@@ -1,12 +1,21 @@
 <script>
 	import { page } from '$app/state';
+	import { onNavigate } from '$app/navigation';
 	import "../app.css";
+
 	let { children, data } = $props();
 
-	// console.log(data.session)
-	// let user = $derived(data.session);
+  onNavigate((navigation) => {
+    // Check if the browser supports the API
+    if (!document.startViewTransition) return;
 
-	// $inspect(page.params.uuid, data.session.user.id);
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 
 </script>
 
@@ -95,5 +104,9 @@
 
 	.user-menu-popover form {
 		margin-top: 0.35rem;
+	}
+
+	:global(nav) {
+		view-transition-name: nav;
 	}
 </style>

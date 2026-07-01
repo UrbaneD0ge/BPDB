@@ -10,6 +10,6 @@ export const actions = {
     await supabase.auth.signOut();
 
     // Redirect after successful signout
-    throw redirect(303, '/');
+    throw redirect(303, '/auth/signin');
   }
 };

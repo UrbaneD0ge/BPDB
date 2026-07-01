@@ -8,11 +8,11 @@
 
 <form method="POST">
     <p class="text-white">Use the form below to sign in to your account.</p><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" autocomplete="email" class="invalid:border-red-700!  invalid:border-4" required><br><br>
+        <label for="email">Email: <span class="text-red-700 italic">{form?.fieldErrors?.fieldErrors?.email}</span></label>
+        <input type="email" id="email" name="email" autocomplete="email" value={form?.data?.email || ''} class="invalid:border-red-700! invalid:border-4"><br><br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" autocomplete="current-password" class="invalid:border-red-700 invalid:border-4" required><br><br>
+        <label for="password">Password: <span class="text-red-700 italic">{form?.fieldErrors?.fieldErrors?.password}</span></label>
+        <input type="password" id="password" name="password" autocomplete="current-password" class="invalid:border-red-700 invalid:border-4 form"><br><br>
 
         <div class="flex flex-col lg:flex-row-reverse justify-end gap-2">
             {#if form?.message || form?.error }
