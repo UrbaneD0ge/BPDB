@@ -4,7 +4,7 @@ import { page } from '$app/state';
 import { MediaQuery } from 'svelte/reactivity';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-const large = new MediaQuery('min-width: 1024px');
+const large = new MediaQuery('(min-width: 1024px)');
 let {data, error} = $props()
 
 let ratings = $derived(data.data);
@@ -127,8 +127,10 @@ $inspect(large.current);
             </tr>
         {#if !large.current}
             <tr>
-                <td colspan="5">{rating?.notes || '-'}</td>
+                <td colspan={page.params.uuid === '$' + user.id ? 5 : 6}>{rating?.notes || '-'}</td>
+                {#if page.params.uuid === '$' + user.id}
                 <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                {/if}
             </tr>
         {/if}
         </tbody>
@@ -136,7 +138,7 @@ $inspect(large.current);
     {:else}
         <tbody>
             <tr>
-                <td colspan={large.current ? 8 : 7}><i>No ratings yet.</i></td>
+                <td colspan={large.current ? (page.params.uuid === '$' + user.id ? 9 : 8) : 6}><i>No ratings yet.</i></td>
             </tr>
         </tbody>
     {/if}
