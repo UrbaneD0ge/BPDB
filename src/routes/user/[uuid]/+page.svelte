@@ -1,7 +1,10 @@
 <script>
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
+import { page } from '$app/state';
+import { MediaQuery } from 'svelte/reactivity';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+const large = new MediaQuery('min-width: 1024px');
 let {data, error} = $props()
 
 let ratings = $derived(data.data);
@@ -20,7 +23,7 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-// $inspect(user);
+$inspect(large.current);
 </script>
 
 <svelte:head>
@@ -70,47 +73,70 @@ let mapBounds = $derived.by(() => {
   </MapLibre>
 </div>
 
-<table class="lg:w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg shadow-lg overflow-hidden mt-5">
+<table class="w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg shadow-lg overflow-hidden mt-5">
     <tbody>
+    {#if large.current}
         <tr>
             <!-- <th>rating ID</th> -->
-            <th>Restaurant<br>"Product"</th>
+            <th hidden={!large.current}>Restaurant<br>"Product"</th>
             <th>Overall</th>
             <th>Doneness</th>
             <th>Brine</th>
             <th>Salty</th>
             <th>Spicy</th>
             <th>Portion</th>
-            <th>Notes</th>
-            {#if data.session?.user.id === user.id }
-            <th>Delete</th>
+            <th hidden={!large.current}>Notes</th>
+            {#if page.params.uuid === '$' + user.id }
+            <th hidden={!large.current}>Delete</th>
             {/if}
         </tr>
+    {/if}
     </tbody>
 
     {#if ratings.length > 0}
         {#each ratings as rating (rating.rating_id)}
         <tbody>
+        {#if !large.current}
+            <tr>
+                <th colspan="6"><a href="/{rating.resto_prod}">{rating.resto_name}</a><br>"{rating.product}"</th>
+            </tr>
+            <tr>
+                <td>Overall</td>
+                <td>Doneness</td>
+                <td>Brine</td>
+                <td>Salty</td>
+                <td>Spicy</td>
+                <td>Portion</td>
+            </tr>
+        {/if}
             <tr>
                 <!-- <td>{rating.id}</td> -->
-                 <td><a href="/{rating.resto_prod}">{rating.resto_name}</a><br>"{rating.product}"</td>
+                <td hidden={!large.current}><a href="/{rating.resto_prod}">{rating.resto_name}</a><br>"{rating.product}"</td>
                 <td><b>{rating?.overall}</b></td>
                 <td>{rating?.done}</td>
                 <td>{rating?.brine}</td>
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
                 <td>{rating?.servings}</td>
-                <td>{rating?.notes || '-'}</td>
-                {#if rating.rating_user_id === user.id }
-                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+
+                <td hidden={!large.current}>{rating?.notes || '-'}</td>
+
+                {#if page.params.uuid === '$' + user.id }
+                <td hidden={!large.current}><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
                 {/if}
             </tr>
+        {#if !large.current}
+            <tr>
+                <td colspan="5">{rating?.notes || '-'}</td>
+                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+            </tr>
+        {/if}
         </tbody>
         {/each}
     {:else}
         <tbody>
             <tr>
-                <td colspan="8"><i>No ratings yet.</i></td>
+                <td colspan={large.current ? 8 : 7}><i>No ratings yet.</i></td>
             </tr>
         </tbody>
     {/if}
@@ -137,9 +163,9 @@ let mapBounds = $derived.by(() => {
         font-size: 1.2em;
     }
 
-    td:nth-child(8) {
+    /* td:nth-child(8) {
         text-align: left;
-    }
+    } */
 
     tr:hover td {
         background-color: #f5f5f5;
@@ -157,10 +183,6 @@ let mapBounds = $derived.by(() => {
 
         td {
             padding: 0;
-        }
-
-        td:nth-of-type(7), th:nth-of-type(7) {
-            display: none;
         }
     }
 </style>
