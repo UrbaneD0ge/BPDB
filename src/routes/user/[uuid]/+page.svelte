@@ -137,7 +137,7 @@ let mapBounds = $derived.by(() => {
         font-size: 1.2em;
     }
 
-    td:nth-child(7) {
+    td:nth-child(8) {
         text-align: left;
     }
 

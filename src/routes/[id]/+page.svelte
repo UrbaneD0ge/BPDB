@@ -3,7 +3,7 @@ import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 let { data } = $props();
-// $inspect(data);
+$inspect(data);
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
