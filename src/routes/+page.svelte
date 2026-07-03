@@ -1,10 +1,13 @@
 <script>
+import { onMount } from 'svelte';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 // export let data;
 let { data } = $props();
 const star = '🥜';
+let peanutList;
+let hasListOverflow = $state(false);
 
 let mapBounds = $derived.by(() => {
     if (!data.peanuts?.length) return undefined;
@@ -23,13 +26,39 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
+  function updateListOverflow() {
+    hasListOverflow = Boolean(peanutList && peanutList.scrollHeight > peanutList.clientHeight + 1);
+  }
+
+  onMount(() => {
+    updateListOverflow();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateListOverflow();
+    });
+
+    if (peanutList) {
+      resizeObserver.observe(peanutList);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  });
+
+  $effect(() => {
+    data.peanuts;
+    peanutList;
+    updateListOverflow();
+  });
+
 </script>
 
 <h1 class="font-rounded-extrabold">BPDB: Boiled Peanut DataBase</h1>
 
 <main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3 lg:h-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+  <ol bind:this={peanutList} class:peanut-list-fade={hasListOverflow} class="flex flex-col w-full lg:w-1/3 lg:h-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
     {#each data.peanuts as peanut}
 
     <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-2 mb-4 shadow-md gap-4">
@@ -146,5 +175,14 @@ let mapBounds = $derived.by(() => {
 
   :global(.maplibregl-popup-close-button:hover) {
     background-color: transparent !important;
+  }
+
+  .peanut-list-fade {
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 82%, transparent 100%);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
   }
  </style>
