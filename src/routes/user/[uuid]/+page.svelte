@@ -23,7 +23,7 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-$inspect(data);
+// $inspect(data);
 </script>
 
 <svelte:head>
@@ -51,7 +51,7 @@ $inspect(data);
     fitBoundsOptions={{ padding: 50 }}
     attributionControl={false}
     zoom={1}
-    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     >
 
 {#each ratings as rating (rating?.rating_id)}

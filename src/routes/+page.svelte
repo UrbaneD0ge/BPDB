@@ -72,7 +72,7 @@ let mapBounds = $derived.by(() => {
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
   zoom={5}
-  style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" >
+  style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" >
 
   {#each data.peanuts as peanut}
     <Marker lnglat={[peanut.x, peanut.y]} anchor="bottom">
@@ -116,4 +116,10 @@ let mapBounds = $derived.by(() => {
   font-style: normal;
   }
 
+  :global(.maplibregl-popup-content) {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: transparent !important;
+  }
  </style>

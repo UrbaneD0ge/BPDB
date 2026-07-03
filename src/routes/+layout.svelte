@@ -40,6 +40,12 @@
 
 	</div>
 
+	<!-- Put the peanut SVG here -->
+	<!-- <div class="flex items-center gap-2">
+		<a href="/"><img src="/peanutglobe.svg" alt="BPDB Logo" class="h-7 w-7"></a>
+		<h1 class="text-l font-rounded-extrabold m-0!">BPDB</h1>
+	</div> -->
+
 	<div>
 		{#if !data?.session}
 		<a href="/auth/signup">Sign Up</a>
@@ -55,7 +61,7 @@
 			<div id="user-menu-popover" popover="auto" class="user-menu-popover rounded bg-[#333] p-2 text-white shadow-lg">
 
 				{#if page.params.uuid != `$${data?.session?.user?.id}`}
-				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
+				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
 				{/if}
 
 				<form method="POST" action="/auth/signout">
@@ -109,4 +115,5 @@
 	:global(nav) {
 		view-transition-name: nav;
 	}
+
 </style>

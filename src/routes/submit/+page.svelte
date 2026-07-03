@@ -11,7 +11,7 @@ let coords = $state({ lat: 35, lon: -88 });
 let geoStatus = $state('');
 let zoom = $state(2);
 
-$inspect(form);
+// $inspect(form);
 
 // Address search
   function URLencode(str) {
@@ -124,7 +124,7 @@ function geoLocate() {
     <title>Submit a Peanut</title>
 </svelte:head>
 
-<h1>Submit a new BP to the DB!</h1>
+<h1>Submit a new BP to the DB</h1>
 
 <form method="POST"use:enhance>
 

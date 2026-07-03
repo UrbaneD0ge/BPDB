@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 const large = new MediaQuery('min-width: 1024px');
 let { data } = $props();
-$inspect(data);
+// $inspect(data);
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
@@ -63,12 +63,12 @@ let avgDone = $derived.by(() => {
     class="min-h-60 lg:h-75  w-full lg:w-2/5 rounded-lg shadow-lg"
     center={[ peanut.geopoint.x, peanut.geopoint.y ]}
     zoom={15}
-    style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     >
 
 
     <Marker lnglat={[peanut.geopoint.x, peanut.geopoint.y]} anchor="bottom">
-     {#snippet content()}
+    {#snippet content()}
         <div class="text-3xl">🥜</div>
     {/snippet}
     </Marker>
