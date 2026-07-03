@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+  import Peanut from '$lib/Peanut.svelte';
 
 // export let data;
 let { data } = $props();
@@ -59,11 +60,15 @@ let mapBounds = $derived.by(() => {
 <main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
 
   <ol bind:this={peanutList} class:peanut-list-fade={hasListOverflow} class="flex flex-col w-full lg:w-1/3 lg:h-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+
     {#each data.peanuts as peanut}
 
     <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-2 mb-4 shadow-md gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
+        <Peanut size={16} clipHeight={peanut.avg_overall * 5} />
+        <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3>
+        <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
+         <h4>{parseInt(peanut?.avg_overall * 10)}</h4>
       </div>
 
       <div>

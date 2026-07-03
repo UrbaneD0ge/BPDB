@@ -3,5 +3,5 @@
 </script>
 
 <div>
-    <Peanut clipHeight={80} />
+    <Peanut clipHeight={100} />
 </div>
