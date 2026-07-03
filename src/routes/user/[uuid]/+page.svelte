@@ -48,9 +48,9 @@ let mapBounds = $derived.by(() => {
     class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg my-4"
     // center={[ -84.3880, 33.7490 ]}
     bounds={mapBounds}
-    fitBoundsOptions={{ padding: 50 }}
+    // fitBoundsOptions={{ padding: 50 }}
     attributionControl={false}
-    zoom={1}
+    zoom={5}
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     >
 
@@ -59,11 +59,11 @@ let mapBounds = $derived.by(() => {
      {#snippet content()}
         <div class="text-3xl">🥜</div>
     {/snippet}
-      <Popup openOn="click" offset={[0, -60]}>
-        <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
-          <strong>{rating?.resto_name}</strong><br>
-          {rating?.product}<br>
-          Overall Rating: {rating?.avg_overall}
+      <Popup openOn="click" offset={[0, -30]}>
+        <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
+          <h3><strong>{rating?.resto_name}</strong></h3>
+          "{rating?.product}"<br>
+          Overall Rating: <b>{rating?.overall}</b>
           <!-- Submitted: {new Date(rating?.created_at).toLocaleDateString()} -->
         </div>
       </Popup>
@@ -176,6 +176,25 @@ let mapBounds = $derived.by(() => {
 
     a {
         text-decoration: underline;
+    }
+
+    :global(.maplibregl-popup-content) {
+        font-family: "M PLUS Rounded 1c", sans-serif !important;
+        font-weight: 400;
+        font-style: normal;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    :global(.maplibregl-popup-tip) {
+        border-top-color: #4a5565 !important; /* Tailwind's gray-600 */
+        border-bottom-color: #4a5565 !important; /* Tailwind's gray-600 */
+    }
+
+    :global(.maplibregl-popup-close-button) {
+        padding: 1rem 1rem !important;
+        font-size: 1rem !important;
+        color: white;
     }
 
     @media (max-width: 640px) {

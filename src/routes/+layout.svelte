@@ -73,7 +73,7 @@
 	</div>
 </nav>
 
-<div class="p-1 pt-15 lg:p-15">
+<div class="flex flex-col lg:h-screen justify-end">
 
 	{@render children()}
 

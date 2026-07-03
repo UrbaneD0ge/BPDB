@@ -27,12 +27,12 @@ let mapBounds = $derived.by(() => {
 
 <h1 class="font-rounded-extrabold">BPDB: Boiled Peanut DataBase</h1>
 
-<main class="flex flex-col-reverse lg:flex-row justify-between items-start m-4 gap-4 font-rounded-regular">
+<main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-212 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
     {#each data.peanuts as peanut}
 
-    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-4 mb-4 shadow-md gap-4">
+    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-2 mb-4 shadow-md gap-4">
       <div class="flex flex-col items-center justify-center w-30">
         <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3><h4>{star.repeat(parseInt(peanut.avg_overall))}</h4>
       </div>
@@ -47,7 +47,7 @@ let mapBounds = $derived.by(() => {
       </div>
     </div>
     {/each}
-    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-4 mb-4 shadow-md">
+    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-6 mb-4 shadow-md">
       <div class="flex flex-col items-center justify-center w-30">
         <h3 class="text-3xl font-rounded-extrabold">???</h3>
       </div>
@@ -67,7 +67,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="w-full h-80 lg:h-180 lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="w-full h-90 lg:h-212 lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
@@ -79,11 +79,11 @@ let mapBounds = $derived.by(() => {
         {#snippet content()}
           <div class="text-3xl">🥜</div>
         {/snippet}
-      <Popup openOn="click" offset={[0, -60]}>
-        <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
+      <Popup openOn="click" offset={[0, -40]}>
+        <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
           <strong>{peanut.resto_name}</strong><br>
-          {peanut.product}<br>
-          Overall Rating: {peanut.avg_overall}
+          "{peanut.product}"<br>
+          Overall Rating: <b>{peanut.avg_overall}</b>
           <!-- Submitted: {new Date(peanut.created_at).toLocaleDateString()} -->
         </div>
       </Popup>
@@ -116,10 +116,26 @@ let mapBounds = $derived.by(() => {
   font-style: normal;
   }
 
+  :global(.maplibregl-canvas) {
+    padding-bottom: 20px;
+  }
+
   :global(.maplibregl-popup-content) {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 400;
     font-style: normal;
     background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  :global(.maplibregl-popup-tip) {
+    border-top-color: #4a5565 !important; /* Tailwind's gray-600 */
+    border-bottom-color: #4a5565 !important; /* Tailwind's gray-600 */
+  }
+
+  :global(.maplibregl-popup-close-button) {
+    padding: 1rem 1rem !important;
+    font-size: 1rem !important;
+    color: white;
   }
  </style>
