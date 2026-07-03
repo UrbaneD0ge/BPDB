@@ -1,20 +1,27 @@
 import { supabase } from "$lib/supabaseClient";
 
 export async function load({ url }) {
-    const uuid = url.pathname.split('/')[2].slice(1);
-    // console.log(uuid)
+    const uuid = url.pathname.split('/')[2].slice(1); // Extract the UUID from the URL
+    console.log(url.pathname.Number); // Extract the UUID from the URL
 
-    // also fetch resto_name and product from Peanuts where ratings.resto_prod = Peanuts.id
-    // const { data, error } = await supabase
-    //     .from('ratings')
-    //     .select('*,Peanuts(resto_name,product)')
-    //     .eq('user_id', uuid);
+    const { data: userInfo, error: userInfoError } = await supabase.rpc("get_user_info", {
+            target_user_id: uuid
+        });
 
-        const { data, error } = await supabase.rpc('get_user_peanuts_with_reviews', { target_user_id: uuid });
+    if (userInfoError) {
+        console.error('Error fetching user info:', userInfoError);
+        throw userInfoError;
+    }
+    // userInfo should be an array with 0 or 1 row
+
+    const requestUser = userInfo?.[0];
+
+    const { data: rows, error: rowsError } = await supabase.rpc('get_user_peanuts_with_reviews', { target_user_id: uuid });
 
     return {
-    data: data ? data : null,
-    error: error ? error.message : null
+    user: requestUser ? requestUser : null,
+    ratings: rows ? rows : null,
+    error: rowsError ? rowsError.message : null
     };
 }
 

@@ -1,7 +1,9 @@
 <script>
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
+import { MediaQuery } from 'svelte/reactivity';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+const large = new MediaQuery('min-width: 1024px');
 let { data } = $props();
 $inspect(data);
 
@@ -53,7 +55,7 @@ let avgDone = $derived.by(() => {
         <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
         <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
         <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p><br>
-        <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length > 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
+        <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length >= 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
     </div>
 
 <!-- TODO: Display the restaurant location on the map -->
@@ -84,11 +86,11 @@ let avgDone = $derived.by(() => {
             <th>Salty</th>
             <th>Spicy</th>
             <th>Portion</th>
-            <th>Notes</th>
+            <th hidden={!large.current}>Notes</th>
         </tr>
     </tbody>
 
-    {#if ratings !== undefined}
+    {#if ratings[0] !== null}
         {#each ratings as rating}
         <tbody>
             <tr>
@@ -99,8 +101,13 @@ let avgDone = $derived.by(() => {
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
                 <td>{rating?.servings}</td>
-                <td>{rating?.notes || '-'}</td>
+                <td hidden={!large.current}>{rating?.notes || '-'}<br><span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>user</a></span></td>
             </tr>
+        {#if !large.current}
+            <tr>
+                <td colspan="6">{rating?.notes || '-'}  <span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>user</a></span></td>
+            </tr>
+        {/if}
         </tbody>
         {/each}
         <tbody>
@@ -111,13 +118,13 @@ let avgDone = $derived.by(() => {
                 <td>{avgBrine}</td>
                 <td>{avgSalty}</td>
                 <td>{avgSpicy}</td>
-                <td>-- Averages --</td>
+                <td hidden={!large.current}>-- Averages --</td>
             </tr>
         </tbody>
     {:else}
         <tbody>
             <tr>
-                <td colspan="8"><i>No ratings yet.</i></td>
+                <td colspan={large.current ? 8 : 7}><i>No ratings yet.</i></td>
             </tr>
         </tbody>
     {/if}
@@ -147,5 +154,13 @@ let avgDone = $derived.by(() => {
 
     tr:hover {
         background-color: #f5f5f5;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    span {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
     }
 </style>

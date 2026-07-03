@@ -7,8 +7,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 const large = new MediaQuery('min-width: 1024px');
 let {data, error} = $props()
 
-let ratings = $derived(data.data);
-let user = $derived(data?.session.user)
+let ratings = $derived(data.ratings);
+let user = $derived(data?.session?.user)
 let mapBounds = $derived.by(() => {
     if (!ratings?.length) return undefined;
 
@@ -23,11 +23,11 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-$inspect(large.current);
+$inspect(data);
 </script>
 
 <svelte:head>
-    <title>User: {user.user_metadata.display_name}'s ratings</title>
+    <title>User: {ratings[0]?.user_display_name}'s ratings</title>
 </svelte:head>
 
 <div class="flex flex-col lg:flex-row items-center justify-between gap-4 my-4 w-full">
@@ -37,10 +37,11 @@ $inspect(large.current);
 {/if}
 
 <div class="text-white min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
-    <h1>User: {user.user_metadata.display_name}</h1>
-    <h2>eMail: {user.email}</h2>
-    <h2>Joined: {new Date(user.created_at).toLocaleDateString()}</h2><br>
-    <h2>Ratings so far: <b>{ratings.length > 1 ? ratings.length : 'None!'}</b></h2>
+<!-- TODO: Turn this into a badge component -->
+    <h1>User: {data?.user.display_name}</h1>
+    <h2>Joined: {new Date(data?.user.request_user_created_at).toLocaleDateString()}</h2>
+    <h2>Average Rating: <b>{data?.user.avg_overall_rating.toFixed(2)}</b></h2>
+    <h2>Ratings so far: <b>{ratings.length >= 1 ? ratings.length : 'None!'}</b></h2>
 </div>
 
   <MapLibre
@@ -49,21 +50,21 @@ $inspect(large.current);
     bounds={mapBounds}
     fitBoundsOptions={{ padding: 50 }}
     attributionControl={false}
-    zoom={0}
+    zoom={1}
     style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
     >
 
-{#each ratings as rating (rating.rating_id)}
-    <Marker lnglat={[ rating.lng, rating.lat]} anchor="bottom">
+{#each ratings as rating (rating?.rating_id)}
+    <Marker lnglat={[ rating?.lng, rating?.lat]} anchor="bottom">
      {#snippet content()}
         <div class="text-3xl">🥜</div>
     {/snippet}
       <Popup openOn="click" offset={[0, -60]}>
         <div style="background: white; padding: 5px; border-radius: 8px; border: 1px solid black;">
-          <strong>{rating.resto_name}</strong><br>
-          {rating.product}<br>
-          Overall Rating: {rating.avg_overall}
-          <!-- Submitted: {new Date(rating.created_at).toLocaleDateString()} -->
+          <strong>{rating?.resto_name}</strong><br>
+          {rating?.product}<br>
+          Overall Rating: {rating?.avg_overall}
+          <!-- Submitted: {new Date(rating?.created_at).toLocaleDateString()} -->
         </div>
       </Popup>
 
@@ -86,7 +87,7 @@ $inspect(large.current);
             <th>Spicy</th>
             <th>Portion</th>
             <th hidden={!large.current}>Notes</th>
-            {#if page.params.uuid === '$' + user.id }
+            {#if page.params.uuid === '$' + user?.id }
             <th hidden={!large.current}>Delete</th>
             {/if}
         </tr>
@@ -94,11 +95,11 @@ $inspect(large.current);
     </tbody>
 
     {#if ratings.length > 0}
-        {#each ratings as rating (rating.rating_id)}
+        {#each ratings as rating (rating?.rating_id)}
         <tbody>
         {#if !large.current}
             <tr>
-                <th colspan="6"><a href="/{rating.resto_prod}">{rating.resto_name}</a><br>"{rating.product}"</th>
+                <th colspan="6"><a href="/{rating?.resto_prod}">{rating?.resto_name}</a><br>"{rating?.product}"</th>
             </tr>
             <tr>
                 <td>Overall</td>
@@ -111,7 +112,7 @@ $inspect(large.current);
         {/if}
             <tr>
                 <!-- <td>{rating.id}</td> -->
-                <td hidden={!large.current}><a href="/{rating.resto_prod}">{rating.resto_name}</a><br>"{rating.product}"</td>
+                <td hidden={!large.current}><a href="/{rating?.resto_prod}">{rating?.resto_name}</a><br>"{rating?.product}"</td>
                 <td><b>{rating?.overall}</b></td>
                 <td>{rating?.done}</td>
                 <td>{rating?.brine}</td>
@@ -121,14 +122,16 @@ $inspect(large.current);
 
                 <td hidden={!large.current}>{rating?.notes || '-'}</td>
 
-                {#if page.params.uuid === '$' + user.id }
-                <td hidden={!large.current}><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                {#if page.params.uuid === '$' + user?.id }
+                <td hidden={!large.current}><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
                 {/if}
             </tr>
         {#if !large.current}
             <tr>
-                <td colspan="5">{rating?.notes || '-'}</td>
-                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                <td colspan={5}>{rating?.notes || '-'}</td>
+                {#if page.params.uuid === '$' + user?.id }
+                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                {/if}
             </tr>
         {/if}
         </tbody>
