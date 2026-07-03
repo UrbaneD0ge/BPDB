@@ -101,11 +101,11 @@ let avgDone = $derived.by(() => {
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
                 <td>{rating?.servings}</td>
-                <td hidden={!large.current}>{rating?.notes || '-'}<br><span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>user</a></span></td>
+                <td hidden={!large.current}>{rating?.notes || '-'}<br><span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
             </tr>
         {#if !large.current}
             <tr>
-                <td colspan="6">{rating?.notes || '-'}  <span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>user</a></span></td>
+                <td colspan="6">{rating?.notes || '-'}  <span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
             </tr>
         {/if}
         </tbody>
