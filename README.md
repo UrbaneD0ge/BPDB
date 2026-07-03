@@ -1,4 +1,5 @@
-<img width="2560" height="1229" alt="bpdb-three vercel app_" src="https://github.com/user-attachments/assets/5ccd0c9f-9e94-49c5-a972-7c8d35702aaa" />
+<img width="2557" height="1226" alt="BPDBscreencap" src="https://github.com/user-attachments/assets/5ad6899d-bf9c-4781-b86a-f944566d4140" />
+
 
 # BPDB - The Boiled Peanut DataBase
 ### And exploration of Web Development and PostGIS
