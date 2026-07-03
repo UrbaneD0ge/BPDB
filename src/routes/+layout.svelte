@@ -24,11 +24,11 @@
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
-<nav class="flex justify-between font-rounded-light fixed w-full z-10">
-	<div>
-		{#if page.route.id !== '/'}
+<nav class="flex justify-between items-center font-rounded-light fixed w-full z-10">
+	<div class="flex lg:gap-4 items-center">
+		<!-- {#if page.route.id !== '/'}
 			<a href="/">Home</a>
-		{/if}
+		{/if} -->
 
 		{#if page.route.id !== '/auth/welcome'}
 			<a href="/auth/welcome">Welcome</a>
@@ -41,10 +41,9 @@
 	</div>
 
 	<!-- Put the peanut SVG here -->
-	<!-- <div class="flex items-center gap-2">
-		<a href="/"><img src="/peanutglobe.svg" alt="BPDB Logo" class="h-7 w-7"></a>
-		<h1 class="text-l font-rounded-extrabold m-0!">BPDB</h1>
-	</div> -->
+	<div class="flex items-center">
+		<h1 class="m-0! leading-0"><a href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img src="/peanutglobe.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
+	</div>
 
 	<div>
 		{#if !data?.session}
@@ -53,7 +52,7 @@
 		{/if}
 
 		{#if data?.session}
-		<div class="inline-flex items-center">
+		<div class="inline-flex items-center m-2">
 
 			<button type="button" class="user-menu-trigger cursor-pointer italic hover:underline text-white font-extrabold" popovertarget="user-menu-popover" popovertargetaction="toggle">
 				{data?.session?.user?.user_metadata?.display_name}
@@ -73,11 +72,14 @@
 	</div>
 </nav>
 
-<div class="flex flex-col lg:h-screen justify-end">
+<!-- END OF NAV BAR, MAIN DIV BELOW -->
+
+<div class="flex flex-col lg:h-auto justify-end pt-10 px-1">
 
 	{@render children()}
 
 </div>
+
 <style>
 	@position-try --user-menu-above-right {
 		bottom: anchor(top);

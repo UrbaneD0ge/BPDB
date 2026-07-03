@@ -29,7 +29,7 @@ let mapBounds = $derived.by(() => {
 
 <main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3 lg:h-212 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
     {#each data.peanuts as peanut}
 
     <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-2 mb-4 shadow-md gap-4">
@@ -67,7 +67,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="w-full h-90 lg:h-212 lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="w-full h-80 lg:h-212 lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
@@ -116,9 +116,9 @@ let mapBounds = $derived.by(() => {
   font-style: normal;
   }
 
-  :global(.maplibregl-canvas) {
-    padding-bottom: 20px;
-  }
+  /* :global(.maplibregl-canvas) {
+    margin-bottom: 20px;
+  } */
 
   :global(.maplibregl-popup-content) {
     font-family: "M PLUS Rounded 1c", sans-serif;
@@ -137,5 +137,14 @@ let mapBounds = $derived.by(() => {
     padding: 1rem 1rem !important;
     font-size: 1rem !important;
     color: white;
+  }
+
+  :global(.maplibregl-popup-close-button:focus) {
+    border: none !important;
+    outline: none !important;
+  }
+
+  :global(.maplibregl-popup-close-button:hover) {
+    background-color: transparent !important;
   }
  </style>

@@ -30,13 +30,13 @@ let mapBounds = $derived.by(() => {
     <title>User: {ratings[0]?.user_display_name}'s ratings</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row items-center justify-between gap-4 my-4 w-full">
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 mt-4 w-full">
 
 {#if data.error}
 <h3>{data?.error}</h3>
 {/if}
 
-<div class="text-white min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
+<div class="text-white lg:min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
 <!-- TODO: Turn this into a badge component -->
     <h1>User: {data?.user.display_name}</h1>
     <h2>Joined: {new Date(data?.user.request_user_created_at).toLocaleDateString()}</h2>
@@ -45,10 +45,10 @@ let mapBounds = $derived.by(() => {
 </div>
 
   <MapLibre
-    class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg my-4"
+    class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg"
     // center={[ -84.3880, 33.7490 ]}
     bounds={mapBounds}
-    // fitBoundsOptions={{ padding: 50 }}
+    fitBoundsOptions={{ padding: 50 }}
     attributionControl={false}
     zoom={5}
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
