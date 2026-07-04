@@ -27,6 +27,7 @@
     viewBox="0 0 100 100"
     version="1.1"
     id="svg-{uid}"
+    style="--clip-target-height: {normalizedClipHeight}%;"
     xmlns="http://www.w3.org/2000/svg"
 >
     <defs>
@@ -35,7 +36,7 @@
         </clipPath>
 
         <clipPath id="verticalClip-{uid}">
-            <rect x="0" y="0" width="100" height={normalizedClipHeight} />
+            <rect class="clip-rect" x="0" y="0" width="100" height={normalizedClipHeight} />
         </clipPath>
     </defs>
 
@@ -69,5 +70,19 @@
         margin: 0 0;
         transform: rotate(45deg);
         filter: drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.9));
+    }
+
+    /* Animate only the clip rectangle and stop at the provided clipHeight. */
+    svg:hover .clip-rect {
+        animation: fillClipAnimation 1s forwards;
+    }
+
+    @keyframes fillClipAnimation {
+        from {
+            height: 0%;
+        }
+        to {
+            height: var(--clip-target-height);
+        }
     }
 </style>
