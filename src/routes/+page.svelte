@@ -27,9 +27,9 @@ let mapBounds = $derived.by(() => {
 
 </script>
 
-<main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
+<main class="flex flex-col-reverse lg:flex-row justify-between lg:items-center lg:pt-0 mt-2 mx-2 gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[90svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[90svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600">
     {#if !data.peanuts?.length}
       <p class="text-white">No peanuts found. Be the first to submit one!</p>
     {/if}
@@ -38,14 +38,13 @@ let mapBounds = $derived.by(() => {
 
     <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <Peanut size={20} clipHeight={peanut?.avg_overall * 10} style="filter: drop-shadow(0px 2px 5px rgba(140, 140, 0, 0.9));" />
+        <Peanut size={20} clipHeight={peanut?.avg_overall * 10}  />
         <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3>
         <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
-         <h4>{parseInt(peanut?.avg_overall || 0)}</h4>
       </div>
 
       <div>
-        <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}: "{peanut.product}"</a></li>
+        <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}<br>"{peanut.product}"</a></li>
         <ul>
         <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : '  -  '}</li>
           <li class="font-rounded-light">Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
@@ -74,7 +73,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="w-full h-80 lg:h-[85svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="h-80 lg:h-[85svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}

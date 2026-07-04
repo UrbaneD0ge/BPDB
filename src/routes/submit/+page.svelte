@@ -124,8 +124,8 @@ function geoLocate() {
     <title>Submit a Peanut</title>
 </svelte:head>
 
-
-<form method="POST"use:enhance>
+<main class="px-2 lg:pt-8">
+<form method="POST" class="my-6! lg:my-12!" use:enhance>
 
     <h1 class="text-white">Submit a new BP to the DB</h1>
     <p class="text-white">Use the form below to submit a new boiled peanut entry to the database. Please include the restaurant name and location, product name and price.</p><br>
@@ -234,12 +234,12 @@ function geoLocate() {
         <p style="color: red;">{data.error}{data?.message}</p>
     {/if}
 </form>
+</main>
 
 <style>
     form {
         display: flex;
         flex-direction: column;
-        margin-top: 1rem;
     }
 
     label {

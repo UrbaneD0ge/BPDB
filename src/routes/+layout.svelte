@@ -74,7 +74,7 @@
 
 <!-- END OF NAV BAR, MAIN DIV BELOW -->
 
-<div class="flex flex-col lg:h-auto mt-auto pt-10 px-1">
+<div class="flex flex-col lg:h-auto mt-auto pt-10 lg:pt-0">
 
 	{@render children()}
 

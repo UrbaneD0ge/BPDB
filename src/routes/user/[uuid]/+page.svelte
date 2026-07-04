@@ -30,7 +30,9 @@ let mapBounds = $derived.by(() => {
     <title>User: {ratings[0]?.user_display_name}'s ratings</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row items-center justify-between gap-4 mt-4 w-full">
+<main class="m-2 lg:m-8 lg:mt-12">
+
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
 
 {#if data.error}
 <h3>{data?.error}</h3>
@@ -71,12 +73,12 @@ let mapBounds = $derived.by(() => {
     </Marker>
 {/each}
 
-  </MapLibre>
+</MapLibre>
 </div>
 
 <table class="w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg shadow-lg overflow-hidden mt-5">
     <tbody>
-    {#if large.current}
+        {#if large.current}
         <tr>
             <!-- <th>rating ID</th> -->
             <th hidden={!large.current}>Restaurant<br>"Product"</th>
@@ -137,13 +139,15 @@ let mapBounds = $derived.by(() => {
         </tbody>
         {/each}
     {:else}
-        <tbody>
-            <tr>
-                <td colspan={large.current ? 8 : 7}><i>No ratings yet.</i></td>
+    <tbody>
+        <tr>
+            <td colspan={large.current ? 8 : 7}><i>No ratings yet.</i></td>
             </tr>
         </tbody>
     {/if}
     </table>
+
+</main>
 
     <style lang="postcss">
 @reference "tailwindcss";

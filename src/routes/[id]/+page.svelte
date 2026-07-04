@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 const large = new MediaQuery('min-width: 1024px');
 let { data } = $props();
-// $inspect(data);
+$inspect(data);
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
@@ -46,9 +46,11 @@ let avgDone = $derived.by(() => {
     <title>Peanut rating: {peanut.resto_name} {peanut.product}</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row items-center justify-between gap-4 my-4">
+<main class="h-svh px-2 py-2 lg:px-8 lg:py-12">
 
-    <div class="text-white w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-4">
+
+        <div class="text-white w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
         <h1 class="font-rounded-extrabold">{peanut.resto_name}: "{peanut.product}"</h1>
         <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
         <p>Address: {peanut.address}</p>
@@ -76,7 +78,7 @@ let avgDone = $derived.by(() => {
   </MapLibre>
 </div>
 
-<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden">
+<table class="table-auto w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg overflow-hidden shadow-sm/25">
     <tbody>
         <tr>
             <!-- <th>rating ID</th> -->
@@ -91,8 +93,8 @@ let avgDone = $derived.by(() => {
     </tbody>
 
     {#if ratings[0] !== null}
-        {#each ratings as rating}
-        <tbody>
+    {#each ratings as rating}
+    <tbody>
             <tr>
                 <!-- <td>{rating.id}</td> -->
                 <td><b>{rating?.overall}</b></td>
@@ -101,11 +103,11 @@ let avgDone = $derived.by(() => {
                 <td>{rating?.salty}</td>
                 <td>{rating?.spicy}</td>
                 <td>{rating?.servings}</td>
-                <td hidden={!large.current}>{rating?.notes || '-'}<br><span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
+                <td hidden={!large.current}>{rating?.notes || '-'}<br><span class="text-sm italic text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
             </tr>
         {#if !large.current}
             <tr>
-                <td colspan="6">{rating?.notes || '-'}  <span class="text-sm text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
+                <td colspan="6">{rating?.notes || '-'}<br><span class="text-sm italic text-gray-500"> {new Date(rating?.created_at).toLocaleDateString()} - <a href='/user/${rating?.user_id}'>{rating?.display_name}</a></span></td>
             </tr>
         {/if}
         </tbody>
@@ -113,11 +115,11 @@ let avgDone = $derived.by(() => {
         <tbody>
             <tr class="italic">
                 <td>{avgOverall}</td>
-                <td>{avgServings}</td>
                 <td>{avgDone}</td>
                 <td>{avgBrine}</td>
                 <td>{avgSalty}</td>
                 <td>{avgSpicy}</td>
+                <td>{avgServings}</td>
                 <td hidden={!large.current}>-- Averages --</td>
             </tr>
         </tbody>
@@ -130,6 +132,7 @@ let avgDone = $derived.by(() => {
     {/if}
     </table>
 
+</main>
 
 <style lang="postcss">
 @reference "tailwindcss";
@@ -160,7 +163,11 @@ let avgDone = $derived.by(() => {
         text-decoration: underline;
     }
 
-    span {
-        font-family: 'M PLUS Rounded 1c', sans-serif;
+    @media (max-width: 420px) {
+        td,th {
+            /* font-size: 0.8rem; */
+            padding: 4px;
+            margin: 0;
+        }
     }
 </style>

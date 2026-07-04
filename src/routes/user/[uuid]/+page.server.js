@@ -1,4 +1,5 @@
 import { supabase } from "$lib/supabaseClient";
+import { redirect } from "@sveltejs/kit";
 
 export async function load({ url }) {
     const uuid = url.pathname.split('/')[2].slice(1); // Extract the UUID from the URL
@@ -10,7 +11,7 @@ export async function load({ url }) {
 
     if (userInfoError) {
         console.error('Error fetching user info:', userInfoError);
-        throw userInfoError;
+        throw redirect(303, '/error');
     }
     // userInfo should be an array with 0 or 1 row
 

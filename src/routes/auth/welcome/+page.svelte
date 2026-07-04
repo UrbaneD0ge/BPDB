@@ -6,8 +6,7 @@
     // $inspect(data.session.user.user_metadata.display_name);
 </script>
 
-<main class="flex flex-col lg:w-2/3 m-auto justify-center gap-4 font-rounded-regular">
-
+<main class="flex flex-col lg:w-2/3 m-auto justify-center gap-4 font-rounded-regular px-2 py-2 lg:px-8 lg:py-12">
     <h1>Welcome to the BPDB{data.session ? `, ${data.session?.user.user_metadata.display_name}!` : '!'}</h1>
 
     <!-- INSERT A WELCOME IMAGE -->

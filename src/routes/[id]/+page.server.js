@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { supabase } from "$lib/supabaseClient";
 import { applyAction } from '$app/forms';
+import {redirect} from "@sveltejs/kit";
 
 export async function load({ url }) {
     const peanut_id = url.pathname.slice(1);
@@ -10,9 +11,17 @@ export async function load({ url }) {
         throw error(404, 'Not found');
     }
 
+
+
     // console.log('Fetching peanut data for ID:', peanut_id);
 
     const { data, error: dbError } = await supabase.rpc('get_peanut_and_reviews', { p_id: peanut_id });
+
+    // If the peanut_id is not in the db, redirect to the error page
+    if (data && data.length === 0) {
+        throw redirect(303, '/error');
+    }
+
 
     // console.log('Get peanut and reviews:', { data, error: dbError });
 
