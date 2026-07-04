@@ -83,13 +83,13 @@ let mapBounds = $derived.by(() => {
   {#each data.peanuts as peanut}
     <Marker lnglat={[peanut.x, peanut.y]} anchor="bottom">
         {#snippet content()}
-          <Peanut size={13} clipHeight={peanut?.avg_overall * 10} />
+          <Peanut size={13} clipHeight={peanut?.avg_overall * 10} disableHoverEffects={true} />
         {/snippet}
       <Popup openOn="click" offset={[0, -40]}>
         <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
           <strong>{peanut.resto_name}</strong><br>
           "{peanut.product}"<br>
-          Overall Rating: <b>{peanut.avg_overall}</b>
+          Overall Rating: <b>{peanut.avg_overall?.toFixed(2) || '-'}</b>
           <!-- Submitted: {new Date(peanut.created_at).toLocaleDateString()} -->
         </div>
       </Popup>

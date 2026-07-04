@@ -1,5 +1,5 @@
 <script>
-    let { clipHeight = 100, size = 100 } = $props();
+    let { clipHeight = 100, size = 100, rotation = 45, disableHoverEffects = false } = $props();
     const uid = $props.id();
 
     const normalizedClipHeight = $derived.by(() => {
@@ -12,6 +12,14 @@
         const value = Number(size);
         if (!Number.isFinite(value) || value <= 0) return 100;
         return value;
+    });
+
+    const normalizedRotation = $derived.by(() => {
+        const value = Number(rotation);
+        if (!Number.isFinite(value)) return 45;
+        // Keep the rotation between 0 and 360 degrees
+        const valueMod = value % 360;
+        return valueMod;
     });
 
     const peanutPath =
@@ -27,7 +35,9 @@
     viewBox="0 0 100 100"
     version="1.1"
     id="svg-{uid}"
-    style="--clip-target-height: {normalizedClipHeight}%;"
+    style="--clip-target-height: {normalizedClipHeight}%; --svg-rotation: {normalizedRotation}deg;"
+    class:spin-on-hover={normalizedClipHeight === 100}
+    class:no-hover-effects={disableHoverEffects}
     xmlns="http://www.w3.org/2000/svg"
 >
     <defs>
@@ -68,13 +78,17 @@
     svg {
         display: block;
         margin: 0 0;
-        transform: rotate(45deg);
+        transform: rotate(var(--svg-rotation));
         filter: drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.9));
     }
 
     /* Animate only the clip rectangle and stop at the provided clipHeight. */
-    svg:hover .clip-rect {
+    svg:not(.no-hover-effects):hover .clip-rect {
         animation: fillClipAnimation 1s forwards;
+    }
+
+    .spin-on-hover:not(.no-hover-effects):hover {
+        animation: spinPeanut 0.9s linear;
     }
 
     @keyframes fillClipAnimation {
@@ -83,6 +97,15 @@
         }
         to {
             height: var(--clip-target-height);
+        }
+    }
+
+    @keyframes spinPeanut {
+        from {
+            transform: rotate(var(--svg-rotation));
+        }
+        to {
+            transform: rotate(calc(var(--svg-rotation) + 360deg));
         }
     }
 </style>

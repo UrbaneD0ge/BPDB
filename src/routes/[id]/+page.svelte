@@ -1,6 +1,7 @@
 <script>
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import { MediaQuery } from 'svelte/reactivity';
+import Peanut from '$lib/Peanut.svelte';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 const large = new MediaQuery('min-width: 1024px');
@@ -50,15 +51,24 @@ let avgDone = $derived.by(() => {
 
     <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-4">
 
+        <!-- RESTAURANT PROFILE CARD -->
         <div class="text-white w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
-        <h1 class="font-rounded-extrabold">{peanut.resto_name}: "{peanut.product}"</h1>
-        <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
-        <p>Address: {peanut.address}</p>
-        <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
-        <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
-        <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p><br>
-        <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length >= 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
-    </div>
+
+            <div class="flex flex-row justify-between">
+                <h1 class="font-rounded-extrabold">{peanut.resto_name}:<br>"{peanut.product}"</h1>
+                <Peanut size={22} clipHeight={avgOverall * 10} rotation={0} />
+                <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
+            </div>
+
+            <div>
+                <p>Address: {peanut.address}</p>
+                <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
+                <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
+                <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p><br>
+                <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length >= 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
+
+            </div>
+        </div>
 
 <!-- TODO: Display the restaurant location on the map -->
   <MapLibre
@@ -168,6 +178,14 @@ let avgDone = $derived.by(() => {
             /* font-size: 0.8rem; */
             padding: 4px;
             margin: 0;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 1.2rem;
         }
     }
 </style>
