@@ -6,9 +6,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 // export let data;
 let { data } = $props();
-const star = '🥜';
-let peanutList;
-let hasListOverflow = $state(false);
+// const star = '🥜';
 
 let mapBounds = $derived.by(() => {
     if (!data.peanuts?.length) return undefined;
@@ -27,48 +25,23 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-  function updateListOverflow() {
-    hasListOverflow = Boolean(peanutList && peanutList.scrollHeight > peanutList.clientHeight + 1);
-  }
-
-  onMount(() => {
-    updateListOverflow();
-
-    const resizeObserver = new ResizeObserver(() => {
-      updateListOverflow();
-    });
-
-    if (peanutList) {
-      resizeObserver.observe(peanutList);
-    }
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  });
-
-  $effect(() => {
-    data.peanuts;
-    peanutList;
-    updateListOverflow();
-  });
-
 </script>
-
-<h1 class="font-rounded-extrabold">BPDB: Boiled Peanut DataBase</h1>
 
 <main class="flex flex-col-reverse lg:flex-row justify-between items-start gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol bind:this={peanutList} class:peanut-list-fade={hasListOverflow} class="flex flex-col w-full lg:w-1/3 lg:h-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[90svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 p-2">
+    {#if !data.peanuts?.length}
+      <p class="text-white">No peanuts found. Be the first to submit one!</p>
+    {/if}
 
-    {#each data.peanuts as peanut}
+    {#each data.peanuts as peanut (peanut.id)}
 
-    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-2 mb-4 shadow-md gap-4">
+    <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <Peanut size={16} clipHeight={peanut.avg_overall * 5} />
+        <Peanut size={20} clipHeight={peanut?.avg_overall * 10} style="filter: drop-shadow(0px 2px 5px rgba(140, 140, 0, 0.9));" />
         <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3>
         <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
-         <h4>{parseInt(peanut?.avg_overall * 10)}</h4>
+         <h4>{parseInt(peanut?.avg_overall || 0)}</h4>
       </div>
 
       <div>
@@ -81,7 +54,7 @@ let mapBounds = $derived.by(() => {
       </div>
     </div>
     {/each}
-    <div class="flex flex-row border border-black rounded-lg bg-gray-600/90 text-white p-6 mb-4 shadow-md">
+    <div class="flex flex-row border border-gray-600 bg-gray-600 rounded-lg text-white p-6 mb-4 shadow-md">
       <div class="flex flex-col items-center justify-center w-30">
         <h3 class="text-3xl font-rounded-extrabold">???</h3>
       </div>
@@ -101,7 +74,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="w-full h-80 lg:h-212 lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="w-full h-80 lg:h-[85svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}

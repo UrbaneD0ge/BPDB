@@ -1,59 +1,73 @@
 <script>
     let { clipHeight = 100, size = 100 } = $props();
+    const uid = $props.id();
+
+    const normalizedClipHeight = $derived.by(() => {
+        const value = Number(clipHeight);
+        if (!Number.isFinite(value)) return 100;
+        return Math.max(0, Math.min(100, value));
+    });
+
+    const normalizedSize = $derived.by(() => {
+        const value = Number(size);
+        if (!Number.isFinite(value) || value <= 0) return 100;
+        return value;
+    });
 
     const peanutPath =
         'M 50,3.8300781 C 37.583774,3.7810701 27.550781,14.764299 27.550781,28.291016 v 0.0039 c 0.01994,9.193332 7.151217,14.499831 7.558594,21.646484 -0.0011,0.01955 -0.0027,0.03908 -0.0039,0.05859 0.0012,0.01952 0.0028,0.03905 0.0039,0.05859 -0.407377,7.146653 -7.538652,12.453152 -7.558594,21.646484 v 0.0039 C 27.550781,85.235701 37.583774,96.21893 50,96.169922 62.416226,96.21893 72.449219,85.235701 72.449219,71.708984 v -0.0039 c -0.01994,-9.193332 -7.151217,-14.499831 -7.558594,-21.646484 0.0011,-0.01955 0.0027,-0.03908 0.0039,-0.05859 -0.0012,-0.01952 -0.0028,-0.03905 -0.0039,-0.05859 0.407377,-7.146653 7.538652,-12.453152 7.558594,-21.646484 v -0.0039 C 72.449219,14.764299 62.416226,3.7810701 50,3.8300781 Z M 50.000024,50 50.000049,96.169906 50.000074,50 50.000049,3.830094 Z m -18.386707,9.333144 c 0,0 11.821933,-1.580839 18.386683,-1.620017 M 31.613317,40.666856 c 0,0 11.821933,1.580839 18.386683,1.620017 m 18.386781,17.046271 c 0,0 -11.821933,-1.580839 -18.386683,-1.620017 M 68.386781,40.666856 c 0,0 -11.821933,1.580839 -18.386683,1.620017 M 27.835026,68.588597 c 0,0 11.501764,-2.309885 22.164974,-2.342843 M 27.835026,31.411403 c 0,0 11.501764,2.309885 22.164974,2.342843 m 22.165072,34.834351 c 0,0 -11.501764,-2.309885 -22.164974,-2.342843 M 72.165072,31.411403 c 0,0 -11.501764,2.309885 -22.164974,2.342843 M 28.698569,79.46756 c 0,0 7.573178,-2.973688 21.30148,-2.973688 13.728302,0 21.30148,2.973688 21.30148,2.973688 M 28.698569,20.53244 c 0,0 7.573178,2.973688 21.30148,2.973688 13.728302,0 21.30148,-2.973688 21.30148,-2.973688 M 34.124906,89.035974 c 0,0 5.215724,-3.278712 15.875094,-3.278712 M 34.124906,10.964026 c 0,0 5.215724,3.278712 15.875094,3.278712 m 15.875192,74.793236 c 0,0 -5.215724,-3.278712 -15.875094,-3.278712 M 65.875192,10.964026 c 0,0 -5.215724,3.278712 -15.875094,3.278712 M 47.608957,3.958301 C 44.982877,6.16597 36.280682,14.360221 36.174758,26.077669 36.058652,38.921544 44.496768,41.291677 44.432038,50 c 0.06473,8.708323 -8.373386,11.078456 -8.25728,23.922331 0.105924,11.717448 8.808119,19.911699 11.434199,22.119368 M 52.391141,3.958301 C 55.017221,6.16597 63.719416,14.360221 63.82534,26.077669 63.941446,38.921544 55.50333,41.291677 55.56806,50 55.50333,58.708323 63.941446,61.078456 63.82534,73.922331 63.719416,85.639779 55.017221,93.83403 52.391141,96.041699';
 
     const peanutOuterPath =
         'M 50,3.8300781 C 37.583774,3.7810701 27.550781,14.764299 27.550781,28.291016 v 0.0039 c 0.01994,9.193332 7.151217,14.499831 7.558594,21.646484 -0.0011,0.01955 -0.0027,0.03908 -0.0039,0.05859 0.0012,0.01952 0.0028,0.03905 0.0039,0.05859 -0.407377,7.146653 -7.538652,12.453152 -7.558594,21.646484 v 0.0039 C 27.550781,85.235701 37.583774,96.21893 50,96.169922 62.416226,96.21893 72.449219,85.235701 72.449219,71.708984 v -0.0039 c -0.01994,-9.193332 -7.151217,-14.499831 -7.558594,-21.646484 0.0011,-0.01955 0.0027,-0.03908 0.0039,-0.05859 -0.0012,-0.01952 -0.0028,-0.03905 -0.0039,-0.05859 0.407377,-7.146653 7.538652,-12.453152 7.558594,-21.646484 v -0.0039 C 72.449219,14.764299 62.416226,3.7810701 50,3.8300781 Z';
+</script>
 
-    let peanutSvg = $derived.by(() => `
 <svg
-    width="${size}mm"
-    height="${size}mm"
+    width="{normalizedSize}mm"
+    height="{normalizedSize}mm"
     viewBox="0 0 100 100"
     version="1.1"
-    id="svg1"
-    docname="peanutglobe.svg"
-    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-    xmlns:sodipodi="http://sodipodi.sourceforge.io/DTD/sodipodi-0.dtd"
+    id="svg-{uid}"
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:svg="http://www.w3.org/2000/svg"
 >
     <defs>
-
-        <clipPath id="peanutFillClip">
-            <path d="${peanutOuterPath}"></path>
+        <clipPath id="peanutFillClip-{uid}">
+            <path d={peanutOuterPath}></path>
         </clipPath>
 
-        <clipPath id="verticalClip">
-            <rect x="0" y="0" width="100" height="${clipHeight}" />
+        <clipPath id="verticalClip-{uid}">
+            <rect x="0" y="0" width="100" height={normalizedClipHeight} />
         </clipPath>
     </defs>
+
     <g
-        id="g59"
         transform="rotate(180,50,50)"
         style="stroke-width:0.26458333;stroke-dasharray:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#a38226;stroke-opacity:1"
-        inkscape:label="Components"
     >
-        <g clip-path="url(#verticalClip)">
+        <g clip-path="url(#verticalClip-{uid})">
             <rect
                 x="0"
                 y="0"
                 width="100"
                 height="100"
-                style="fill:#765d1f;fill-opacity:1;stroke:none;clip-path:url(#peanutFillClip)"
+                clip-path="url(#peanutFillClip-{uid})"
+                style="fill-opacity:1;stroke:none"
+                fill="#765d1f"
             ></rect>
         </g>
+
         <path
-            id="peanut"
+            id="peanutPath-outline"
             style="baseline-shift:baseline;display:inline;overflow:visible;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#a38226;stroke-width:1.32291667;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#a38226;stop-opacity:1"
-            inkscape:label="Outline"
-            d="${peanutPath}"
-            sodipodi:nodetypes="csscssssssscccccccccccccccccccccccccccscsc"
+            d={peanutPath}
         ></path>
     </g>
-</svg>`);
-</script>
+</svg>
 
-{@html peanutSvg}
+<style>
+    svg {
+        display: block;
+        margin: 0 0;
+        transform: rotate(45deg);
+        filter: drop-shadow(5px 2px 5px rgba(0, 0, 0, 0.9));
+    }
+</style>

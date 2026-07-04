@@ -42,7 +42,7 @@
 
 	<!-- Put the peanut SVG here -->
 	<div class="flex items-center">
-		<h1 class="m-0! leading-0"><a href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img src="/peanutglobe.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
+		<h1 class="m-0! leading-0"><a id="peanut-logo-link" href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img id="peanut-logo" src="/peanutglobe.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
 	</div>
 
 	<div>
@@ -74,7 +74,7 @@
 
 <!-- END OF NAV BAR, MAIN DIV BELOW -->
 
-<div class="flex flex-col lg:h-auto justify-end pt-10 px-1">
+<div class="flex flex-col lg:h-auto mt-auto pt-10 px-1">
 
 	{@render children()}
 
@@ -116,6 +116,19 @@
 
 	:global(nav) {
 		view-transition-name: nav;
+	}
+
+	@media (max-width: 380px) {
+		#peanut-logo {
+			width: 2rem;
+			height: 2rem;
+		}
+
+		#peanut-logo-link {
+			/* Remove the link text */
+			font-size: 0;
+		}
+
 	}
 
 </style>
