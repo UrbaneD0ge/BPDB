@@ -83,7 +83,7 @@ let mapBounds = $derived.by(() => {
   {#each data.peanuts as peanut}
     <Marker lnglat={[peanut.x, peanut.y]} anchor="bottom">
         {#snippet content()}
-          <div class="text-3xl">🥜</div>
+          <Peanut size={13} clipHeight={peanut?.avg_overall * 10} />
         {/snippet}
       <Popup openOn="click" offset={[0, -40]}>
         <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
