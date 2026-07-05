@@ -4,7 +4,7 @@
     // $inspect(form);
 </script>
 
-<main class="h-svh pt-12">
+<main class="h-svh pt-12 m-2">
 
     <form method="POST">
         <h1 class="text-white">Sign In</h1>

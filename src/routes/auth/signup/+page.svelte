@@ -5,12 +5,12 @@
     let { data, form } = $props();
     // let disabled = $state(false);
 
-    $inspect(form);
+    // $inspect(form);
 </script>
 
-<main class="h-svh pt-12">
-<h1>Sign Up</h1>
-<form method="POST" use:enhance>
+<main class="h-svh pt-12 m-2">
+    <form method="POST" use:enhance>
+        <h1>Sign Up</h1>
     <p class="text-white">Sign up to be a BPDB contributor!</p><br>
     <label for="display_name">Display Name: <span class="error-message italic">{form?.fieldErrors?.fieldErrors?.display_name}</span></label>
     <input type="text" id="display_name" name="display_name" value={form?.data?.display_name} autocomplete="off" class="invalid:border-red-700! invalid:border-4"><br><br>

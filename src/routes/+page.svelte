@@ -6,7 +6,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 // export let data;
 let { data } = $props();
-// const star = '🥜';
+
+// $inspect(data);
 
 let mapBounds = $derived.by(() => {
     if (!data.peanuts?.length) return undefined;
@@ -27,9 +28,10 @@ let mapBounds = $derived.by(() => {
 
 </script>
 
+<h1 class="mx-2 text-3xl!">BPDB: The Boiled Peanut DataBase</h1>
 <main class="flex flex-col-reverse lg:flex-row justify-between lg:items-center lg:pt-0 mt-2 mx-2 gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[96svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[90svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600">
     {#if !data.peanuts?.length}
       <p class="text-white">No peanuts found. Be the first to submit one!</p>
     {/if}
@@ -43,10 +45,12 @@ let mapBounds = $derived.by(() => {
         <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
       </div>
 
+      <!-- RATING CARD -->
       <div>
-        <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}<br>"{peanut.product}"</a></li>
         <ul>
-        <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : '  -  '}</li>
+          <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}<br>"{peanut.product}"</a></li>
+          <li>{peanut.price ? `$${peanut.price.toFixed(2)}` : '  -  '}</li>
+          <li><b>{peanut?.review_count}</b> reviews so far..</li>
           <li class="font-rounded-light">Submitted: {new Date(peanut.created_at).toLocaleDateString()}</li>
           <!-- <li>Location: {peanut?.y}, {peanut?.x}</li> -->
         </ul><br>
@@ -73,7 +77,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="h-80 lg:h-[92.5svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="h-80 lg:h-[90svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
@@ -87,9 +91,9 @@ let mapBounds = $derived.by(() => {
         {/snippet}
       <Popup openOn="click" offset={[0, -40]}>
         <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
-          <strong>{peanut.resto_name}</strong><br>
-          "{peanut.product}"<br>
-          Overall Rating: <b>{peanut.avg_overall?.toFixed(1) || '-'}</b>
+          <a href={`/${peanut.id}`}><strong>{peanut.resto_name}</strong><br>
+          "{peanut.product}"<br></a>
+          Overall Rating: <b>{peanut.avg_overall?.toFixed(1) || '-'}</b> ({peanut?.review_count})<br>
           <!-- Submitted: {new Date(peanut.created_at).toLocaleDateString()} -->
         </div>
       </Popup>
@@ -100,7 +104,6 @@ let mapBounds = $derived.by(() => {
 </main>
 
 <style lang="postcss">
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;800&display=swap');
 @reference "tailwindcss";
 
 /* Ensure the font utility used in markup resolves to a real global class. */
@@ -154,12 +157,7 @@ let mapBounds = $derived.by(() => {
     background-color: transparent !important;
   }
 
-  .peanut-list-fade {
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 82%, transparent 100%);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
+  a:hover {
+    text-decoration: underline;
   }
  </style>

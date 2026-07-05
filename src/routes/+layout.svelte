@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/state';
 	import { onNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import "../app.css";
 
 	let { children, data } = $props();
@@ -17,10 +18,18 @@
     });
   });
 
+	onMount(() => {
+		if (!('serviceWorker' in navigator)) return;
+
+		navigator.serviceWorker.register('/service-worker.js', { type: 'module' }).catch((error) => {
+			console.error('Service worker registration failed:', error);
+		});
+	});
+
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/peanutglobe.svg">
+	<link rel="icon" href="/peanut_icon.svg">
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
@@ -38,7 +47,7 @@
 
 	<!-- Put the peanut SVG here -->
 	<div class="flex items-center">
-		<h1 class="m-0! leading-0"><a id="peanut-logo-link" href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img id="peanut-logo" src="/peanutglobe.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
+		<h1 class="m-0! leading-0"><a id="peanut-logo-link" href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img id="peanut-logo" src="/peanut_icon.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
 	</div>
 
 	<div>

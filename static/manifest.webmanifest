@@ -1,0 +1,18 @@
+{
+	"name": "Boiled Peanut DataBase",
+	"short_name": "BPDB",
+	"description": "Find, review, and share great boiled peanuts.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#a38226",
+	"theme_color": "#765d1f",
+	"icons": [
+		{
+			"src": "/peanut_icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
+		}
+	]
+}
