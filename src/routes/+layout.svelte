@@ -30,12 +30,8 @@
 			<a href="/">Home</a>
 		{/if} -->
 
-		{#if page.route.id !== '/auth/welcome'}
-			<a href="/auth/welcome">Welcome</a>
-		{/if}
-
 		{#if page.route.id !== '/submit' && data?.session}
-			<a href="/submit">Submit</a>
+		<a href="/submit">Submit</a>
 		{/if}
 
 	</div>
@@ -46,6 +42,7 @@
 	</div>
 
 	<div>
+
 		{#if !data?.session}
 		<a href="/auth/signup">Sign Up</a>
 		<a href="/auth/signin">Sign In</a>
@@ -59,12 +56,16 @@
 			</button>
 			<div id="user-menu-popover" popover="auto" class="user-menu-popover rounded bg-[#333] p-2 text-white shadow-lg">
 
+				{#if page.route.id !== '/auth/welcome'}
+					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/auth/welcome" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>Welcome</a>
+				{/if}
+
 				{#if page.params.uuid != `$${data?.session?.user?.id}`}
-				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
+				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
 				{/if}
 
 				<form method="POST" action="/auth/signout">
-					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out">
+					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>
 				</form>
 			</div>
 		</div>

@@ -15,6 +15,17 @@ let mapBounds = $derived.by(() => {
     const lngs = ratings.map((r) => r.lng);
     const lats = ratings.map((r) => r.lat);
 
+    // Ensure that when there is only one rating, we create a large enough bounding box around it
+    if (ratings.length === 1) {
+        const offset = 0.001; // Adjust this value as needed
+        return [
+            lngs[0] - offset,
+            lats[0] - offset,
+            lngs[0] + offset,
+            lats[0] + offset
+        ];
+    }
+
     return [
         Math.min(...lngs),
         Math.min(...lats),
@@ -23,14 +34,14 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-// $inspect(data);
+// $inspect(mapBounds, 'mapBounds');
 </script>
 
 <svelte:head>
     <title>User: {ratings[0]?.user_display_name}'s ratings</title>
 </svelte:head>
 
-<main class="m-2 lg:m-8 lg:mt-12">
+<main class="h-svh m-2 lg:m-8 lg:mt-12">
 
     <div class="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
 
@@ -40,21 +51,22 @@ let mapBounds = $derived.by(() => {
 
 <div class="text-white lg:min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
 <!-- TODO: Turn this into a badge component -->
-    <h1>User: {data?.user.display_name}</h1>
-    <h2>Joined: {new Date(data?.user.request_user_created_at).toLocaleDateString()}</h2>
-    <h2>Average Rating: <b>{data?.user.avg_overall_rating.toFixed(2)}</b></h2>
+    <h1>User: {data?.user?.display_name}</h1>
+    <h2>Joined: {new Date(data?.user?.request_user_created_at).toLocaleDateString()}</h2>
+    <h2>Average Rating: <b>{data?.user?.avg_overall_rating?.toFixed(2)}</b></h2>
     <h2>Ratings so far: <b>{ratings.length >= 1 ? ratings.length : 'None!'}</b></h2>
 </div>
 
-  <MapLibre
-    class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg"
-    // center={[ -84.3880, 33.7490 ]}
-    bounds={mapBounds}
-    fitBoundsOptions={{ padding: 50 }}
-    attributionControl={false}
-    zoom={5}
-    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-    >
+    {#key page.params.uuid}
+    <MapLibre
+        class="min-h-60 lg:h-75 w-full lg:w-2/5 rounded-lg shadow-lg"
+        // center={[ -84.3880, 33.7490 ]}
+        bounds={mapBounds}
+        fitBoundsOptions={{ padding: 50 }}
+        attributionControl={false}
+        zoom={ratings.length >= 1 ? 5 : 1}
+        style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        >
 
 {#each ratings as rating (rating?.rating_id)}
     <Marker lnglat={[ rating?.lng, rating?.lat]} anchor="bottom">
@@ -73,7 +85,8 @@ let mapBounds = $derived.by(() => {
     </Marker>
 {/each}
 
-</MapLibre>
+    </MapLibre>
+    {/key}
 </div>
 
 <table class="w-full border-collapse border border-gray-500 bg-gray-300/75 rounded-lg shadow-lg overflow-hidden mt-5">

@@ -1,13 +1,13 @@
 <script>
     let { form } = $props();
 
-    $inspect(form);
+    // $inspect(form);
 </script>
 
 <main class="h-svh pt-12">
-    <h1>Sign In</h1>
 
     <form method="POST">
+        <h1 class="text-white">Sign In</h1>
 
         <p class="text-white">Use the form below to sign in to your account.</p><br>
             <label for="email">Email: <span class="text-red-700 italic">{form?.fieldErrors?.fieldErrors?.email}</span></label>

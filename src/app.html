@@ -3,98 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;500;800&display=swap"
+			rel="stylesheet"
+		/>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover" class="font-rounded-regular min-h-svh flex flex-col">
 		<div style="display: contents" class="mt-auto">%sveltekit.body%</div>
 	</body>
 </html>
-
-<style lang="postcss">
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;500;800&display=swap');
-@reference "tailwindcss";
-
-@theme {
-	--font-rounded-light: "M PLUS Rounded 1c", sans-serif;
-	--font-rounded-regular: "M PLUS Rounded 1c", sans-serif;
-	--font-rounded-extrabold: "M PLUS Rounded 1c", sans-serif;
-}
-
-
-	:global(.m-plus-rounded-1c-light) {
-	font-family: "M PLUS Rounded 1c", sans-serif;
-	font-weight: 300;
-	font-style: normal;
-	}
-
-	:global(.m-plus-rounded-1c-medium) {
-	font-family: "M PLUS Rounded 1c", sans-serif;
-	font-weight: 500;
-	font-style: normal;
-	}
-
-	:global(.m-plus-rounded-1c-extrabold) {
-	font-family: "M PLUS Rounded 1c", sans-serif;
-	font-weight: 800;
-	font-style: normal;
-	}
-
-	form {
-		max-width: 800px;
-		margin: auto;
-		padding: 1rem;
-		background-color: #4a5565e6;
-		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-
-	h1 {
-		font-weight: 800;
-		font-size: 2rem;
-	}
-
-	p {
-		font-size: 1.5rem;
-	}
-
-	label {
-		display: block;
-		margin-bottom: 0.5rem;
-		font-weight: bold;
-	}
-
-	input[type="text"],
-	input[type="email"],
-	input[type="password"] {
-		width: 100%;
-		padding: 0.5rem;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		background-color: whitesmoke;
-	}
-
-	nav {
-		background-color: #333;
-		padding: 0;
-	}
-
-	nav a {
-		color: white;
-		margin-inline: .5rem;
-		text-decoration: none;
-	}
-
-	nav a:hover {
-		text-decoration: underline;
-	}
-
-	body {
-		background-color: #a38226;
-		margin: 0;
-		padding: 0;
-		background-image: url('/peanut_tile.svg');
-		/* backdrop-filter: blur(5 px); */
-		background-repeat: repeat;
-		background-attachment: fixed;
-	}
-</style>
