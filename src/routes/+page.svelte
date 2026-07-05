@@ -29,7 +29,7 @@ let mapBounds = $derived.by(() => {
 
 <main class="flex flex-col-reverse lg:flex-row justify-between lg:items-center lg:pt-0 mt-2 mx-2 gap-4 lg:mr-4 font-rounded-regular">
 
-  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[90svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600">
+  <ol class="flex flex-col w-full lg:w-1/3 lg:h-[96svh] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600">
     {#if !data.peanuts?.length}
       <p class="text-white">No peanuts found. Be the first to submit one!</p>
     {/if}
@@ -38,8 +38,8 @@ let mapBounds = $derived.by(() => {
 
     <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <Peanut size={20} clipHeight={peanut?.avg_overall * 10}  />
-        <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(2) || '-'}</h3>
+        <Peanut size={20} clipHeight={(peanut?.avg_overall * 10)}  />
+        <h3 class="text-3xl font-rounded-extrabold">{peanut?.avg_overall?.toFixed(1) || '-'}</h3>
         <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
       </div>
 
@@ -73,7 +73,7 @@ let mapBounds = $derived.by(() => {
   </ol>
 
   <MapLibre
-  class="h-80 lg:h-[85svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
+  class="h-80 lg:h-[92.5svh] lg:w-2/3 flex-none rounded-lg shadow-lg"
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
@@ -89,7 +89,7 @@ let mapBounds = $derived.by(() => {
         <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
           <strong>{peanut.resto_name}</strong><br>
           "{peanut.product}"<br>
-          Overall Rating: <b>{peanut.avg_overall?.toFixed(2) || '-'}</b>
+          Overall Rating: <b>{peanut.avg_overall?.toFixed(1) || '-'}</b>
           <!-- Submitted: {new Date(peanut.created_at).toLocaleDateString()} -->
         </div>
       </Popup>

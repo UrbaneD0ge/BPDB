@@ -8,6 +8,7 @@
     $inspect(form);
 </script>
 
+<main class="h-svh pt-12">
 <h1>Sign Up</h1>
 <form method="POST" use:enhance>
     <p class="text-white">Sign up to be a BPDB contributor!</p><br>
@@ -27,7 +28,7 @@
 
     <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" >Send Signup Email</button>
 </form>
-
+</main>
 <style lang="postcss">
 @reference "tailwindcss";
 

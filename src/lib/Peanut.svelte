@@ -2,9 +2,13 @@
     let { clipHeight = 100, size = 100, rotation = 45, disableHoverEffects = false } = $props();
     const uid = $props.id();
 
+    // $inspect(clipHeight, 'clipHeight');
+
     const normalizedClipHeight = $derived.by(() => {
         const value = Number(clipHeight);
         if (!Number.isFinite(value)) return 100;
+        if (value >= 85) return value - 5; // Subtract 5 to account for the peanut outline stroke width
+        if (value <= 15) return value + 5; // Add 5 to account for the peanut outline stroke width
         return Math.max(0, Math.min(100, value));
     });
 
