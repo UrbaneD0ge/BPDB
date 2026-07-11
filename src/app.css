@@ -82,3 +82,9 @@ body {
 	background-repeat: repeat;
 	background-attachment: fixed;
 }
+
+@media (max-width: 380px) {
+	p {
+		font-size: 1.2rem;
+	}
+}

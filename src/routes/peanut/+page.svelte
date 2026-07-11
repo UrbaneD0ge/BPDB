@@ -44,7 +44,7 @@
 
 <main class="h-svh flex flex-col justify-start items-center gap-4 font-rounded-regular px-2 py-2 lg:px-8 lg:py-12">
 
-    <form class="flex flex-col text-white gap- lg:gap-4 justify-start items-center m-0! z-10">
+    <form class="flex flex-col text-white gap-4 lg:gap-4 justify-start items-center m-0! z-10">
     <div>
         <h1>Peanut Picker</h1>
         <p>Make the peanut your own! Design your own peanut to live at the top of the page on this device. You can always come back and change it later.</p>
@@ -70,11 +70,14 @@
         colorspace="limited-srgb"
         alpha />
     <label for="background">Fill color</label>
-
-    <button type="button" class="bg-gray-900 text-white p-2 rounded-lg" onclick={resetColors}>Reset</button>
-
-    <button type="button" class="bg-white text-black p-2 rounded-lg" onclick={saveColors}>Save</button>
     </div>
+
+    <div class="flex flex-row gap-4 justify-center items-center">
+        <button type="button" class="bg-gray-900 text-white p-2 rounded-lg" onclick={resetColors}>Reset</button>
+
+        <button type="button" class="bg-white text-black p-2 rounded-lg" onclick={saveColors}>Save</button>
+    </div>
+
     </form>
 
     <div id="peanut-container" class="flex justify-center items-center top-[60svh] lg:top-[35svh]">
