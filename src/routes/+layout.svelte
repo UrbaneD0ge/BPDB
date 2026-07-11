@@ -3,8 +3,45 @@
 	import { onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import "../app.css";
+	import Peanut from "$lib/Peanut.svelte";
 
 	let { children, data } = $props();
+
+	let fillHex = $state("#a38226");
+	let strokeHex = $state("#765d1f");
+
+	const applySavedColors = () => {
+		const savedFillHex = localStorage.getItem('fillHex');
+		const savedStrokeHex = localStorage.getItem('strokeHex');
+		if (savedFillHex) fillHex = savedFillHex;
+		if (savedStrokeHex) strokeHex = savedStrokeHex;
+	};
+
+	const hidePopover = () => {
+		const popover = document.getElementById('user-menu-popover');
+		if (popover) {
+			popover.hidePopover();
+		}
+	};
+
+	onMount(() => {
+		applySavedColors();
+
+		const handlePeanutColorsChanged = () => applySavedColors();
+		const handleStorage = (event) => {
+			if (event.key === 'fillHex' || event.key === 'strokeHex') {
+				applySavedColors();
+			}
+		};
+
+		window.addEventListener('peanut-colors-changed', handlePeanutColorsChanged);
+		window.addEventListener('storage', handleStorage);
+
+		return () => {
+			window.removeEventListener('peanut-colors-changed', handlePeanutColorsChanged);
+			window.removeEventListener('storage', handleStorage);
+		};
+	});
 
   onNavigate((navigation) => {
     // Check if the browser supports the API
@@ -45,9 +82,15 @@
 
 	</div>
 
-	<!-- Put the peanut SVG here -->
 	<div class="flex items-center">
-		<h1 class="m-0! leading-0"><a id="peanut-logo-link" href="/" class="text-2xl font-rounded-extrabold! font-extrabold m-0!"><img id="peanut-logo" src="/peanut_icon.svg" alt="BPDB Logo" class="h-10 w-10 inline">BPDB</a></h1>
+		<h1 class="m-0!">
+			<a id="peanut-logo-link" href="/" class="inline-flex items-center gap-2 text-2xl font-rounded-extrabold! font-extrabold m-0! leading-none">
+				<span id="peanut-logo-wrap" aria-hidden="true">
+					<Peanut id="peanut-logo" size={10} clipHeight={100} rotation={45} {fillHex} {strokeHex} disableHoverEffects={true} />
+				</span>
+				<span>BPDB</span>
+			</a>
+		</h1>
 	</div>
 
 	<div>
@@ -66,15 +109,19 @@
 			<div id="user-menu-popover" popover="auto" class="user-menu-popover rounded bg-[#333] p-2 text-white shadow-lg">
 
 				{#if page.route.id !== '/auth/welcome'}
-					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/auth/welcome" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>Welcome</a>
+					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/auth/welcome" onclick={hidePopover}>Welcome</a>
+				{/if}
+
+				{#if page.route.id !== '/peanut'}
+					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/peanut" onclick={hidePopover}>Peanut</a>
 				{/if}
 
 				{#if page.params.uuid != `$${data?.session?.user?.id}`}
-				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>My Ratings</a>
+				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={hidePopover}>My Ratings</a>
 				{/if}
 
 				<form method="POST" action="/auth/signout">
-					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out" onclick={()=> document.getElementById('user-menu-popover').hidePopover()}>
+					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out" onclick={hidePopover}>
 				</form>
 			</div>
 		</div>
@@ -128,8 +175,13 @@
 		view-transition-name: nav;
 	}
 
+	#peanut-logo-wrap :global(svg) {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
 	@media (max-width: 380px) {
-		#peanut-logo {
+		#peanut-logo-wrap :global(svg) {
 			width: 2rem;
 			height: 2rem;
 		}
