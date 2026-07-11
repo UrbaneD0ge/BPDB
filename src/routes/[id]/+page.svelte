@@ -81,7 +81,8 @@ let avgDone = $derived.by(() => {
 
     <Marker lnglat={[peanut.geopoint.x, peanut.geopoint.y]} anchor="bottom">
     {#snippet content()}
-        <div class="text-3xl">🥜</div>
+        <!-- <div class="text-3xl">🥜</div> -->
+        <Peanut size="16" clipHeight={avgOverall * 10} />
     {/snippet}
     </Marker>
 

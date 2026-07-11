@@ -3,6 +3,7 @@ import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import { page } from '$app/state';
 import { MediaQuery } from 'svelte/reactivity';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import Peanut from '$lib/Peanut.svelte';
 
 const large = new MediaQuery('min-width: 1024px');
 let {data, error} = $props()
@@ -71,7 +72,8 @@ let mapBounds = $derived.by(() => {
 {#each ratings as rating (rating?.rating_id)}
     <Marker lnglat={[ rating?.lng, rating?.lat]} anchor="bottom">
      {#snippet content()}
-        <div class="text-3xl">🥜</div>
+        <!-- <div class="text-3xl">🥜</div> -->
+         <Peanut size="10" clipHeight={rating?.overall * 10} />
     {/snippet}
       <Popup openOn="click" offset={[0, -30]}>
         <div class="bg-gray-600/90 text-white" style="padding: 5px; border-radius: 8px; border: 1px solid black;">
