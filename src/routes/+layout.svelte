@@ -113,7 +113,7 @@
 				{/if}
 
 				{#if page.route.id !== '/peanut'}
-					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/peanut" onclick={hidePopover}>Peanut</a>
+					<a class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" href="/peanut" onclick={hidePopover}>Peanut Picker</a>
 				{/if}
 
 				{#if page.params.uuid != `$${data?.session?.user?.id}`}

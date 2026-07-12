@@ -59,8 +59,6 @@
         bind:value={strokeHex} />
     <label for="foreground">Stroke color</label>
 
-        <button type="button" class="bg-black text-white hover:bg-white hover:text-black p-2 rounded-lg" onclick={swapColors}>Swap</button>
-
     <input
         type="color"
         class="color-picker"
@@ -74,6 +72,8 @@
 
     <div class="flex flex-row gap-4 justify-center items-center">
         <button type="button" class="bg-gray-900 text-white p-2 rounded-lg" onclick={resetColors}>Reset</button>
+
+                <button type="button" class="bg-black text-white p-2 rounded-lg" onclick={swapColors}>Swap</button>
 
         <button type="button" class="bg-white text-black p-2 rounded-lg" onclick={saveColors}>Save</button>
     </div>
@@ -119,5 +119,10 @@
     .color-picker::-moz-color-swatch {
         border: 0;
         border-radius: 9999px;
+    }
+
+    button {
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
     }
 </style>
