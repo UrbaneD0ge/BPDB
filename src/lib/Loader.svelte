@@ -1,10 +1,12 @@
 <script>
   import { fade } from 'svelte/transition';
-  // import peanutglobe from '/peanutglobe.svg';
+  import Peanut from '$lib/Peanut.svelte';
+
+  let {fillHex = '#a38226', strokeHex = '#765d1f'} = $props();
 </script>
 
 <div class="loader" transition:fade>
-  <img src="/peanutglobe.svg" alt="Loading" />
+  <Peanut size={8} disableHoverEffects fillHex={fillHex} strokeHex={strokeHex} />
 </div>
 
 <style>
@@ -13,12 +15,6 @@
     align-items: center;
     justify-content: center;
     margin: 5px;
-  }
-
-  .loader img {
-    src: url('/peanutglobe.svg');
-    width: 30px;
-    height: 30px;
     animation: spin 2s linear infinite;
   }
 
