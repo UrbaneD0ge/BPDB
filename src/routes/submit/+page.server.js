@@ -4,7 +4,7 @@ import * as z from 'zod';
 const peanutSchema = z.object({
     resto_name: z.string().min(1, "Please enter a restaurant name").trim(),
     product_name: z.string().min(1, "Please enter a product name").trim(),
-    price: z.string().refine((val) => !val || !isNaN(parseFloat(val)), {
+    price: z.coerce.number().refine((val) => !val || !isNaN(parseFloat(val)), {
         message: "Invalid price value"
     }),
     address: z.string().min(1, "Please enter an address").trim(),

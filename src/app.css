@@ -88,3 +88,31 @@ body {
 		font-size: 1.2rem;
 	}
 }
+
+  .maplibregl-popup-content {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .maplibregl-popup-tip {
+    border-top-color: #4a5565 !important; /* Tailwind's gray-600 */
+    border-bottom-color: #4a5565 !important; /* Tailwind's gray-600 */
+  }
+
+  .maplibregl-popup-close-button {
+    padding: 1rem 1rem !important;
+    font-size: 1rem !important;
+    color: white;
+  }
+
+  .maplibregl-popup-close-button:focus {
+    border: none !important;
+    outline: none !important;
+  }
+
+  .maplibregl-popup-close-button:hover {
+    background-color: transparent !important;
+  }

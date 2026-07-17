@@ -10,6 +10,7 @@
     <title>Peanut rating</title>
 </svelte:head>
 
+<main class="h-auto p-4 lg:pt-12">
 <form class="flex flex-col items-center" method="POST">
 
     <h1 class="text-white">Rate this Peanut</h1>
@@ -330,6 +331,7 @@
 
     <input class=" bg-green-600 text-white font-bold m-2 p-2 rounded-md" type="submit" value="Submit">
 </form>
+</main>
 
 <style lang="postcss">
 @reference "tailwindcss";
