@@ -42,6 +42,7 @@ export const actions = {
             return {
                 success: false,
                 message: error.message || 'Sign-up failed',
+                data: { display_name, email }
             };
         }
 
