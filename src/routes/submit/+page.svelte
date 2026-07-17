@@ -253,7 +253,7 @@ function geoLocate() {
 
                 <button
                 onclick={(e) => {e.preventDefault(); addySearch()}}
-                class="rounded-full bg-yellow-500 text-nowrap p-2 m-2 action-button address-button"
+                class="rounded-full bg-yellow-500 text-nowrap p-2 m-2 action-button address-button w-full lg:w-auto"
                 >{#if addyLoading}
                     <Loader fillHex="#FFD700" strokeHex="#FFA500"  />
                     {:else}
@@ -268,7 +268,7 @@ function geoLocate() {
 
                 <input type="text" id="resto_name" name="resto_name" placeholder="Jimmy's Peanut Shack" bind:value={restaurantName}>
 
-                <button type="button" onclick={clearForm} class="rounded-full bg-red-500 text-nowrap p-2 m-2 action-button address-button">Clear All</button>
+                <button type="button" onclick={clearForm} class="rounded-full bg-red-500 text-nowrap p-2 m-2 action-button address-button w-full lg:w-auto">Clear All</button>
 
             </div>
 
@@ -300,7 +300,7 @@ function geoLocate() {
                 <!-- BUTTON AND LOADER -->
                         <button
                         onclick={(e) => {e.preventDefault(); geoLocate()}}
-                        class="rounded-full bg-green-500 lg:p-2 lg:m-2 action-button locate-button"
+                        class="rounded-full bg-green-500 lg:p-2 lg:m-2 action-button locate-button w-full lg:w-auto"
                         id="locate"
                         >
                     {#if geoLoading}
@@ -366,7 +366,7 @@ function geoLocate() {
         <p class="error-message">{formState.error}</p>
     {/if}
 
-    <button class="text-xl font-rounded-extrabold bg-green-500 p-2" type="submit" value="Submit">Submit Peanut!</button>
+    <button class="text-xl font-rounded-extrabold bg-green-500 p-2 w-full lg:w-auto" type="submit" value="Submit">Submit Peanut!</button>
     {#if data?.error}
         <p style="color: red;">{data.error}{data?.message}</p>
     {/if}

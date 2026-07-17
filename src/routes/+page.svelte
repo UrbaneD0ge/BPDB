@@ -38,6 +38,7 @@ let mapBounds = $derived.by(() => {
 
     {#each data.peanuts as peanut (peanut.id)}
 
+    <!-- RATING CARD -->
     <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
         <Peanut size={20} clipHeight={(peanut?.avg_overall * 10)}  />
@@ -45,7 +46,6 @@ let mapBounds = $derived.by(() => {
         <!-- <h4>{star.repeat(parseInt(peanut.avg_overall))}</h4> -->
       </div>
 
-      <!-- RATING CARD -->
       <div>
         <ul>
           <li><a class="text-green-500 hover:underline text-xl" href={`/${peanut.id}`}>{peanut.resto_name}<br>"{peanut.product}"</a></li>
@@ -57,12 +57,13 @@ let mapBounds = $derived.by(() => {
       </div>
     </div>
     {/each}
-    <div class="flex flex-row border border-gray-600 bg-gray-600 rounded-lg text-white p-6 mb-4 shadow-md">
+    <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
+        <Peanut size={20} clipHeight={100} strokeHex="#333333" fillHex="#000000" />
         <h3 class="text-3xl font-rounded-extrabold">???</h3>
       </div>
 
-      <div>
+      <div class="flex flex-col justify-center">
         <li><a class="text-green-500 hover:underline text-xl" href={data.session? '/submit' : '/auth/signup'}>Submit a Peanut</a></li>
         <ul>
         <li>Your Peanut Goes HERE!</li>

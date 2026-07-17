@@ -5,6 +5,7 @@
         "lnglat",
         "lons",
         "maplibre",
+        "maplibregl",
         "peanutglobe",
         "PGAPIKEY",
         "resto",
