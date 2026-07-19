@@ -1,5 +1,7 @@
 <script>
-    import { page } from '$app/state';
+    import { enhance } from '$app/forms';
+    import { navigating, page } from '$app/state';
+    import Loader from '$lib/Loader.svelte';
     let { data } = $props();
     import Slider from "$lib/Slider.svelte";
     // console.log(data.session.user.id)
@@ -13,6 +15,19 @@
         { name: 'overall', message: 'The ultimate question: How would you rate this peanut overall? 10 is excellent, 1 is poor.' }
     ];
 
+    let isSubmitting = $state(false);
+    const isNavigating = $derived(Boolean(navigating.to));
+    const showLoader = $derived(isSubmitting || isNavigating);
+
+    const enhanceRatingForm = () => {
+        isSubmitting = true;
+
+        return async ({ update }) => {
+            await update();
+            isSubmitting = false;
+        };
+    };
+
 </script>
 
 
@@ -20,8 +35,14 @@
     <title>Peanut rating</title>
 </svelte:head>
 
+{#if showLoader}
+    <div class="loader-overlay" aria-live="polite" aria-busy="true">
+        <Loader />
+    </div>
+{/if}
+
 <main class="h-auto p-4 lg:pt-12">
-<form class="flex flex-col items-center" method="POST">
+<form class="flex flex-col items-center" method="POST" use:enhance={enhanceRatingForm}>
 
     <h1 class="text-white">Rate this Peanut</h1>
 
@@ -44,7 +65,7 @@
         <textarea id="notes" name="notes" class="bg-gray-100 border-2 rounded-lg w-full" cols="80" rows="8"></textarea>
     </div>
 
-    <input class=" bg-green-600 text-white font-bold m-2 p-2 rounded-md cursor-pointer" type="submit" value="Submit">
+    <input class="bg-green-600 text-white font-bold m-2 p-2 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-wait" type="submit" value="Submit" disabled={showLoader}>
 </form>
 </main>
 
@@ -62,6 +83,17 @@ fieldset {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: white;
+}
+
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0 0 0 / 0.35);
+    backdrop-filter: blur(2px);
+    z-index: 50;
 }
 
 /* input[type="radio"] {

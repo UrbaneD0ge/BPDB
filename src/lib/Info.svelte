@@ -83,7 +83,7 @@
         line-height: 1.2rem;
         border-radius: 50%;
         cursor: pointer;
-        z-index: 1000;
+        z-index: 10;
     }
 
     .info-button:hover {

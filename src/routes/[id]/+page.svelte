@@ -6,7 +6,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 const large = new MediaQuery('min-width: 1024px');
 let { data } = $props();
-$inspect(data);
+// $inspect(data);
 
 let peanut = $derived(data?.data[0]?.peanut);
 let ratings = $derived(data?.data[0]?.reviews);
