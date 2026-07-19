@@ -1,18 +1,89 @@
 <script>
-import { onMount } from 'svelte';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-  import Peanut from '$lib/Peanut.svelte';
+import Peanut from '$lib/Peanut.svelte';
 
 // export let data;
 let { data } = $props();
+let mapZoom = $state(5);
+const CLUSTER_CELL_SIZE = 64;
+const CLUSTER_ZOOM_STEP = 1;
+
+const validPeanuts = $derived(data.peanuts?.filter((p) => p.x !== null && p.y !== null) ?? []);
+
+function projectToPixel(lon, lat, zoom) {
+  const scale = 256 * Math.pow(2, zoom);
+  const x = ((lon + 180) / 360) * scale;
+
+  const clampedLat = Math.max(-85.05112878, Math.min(85.05112878, lat));
+  const latRad = (clampedLat * Math.PI) / 180;
+  const y =
+    ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * scale;
+
+  return { x, y };
+}
+
+function clusterPeanuts(peanuts, zoomBucket) {
+  if (!peanuts.length) {
+    return [];
+  }
+
+  const buckets = new Map();
+
+  for (const peanut of peanuts) {
+    const pixel = projectToPixel(peanut.x, peanut.y, zoomBucket);
+    const key = `${Math.floor(pixel.x / CLUSTER_CELL_SIZE)}:${Math.floor(pixel.y / CLUSTER_CELL_SIZE)}`;
+    const existing = buckets.get(key);
+
+    if (!existing) {
+      buckets.set(key, {
+        key,
+        peanuts: [peanut],
+        lonSum: peanut.x,
+        latSum: peanut.y,
+        avgOverallSum: peanut.avg_overall ?? 0,
+        ratedCount: peanut.avg_overall == null ? 0 : 1
+      });
+      continue;
+    }
+
+    existing.peanuts.push(peanut);
+    existing.lonSum += peanut.x;
+    existing.latSum += peanut.y;
+    existing.avgOverallSum += peanut.avg_overall ?? 0;
+    if (peanut.avg_overall != null) {
+      existing.ratedCount += 1;
+    }
+  }
+
+  return Array.from(buckets.values()).map((bucket) => {
+    const sortedIds = bucket.peanuts
+      .map((peanut) => peanut.id)
+      .sort((a, b) => String(a).localeCompare(String(b)));
+
+    const count = bucket.peanuts.length;
+
+    return {
+      key: bucket.key,
+      count,
+      lnglat: [bucket.lonSum / count, bucket.latSum / count],
+      peanuts: bucket.peanuts,
+      avgOverall: bucket.ratedCount > 0 ? bucket.avgOverallSum / bucket.ratedCount : null,
+      renderKey:
+        count === 1
+          ? `single:${sortedIds[0]}`
+          : `cluster:${zoomBucket}:${sortedIds.join('-')}`
+    };
+  });
+}
+
+const clusterZoom = $derived(Math.round(mapZoom / CLUSTER_ZOOM_STEP) * CLUSTER_ZOOM_STEP);
+const clusteredPeanuts = $derived(clusterPeanuts(validPeanuts, clusterZoom));
 
 // $inspect(data);
 
 let mapBounds = $derived.by(() => {
-    if (!data.peanuts?.length) return undefined;
-    // Filter out peanuts without valid coordinates
-    const validPeanuts = data.peanuts.filter(p => p.x !== null && p.y !== null);
+  if (!data.peanuts?.length) return undefined;
     if (validPeanuts.length === 0) return undefined;
 
     const lons = validPeanuts.map((r) => r.x);
@@ -82,11 +153,13 @@ let mapBounds = $derived.by(() => {
   // center={[-84.3880, 33.7490]}
   bounds={mapBounds}
   fitBoundsOptions={{ padding: 125 }}
-  zoom={5}
+  bind:zoom={mapZoom}
   style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" >
 
-  {#each data.peanuts as peanut}
-    <Marker lnglat={[peanut.x, peanut.y]} anchor="bottom">
+  {#each clusteredPeanuts as cluster (cluster.renderKey)}
+    {#if cluster.count === 1}
+    {@const peanut = cluster.peanuts[0]}
+    <Marker lnglat={cluster.lnglat} anchor="bottom">
         {#snippet content()}
           <Peanut size={13} clipHeight={peanut?.avg_overall * 10} disableHoverEffects={true} />
         {/snippet}
@@ -99,6 +172,24 @@ let mapBounds = $derived.by(() => {
         </div>
       </Popup>
     </Marker>
+    {:else}
+    <Marker lnglat={cluster.lnglat} anchor="center">
+      {#snippet content()}
+        <button type="button" class="cluster-pin" aria-label={`${cluster.count} peanuts in this area`}>
+          {cluster.count}
+        </button>
+      {/snippet}
+      <Popup openOn="click" offset={[0, -10]}>
+        <div class="bg-gray-600/90 text-white" style="padding: 8px; border-radius: 8px; border: 1px solid black;">
+          <strong>{cluster.count} peanuts nearby</strong><br>
+          {#if cluster.avgOverall != null}
+            Avg rating in cluster: <b>{cluster.avgOverall.toFixed(1)}</b><br>
+          {/if}
+          Zoom in to view individual peanuts.
+        </div>
+      </Popup>
+    </Marker>
+    {/if}
     {/each}
   </MapLibre>
 
@@ -138,9 +229,24 @@ let mapBounds = $derived.by(() => {
     box-shadow: none !important;
   }
 
-  :global(.maplibregl-popup-tip) {
-    border-top-color: #4a5565 !important; /* Tailwind's gray-600 */
-    border-bottom-color: #4a5565 !important; /* Tailwind's gray-600 */
+  :global(.maplibregl-popup-anchor-top .maplibregl-popup-tip),
+  :global(.maplibregl-popup-anchor-top-left .maplibregl-popup-tip),
+  :global(.maplibregl-popup-anchor-top-right .maplibregl-popup-tip) {
+    border-color: transparent transparent #4a5565 transparent !important; /* Tailwind's gray-600 */
+  }
+
+  :global(.maplibregl-popup-anchor-bottom .maplibregl-popup-tip),
+  :global(.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip),
+  :global(.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip) {
+    border-color: #4a5565 transparent transparent transparent !important; /* Tailwind's gray-600 */
+  }
+
+  :global(.maplibregl-popup-anchor-left .maplibregl-popup-tip) {
+    border-color: transparent #4a5565 transparent transparent !important; /* Tailwind's gray-600 */
+  }
+
+  :global(.maplibregl-popup-anchor-right .maplibregl-popup-tip) {
+    border-color: transparent transparent transparent #4a5565 !important; /* Tailwind's gray-600 */
   }
 
   :global(.maplibregl-popup-close-button) {
@@ -156,6 +262,22 @@ let mapBounds = $derived.by(() => {
 
   :global(.maplibregl-popup-close-button:hover) {
     background-color: transparent !important;
+  }
+
+  .cluster-pin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    border: 2px solid #00c951;
+    background: #f8f5e9;
+    color: #1f2937;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.35);
+    cursor: pointer;
   }
 
   a:hover {
