@@ -54,7 +54,7 @@ const thumbPercent = $derived.by(() => {
       bind:value={sliderValue}
     />
     <div class="thumb" style={`left: clamp(0.75rem, ${thumbPercent}%, calc(100% - 0.75rem));`} aria-hidden="true">
-      <Peanut size={12} clipHeight={sliderValue * 10} rotation={45} disableHoverEffects={true} strokeHex="#000" fillHex="#ffd300" />
+      <Peanut size={12} clipHeight={sliderValue * 10} rotation={45} disableHoverEffects={true} strokeHex="#D2B48C" />
     </div>
   </div>
 </div>

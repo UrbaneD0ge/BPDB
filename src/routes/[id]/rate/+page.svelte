@@ -37,7 +37,7 @@
 
 {#if showLoader}
     <div class="loader-overlay" aria-live="polite" aria-busy="true">
-        <Loader />
+        <Loader size={40} />
     </div>
 {/if}
 

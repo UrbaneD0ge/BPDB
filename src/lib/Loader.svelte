@@ -2,11 +2,11 @@
   import { fade } from 'svelte/transition';
   import Peanut from '$lib/Peanut.svelte';
 
-  let {fillHex = '#a38226', strokeHex = '#765d1f'} = $props();
+  let {fillHex = '#a38226', strokeHex = '#765d1f', size = 8} = $props();
 </script>
 
 <div class="loader" transition:fade>
-  <Peanut size={8} disableHoverEffects fillHex={fillHex} strokeHex={strokeHex} />
+  <Peanut size={size} disableHoverEffects fillHex={fillHex} strokeHex={strokeHex} />
 </div>
 
 <style>

@@ -59,7 +59,7 @@ let mapBounds = $derived.by(() => {
     {/each}
     <div class="flex flex-row border border-gray-600 bg-gray-600 inset-shadow-sm/25 rounded-lg text-white p-2 mb-4 gap-4">
       <div class="flex flex-col items-center justify-center w-30">
-        <Peanut size={20} clipHeight={100} strokeHex="#333333" fillHex="#000000" />
+        <Peanut size={20} clipHeight={0} strokeHex="#333333" fillHex="#000000" />
         <h3 class="text-3xl font-rounded-extrabold">???</h3>
       </div>
 

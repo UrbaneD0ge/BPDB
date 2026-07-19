@@ -1,5 +1,5 @@
 <script>
-    let { clipHeight = 100, size = 100, rotation = 45, disableHoverEffects = false, fillHex = '#765d1f', strokeHex = '#a38226' } = $props();
+    let { clipHeight = 100, size = 100, rotation = 45, disableHoverEffects = false, fillHex = '#765d1f', strokeHex = '#a38226', background = true } = $props();
     const uid = $props.id();
 
     // $inspect(clipHeight, 'clipHeight');
@@ -40,6 +40,7 @@
     xmlns="http://www.w3.org/2000/svg"
 >
     <defs>
+
         <clipPath id="peanutFillClip-{uid}">
             <path d='M 50,3.8300781 C 37.583774,3.7810701 27.550781,14.764299 27.550781,28.291016 v 0.0039 c 0.01994,9.193332 7.151217,14.499831 7.558594,21.646484 -0.0011,0.01955 -0.0027,0.03908 -0.0039,0.05859 0.0012,0.01952 0.0028,0.03905 0.0039,0.05859 -0.407377,7.146653 -7.538652,12.453152 -7.558594,21.646484 v 0.0039 C 27.550781,85.235701 37.583774,96.21893 50,96.169922 62.416226,96.21893 72.449219,85.235701 72.449219,71.708984 v -0.0039 c -0.01994,-9.193332 -7.151217,-14.499831 -7.558594,-21.646484 0.0011,-0.01955 0.0027,-0.03908 0.0039,-0.05859 -0.0012,-0.01952 -0.0028,-0.03905 -0.0039,-0.05859 0.407377,-7.146653 7.538652,-12.453152 7.558594,-21.646484 v -0.0039 C 72.449219,14.764299 62.416226,3.7810701 50,3.8300781 Z'></path>
         </clipPath>
@@ -52,6 +53,12 @@
     <g
         transform="rotate(180,50,50)"
     >
+        {#if background}
+            <g clip-path="url(#peanutFillClip-{uid})">
+                <rect x="0" y="0" width="100" height="100" fill="#000000" opacity=".5" />
+            </g>
+        {/if}
+
         <g clip-path="url(#verticalClip-{uid})">
             <rect
                 x="0"

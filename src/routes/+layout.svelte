@@ -70,7 +70,7 @@
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
-<nav class="flex justify-between items-center font-rounded-light fixed w-full z-10">
+<nav class="flex justify-between items-center font-rounded-light fixed w-full z-1000">
 	<div class="flex lg:gap-4 items-center">
 		<!-- {#if page.route.id !== '/'}
 			<a href="/">Home</a>
