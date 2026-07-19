@@ -1,14 +1,27 @@
 <script>
+	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
 	import { onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import "../app.css";
 	import Peanut from "$lib/Peanut.svelte";
+	import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
 
 	let { children, data } = $props();
 
 	let fillHex = $state("#a38226");
 	let strokeHex = $state("#765d1f");
+	let isSigningOut = $state(false);
+	const showLoader = $derived(isSigningOut);
+
+	function enhanceSignout() {
+		isSigningOut = true;
+
+		return async ({ update }) => {
+			await update();
+			isSigningOut = false;
+		};
+	}
 
 	const applySavedColors = () => {
 		const savedFillHex = localStorage.getItem('fillHex');
@@ -70,6 +83,10 @@
 	<title>BPDB - Boiled Peanut DataBase</title>
 </svelte:head>
 
+{#if showLoader}
+	<FormSubmissionLoader show={showLoader} zIndex={1100} />
+{/if}
+
 <nav class="flex justify-between items-center font-rounded-light fixed w-full z-1000">
 	<div class="flex lg:gap-4 items-center">
 		<!-- {#if page.route.id !== '/'}
@@ -120,8 +137,8 @@
 				<a href='/user/${data?.session?.user?.id}' data-sveltekit-preload-data="false" class="m-0! mt-[.35rem]! p-4 bg-gray-600/90 rounded-lg text-nowrap" onclick={hidePopover}>My Ratings</a>
 				{/if}
 
-				<form method="POST" action="/auth/signout">
-					<input class="cursor-pointer hover:underline" type="submit" value="Sign Out" onclick={hidePopover}>
+				<form method="POST" action="/auth/signout" use:enhance={enhanceSignout}>
+					<input class="cursor-pointer hover:underline disabled:opacity-60 disabled:cursor-wait" type="submit" value="Sign Out" onclick={hidePopover} disabled={showLoader}>
 				</form>
 			</div>
 		</div>

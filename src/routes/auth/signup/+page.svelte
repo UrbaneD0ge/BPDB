@@ -1,17 +1,32 @@
 <script>
     import { enhance } from "$app/forms";
-    import { preventDefault } from "svelte/legacy";
+    import { navigating } from '$app/state';
+    import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
     import Info from "$lib/Info.svelte";
 
-    let { data, form } = $props();
-    // let disabled = $state(false);
+    let { form } = $props();
+    let isSubmitting = $state(false);
+    const isNavigating = $derived(Boolean(navigating.to));
+    const showLoader = $derived(isSubmitting || isNavigating);
+
+    function enhanceSignup() {
+        isSubmitting = true;
+
+        return async ({ update }) => {
+            await update();
+            isSubmitting = false;
+        };
+    }
 
     // $inspect(form);
-    // $inspect(data);
 </script>
 
+{#if showLoader}
+    <FormSubmissionLoader show={showLoader} />
+{/if}
+
 <main class="h-svh pt-12 m-2">
-    <form method="POST" use:enhance>
+    <form method="POST" use:enhance={enhanceSignup}>
 
     <h1>Sign Up</h1>
 
@@ -41,7 +56,7 @@
 
     <br>
 
-    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer" type="submit" value="Sign Up" >Send Signup Email</button>
+    <button class="p-4 bg-green-500 text-white rounded-md hover:bg-green-700 cursor-pointer disabled:opacity-60 disabled:cursor-wait" type="submit" value="Sign Up" disabled={showLoader}>Send Signup Email</button>
 </form>
 </main>
 <style lang="postcss">

@@ -1,12 +1,32 @@
 <script>
+    import { enhance } from '$app/forms';
+    import { navigating } from '$app/state';
+    import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
+
     let { form } = $props();
+    let isSubmitting = $state(false);
+    const isNavigating = $derived(Boolean(navigating.to));
+    const showLoader = $derived(isSubmitting || isNavigating);
+
+    function enhanceSignin() {
+        isSubmitting = true;
+
+        return async ({ update }) => {
+            await update();
+            isSubmitting = false;
+        };
+    }
 
     // $inspect(form);
 </script>
 
+{#if showLoader}
+    <FormSubmissionLoader show={showLoader} />
+{/if}
+
 <main class="h-svh pt-12 m-2">
 
-    <form method="POST">
+    <form method="POST" use:enhance={enhanceSignin}>
         <h1 class="text-white">Sign In</h1>
 
         <p class="text-white">Use the form below to sign in to your account.</p><br>
@@ -20,7 +40,7 @@
                 {#if form?.message || form?.error }
                 <p class="text-red-700 italic p-2">{form?.message || form?.error}</p>
                 {/if}
-                <button type="submit" value="Sign In" class="bg-green-500 hover:bg-green-700 cursor-pointer p-2 rounded-md text-white" >Sign In</button>
+                <button type="submit" value="Sign In" class="bg-green-500 hover:bg-green-700 cursor-pointer p-2 rounded-md text-white disabled:opacity-60 disabled:cursor-wait" disabled={showLoader}>Sign In</button>
             </div>
 
             <br>
@@ -28,3 +48,4 @@
 
     </form>
 </main>
+

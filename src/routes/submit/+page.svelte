@@ -1,5 +1,6 @@
 <script>
 import Loader from '$lib/Loader.svelte';
+import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
 // import { onMount } from 'svelte';
 import { enhance } from "$app/forms";
 import { navigating } from '$app/state';
@@ -241,9 +242,7 @@ function geoLocate() {
 </svelte:head>
 
 {#if showLoader}
-    <div class="loader-overlay" aria-live="polite" aria-busy="true">
-        <Loader size={40} />
-    </div>
+    <FormSubmissionLoader show={showLoader} />
 {/if}
 
 <main class="px-2 lg:pt-8">
@@ -420,17 +419,6 @@ function geoLocate() {
 
     .popup {
         font-size: 0.9rem;
-    }
-
-    .loader-overlay {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgb(0 0 0 / 0.35);
-        backdrop-filter: blur(2px);
-        z-index: 50;
     }
 
     .error-message {

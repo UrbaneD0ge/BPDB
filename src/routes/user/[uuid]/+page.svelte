@@ -1,15 +1,30 @@
 <script>
+import { enhance } from '$app/forms';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
-import { page } from '$app/state';
+import { navigating, page } from '$app/state';
 import { MediaQuery } from 'svelte/reactivity';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import Peanut from '$lib/Peanut.svelte';
+import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
 
 const large = new MediaQuery('min-width: 1024px');
 let {data, error} = $props()
 
 let ratings = $derived(data.ratings);
 let user = $derived(data?.session?.user)
+let isSubmitting = $state(false);
+const isNavigating = $derived(Boolean(navigating.to));
+const showLoader = $derived(isSubmitting || isNavigating);
+
+function enhanceDelete() {
+    isSubmitting = true;
+
+    return async ({ update }) => {
+        await update();
+        isSubmitting = false;
+    };
+}
+
 let mapBounds = $derived.by(() => {
     if (!ratings?.length) return undefined;
 
@@ -41,6 +56,10 @@ let mapBounds = $derived.by(() => {
 <svelte:head>
     <title>User: {ratings[0]?.user_display_name}'s ratings</title>
 </svelte:head>
+
+{#if showLoader}
+    <FormSubmissionLoader show={showLoader} />
+{/if}
 
 <main class="h-svh m-2 lg:m-8 lg:mt-12">
 
@@ -140,14 +159,14 @@ let mapBounds = $derived.by(() => {
                 <td hidden={!large.current}>{rating?.notes || '-'}</td>
 
                 {#if page.params.uuid === '$' + user?.id }
-                <td hidden={!large.current}><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                <td hidden={!large.current}><form action="?/delete" method="POST" class="bg-transparent!" use:enhance={enhanceDelete}><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-wait" type="submit" disabled={showLoader}>🗑️ </button></form></td>
                 {/if}
             </tr>
         {#if !large.current}
             <tr>
                 <td colspan={5}>{rating?.notes || '-'}</td>
                 {#if page.params.uuid === '$' + user?.id }
-                <td><form action="?/delete" method="POST" class="bg-transparent!"><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer" type="submit">🗑️ </button></form></td>
+                <td><form action="?/delete" method="POST" class="bg-transparent!" use:enhance={enhanceDelete}><input type="number" value={rating?.rating_id} name='id' hidden><button class="p-2 bg-red-600 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-wait" type="submit" disabled={showLoader}>🗑️ </button></form></td>
                 {/if}
             </tr>
         {/if}

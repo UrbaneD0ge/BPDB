@@ -1,7 +1,7 @@
 <script>
     import { enhance } from '$app/forms';
     import { navigating, page } from '$app/state';
-    import Loader from '$lib/Loader.svelte';
+    import FormSubmissionLoader from '$lib/FormSubmissionLoader.svelte';
     let { data } = $props();
     import Slider from "$lib/Slider.svelte";
     // console.log(data.session.user.id)
@@ -36,9 +36,7 @@
 </svelte:head>
 
 {#if showLoader}
-    <div class="loader-overlay" aria-live="polite" aria-busy="true">
-        <Loader size={40} />
-    </div>
+    <FormSubmissionLoader show={showLoader} />
 {/if}
 
 <main class="h-auto p-4 lg:pt-12">
@@ -83,17 +81,6 @@ fieldset {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: white;
-}
-
-.loader-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgb(0 0 0 / 0.35);
-    backdrop-filter: blur(2px);
-    z-index: 50;
 }
 
 /* input[type="radio"] {
