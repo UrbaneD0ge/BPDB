@@ -20,7 +20,7 @@
                 {#if form?.message || form?.error }
                 <p class="text-red-700 italic p-2">{form?.message || form?.error}</p>
                 {/if}
-                <button type="submit" value="Sign In" class="bg-green-500 hover:bg-green-700 p-2 rounded-md text-white" >Sign In</button>
+                <button type="submit" value="Sign In" class="bg-green-500 hover:bg-green-700 cursor-pointer p-2 rounded-md text-white" >Sign In</button>
             </div>
 
             <br>

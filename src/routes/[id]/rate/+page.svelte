@@ -1,8 +1,18 @@
 <script>
     import { page } from '$app/state';
     let { data } = $props();
-
+    import Slider from "$lib/Slider.svelte";
     // console.log(data.session.user.id)
+
+    const sliderCats = [
+        { name: 'servings', message: 'How would you rate the amount of Peanuts you received? 10 is a great value, 1 is a skimpy portion.' },
+        { name: 'brine', message: 'How was the flavor of the liquid component? We don\'t count pops.' },
+        { name: 'salty', message: 'How salty was it? 10 is very salty, 1 is not salty at all.' },
+        { name: 'done', message: 'Does the peanut seem cooked? 10 is perfectly cooked and soft but not mush, 1 is undercooked and hard.' },
+        { name: 'spicy', message: 'Spicy level: 10 is very spicy, 1 is not spicy at all.' },
+        { name: 'overall', message: 'The ultimate question: How would you rate this peanut overall? 10 is excellent, 1 is poor.' }
+    ];
+
 </script>
 
 
@@ -14,10 +24,6 @@
 <form class="flex flex-col items-center" method="POST">
 
     <h1 class="text-white">Rate this Peanut</h1>
-    <div class="text-white w-3/5 flex items-center justify-between gap-4">
-        <h2 class="text-l">WORST</h2> <span>➡️➡️➡️</span>
-        <h2 class="text-l">BEST</h2>
-    </div>
 
     <div>
         <input id="resto" type="number" name="resto_prod" value={page.params.id} hidden>
@@ -26,310 +32,19 @@
 
     <br>
 
-    <div>
-        <fieldset>Portion:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="servings" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="servings" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Brine Flavor:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="brine" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="brine" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Saltiness:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="salty" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="salty" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Texture:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="done" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="done" type="radio">
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div>
-        <fieldset>Spicy:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="spicy" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="spicy" type="radio">
-            </div>
-        </div>
-    </div>
-
-
-    <div>
-        <fieldset>Overall:</fieldset>
-        <div class="flex items-center">
-            <div class="flex flex-col-reverse items-center">
-                <label for="1">1</label>
-                <input id="1" value="1" name="overall" type="radio">
-            </div>
-
-            <div class="flex flex-col-reverse items-center">
-                <label for="2">2</label>
-                <input id="2" value="2" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="3">3</label>
-                <input id="3" value="3" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="4">4</label>
-                <input id="4" value="4" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="5">5</label>
-                <input id="5" value="5" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="6">6</label>
-                <input id="6" value="6" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="7">7</label>
-                <input id="7" value="7" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="8">8</label>
-                <input id="8" value="8" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="9">9</label>
-                <input id="9" value="9" name="overall" type="radio">
-            </div>
-            <div class="flex flex-col-reverse items-center">
-                <label for="10">10</label>
-                <input id="10" value="10" name="overall" type="radio">
-            </div>
-        </div>
-    </div>
+    {#each sliderCats as cat}
+        <Slider title={cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} name={cat.name} id={cat.name} message={cat.message} /><br>
+    {/each}
 
     <br>
 
     <fieldset>Notes:</fieldset>
-    <div class="flex items-center">
+    <div class="flex items-center justify-center">
         <!-- <label for="notes">Notes</label> -->
-        <textarea id="notes" name="notes" class="bg-gray-100 border-2 rounded-lg" cols="80" rows="8"></textarea>
+        <textarea id="notes" name="notes" class="bg-gray-100 border-2 rounded-lg w-full" cols="80" rows="8"></textarea>
     </div>
 
-    <input class=" bg-green-600 text-white font-bold m-2 p-2 rounded-md" type="submit" value="Submit">
+    <input class=" bg-green-600 text-white font-bold m-2 p-2 rounded-md cursor-pointer" type="submit" value="Submit">
 </form>
 </main>
 
@@ -349,11 +64,11 @@ fieldset {
     color: white;
 }
 
-input[type="radio"] {
+/* input[type="radio"] {
     accent-color: rgb(34, 197, 94);
-    margin: .5rem 1.8rem;
-    scale: 3;
-}
+    margin: .5rem 1rem;
+    scale: 2;
+} */
 
 label {
     font-weight: bold;
@@ -362,11 +77,6 @@ label {
 }
 
 @media (max-width: 640px) {
-    input[type="radio"] {
-        margin: 0.6rem .7rem;
-        scale: 2.25;
-    }
-
     textarea {
         width: 100%;
     }

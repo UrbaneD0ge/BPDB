@@ -10,13 +10,16 @@
         targetId
     } = $props();
 
-    const generatedTarget = `info-popover-${++infoPopoverCount}`;
+    const instanceId = ++infoPopoverCount;
+    const generatedTarget = `info-popover-${instanceId}`;
+    const generatedAnchor = `--info-button-anchor-${instanceId}`;
     let target = $derived(targetId ?? generatedTarget);
 </script>
 
 <button
     type="button"
     class="info-button"
+    style={`anchor-name: ${generatedAnchor};`}
     aria-label={label}
     title={label}
     popovertarget={target}
@@ -24,7 +27,7 @@
     {buttonText}
 </button>
 
-<div id={target} popover class="info-popover">{message}</div>
+<div id={target} popover class="info-popover" style={`position-anchor: ${generatedAnchor};`}>{message}</div>
 
 <style>
     @position-try --info-below {
@@ -81,7 +84,6 @@
         border-radius: 50%;
         cursor: pointer;
         z-index: 1000;
-        anchor-name: --info-button-anchor;
     }
 
     .info-button:hover {
@@ -102,7 +104,6 @@
         overflow-wrap: anywhere;
 
         position: fixed;
-        position-anchor: --info-button-anchor;
         top: anchor(top);
         left: anchor(center);
         transform: translate(-50%, calc(-100% - 0.5rem));

@@ -33,8 +33,8 @@
                 <p>Sometimes a restaurant may have two varieties of boiled peanuts, the BPDB handles this by treating each vendor and its peanut offerings as separate listings. To keep things accurate, always refer to the menu or signage when submitting a new peanut.</p>
             </li>
             <li>
-                <b>Rate against your ideal peanut:</b>
-                <p>The 1-10 scale isn't about being the saltiest or the spiciest peanut, it's about how closely the peanut matches your ideal flavor profile. A 10-point salty peanut, for example, isn't the saltiest boiled peanut you've ever tasted, it's the one that hits the target right on the nose.</p>
+                <b>Peanuts are subjective:</b>
+                <p>We're revising our method here. The ideal peanut isn't universally agreed upon, but we can still be descriptive. 10 is VERY SALTY, 1 is not salty at all.</p>
             </li>
             <li>
                 <b>Rate ANYWHERE:</b>
