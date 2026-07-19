@@ -2,6 +2,7 @@
 import Loader from '$lib/Loader.svelte';
 // import { onMount } from 'svelte';
 import { enhance } from "$app/forms";
+import { navigating } from '$app/state';
 import { MapLibre, Marker, Popup } from 'svelte-maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
   import Peanut from '$lib/Peanut.svelte';
@@ -17,6 +18,7 @@ let displayValue = $state('');
 let formState = $state(null);
 let addyLoading = $state(false);
 let geoLoading = $state(false);
+let isSubmitting = $state(false);
 let coords = $state({ lat: 35, lon: -88 });
 let geoStatus = $state('');
 let zoom = $state(2);
@@ -26,6 +28,8 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 const markerCenterOffsetLat = 0.00125;
 const hasMarker = $derived(coords.lat !== 35 || coords.lon !== -88);
+const isNavigating = $derived(Boolean(navigating.to));
+const showLoader = $derived(isSubmitting || isNavigating);
 const mapCenter = $derived([
     Number(coords.lon),
     Number(coords.lat) + (hasMarker ? markerCenterOffsetLat : 0)
@@ -108,8 +112,11 @@ function clearForm() {
 }
 
 function enhanceSubmit() {
+    isSubmitting = true;
+
     return async ({ result, update }) => {
         await update();
+        isSubmitting = false;
 
         if (result.type === 'failure') {
             formState = result.data;
@@ -232,6 +239,12 @@ function geoLocate() {
 <svelte:head>
     <title>Submit a Peanut</title>
 </svelte:head>
+
+{#if showLoader}
+    <div class="loader-overlay" aria-live="polite" aria-busy="true">
+        <Loader size={40} />
+    </div>
+{/if}
 
 <main class="px-2 lg:pt-8">
 <form method="POST" class="my-6! lg:my-12!" use:enhance={enhanceSubmit}>
@@ -366,7 +379,7 @@ function geoLocate() {
         <p class="error-message">{formState.error}</p>
     {/if}
 
-    <button class="text-xl font-rounded-extrabold bg-green-500 p-2 w-full lg:w-auto" type="submit" value="Submit">Submit Peanut!</button>
+    <button class="text-xl font-rounded-extrabold bg-green-500 p-2 w-full lg:w-auto disabled:opacity-60 disabled:cursor-wait" type="submit" value="Submit" disabled={showLoader}>Submit Peanut!</button>
     {#if data?.error}
         <p style="color: red;">{data.error}{data?.message}</p>
     {/if}
@@ -407,6 +420,17 @@ function geoLocate() {
 
     .popup {
         font-size: 0.9rem;
+    }
+
+    .loader-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgb(0 0 0 / 0.35);
+        backdrop-filter: blur(2px);
+        z-index: 50;
     }
 
     .error-message {
