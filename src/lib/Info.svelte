@@ -93,7 +93,7 @@
     .info-popover {
         max-width: min(18rem, calc(100vw - 1rem));
         max-height: calc(100vh - 1rem);
-        margin: 0;
+        margin: 20px;
         padding: 0.5rem 0.75rem;
         border: 1px solid #4a5565;
         border-radius: 0.5rem;
