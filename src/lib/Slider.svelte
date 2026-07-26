@@ -16,6 +16,36 @@ let {
 
 let sliderValue = $derived(Number(value));
 
+const COLOR_HEX_MAP = {
+  green: '#22c55e',
+  red: '#dc2626',
+  blue: '#2563eb',
+  yellow: '#eab308',
+  amber: '#d97706',
+  orange: '#ea580c',
+  pink: '#db2777',
+  purple: '#9333ea',
+  violet: '#7c3aed',
+  teal: '#0d9488',
+  cyan: '#0891b2',
+  lime: '#65a30d',
+  emerald: '#059669',
+  sky: '#0284c7',
+  indigo: '#4f46e5',
+  rose: '#e11d48',
+  gray: '#4b5563',
+  grey: '#4b5563'
+};
+
+const isHexColor = (value) => /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value);
+
+const resolvedSliderColor = $derived.by(() => {
+  if (typeof color !== 'string') return COLOR_HEX_MAP.green;
+  const normalized = color.trim().toLowerCase();
+  if (isHexColor(normalized)) return normalized;
+  return COLOR_HEX_MAP[normalized] ?? COLOR_HEX_MAP.green;
+});
+
 $effect(() => {
   sliderValue = Number(value);
 });
@@ -43,7 +73,6 @@ const thumbPercent = $derived.by(() => {
 <div class="slider-wrap">
   <div class="range-wrap">
     <input
-      class="accent-{color}-600"
       type="range"
       id={name}
       name={name}
@@ -51,6 +80,7 @@ const thumbPercent = $derived.by(() => {
       min={min}
       max={max}
       step={step}
+      style={`accent-color: ${resolvedSliderColor}; --slider-accent-color: ${resolvedSliderColor};`}
       bind:value={sliderValue}
     />
     <div class="thumb" style={`left: clamp(0.75rem, ${thumbPercent}%, calc(100% - 0.75rem));`} aria-hidden="true">
@@ -114,7 +144,7 @@ input[type="range"] {
   display: block;
   margin: 0;
   height: 1rem;
-  background: linear-gradient(to right, #96a699 0%, #22c55e 100%);
+  background: linear-gradient(to right, #96a699 0%, var(--slider-accent-color, #22c55e) 100%);
   border-radius: 1rem;
   outline: none;
 }

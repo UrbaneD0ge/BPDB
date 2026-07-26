@@ -11,7 +11,7 @@
         { name: 'brine', message: 'How was the flavor of the liquid component? We don\'t count pops.' },
         { name: 'salty', message: 'How salty was it? 10 is very salty, 1 is not salty at all.' },
         { name: 'done', message: 'Does the peanut seem cooked? 10 is perfectly cooked and soft but not mush, 1 is undercooked and hard.' },
-        { name: 'spicy', message: 'Spicy level: 10 is very spicy, 1 is not spicy at all.' },
+        { name: 'spicy', message: 'Spicy level: 10 is very spicy, 1 is not spicy at all.', color: 'red' },
         { name: 'overall', message: 'The ultimate question: How would you rate this peanut overall? 10 is excellent, 1 is poor.' }
     ];
 
@@ -52,7 +52,7 @@
     <br>
 
     {#each sliderCats as cat}
-        <Slider title={cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} name={cat.name} id={cat.name} message={cat.message} /><br>
+        <Slider title={cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} name={cat.name} id={cat.name} message={cat.message} color={cat.color} /><br>
     {/each}
 
     <br>
@@ -60,7 +60,7 @@
     <fieldset>Notes:</fieldset>
     <div class="flex items-center justify-center">
         <!-- <label for="notes">Notes</label> -->
-        <textarea id="notes" name="notes" class="bg-gray-100 border-2 rounded-lg w-full" cols="80" rows="8"></textarea>
+        <textarea id="notes" name="notes" class="bg-gray-100 border-2 p-2 rounded-lg w-full" cols="80" rows="8"></textarea>
     </div>
 
     <input class="bg-green-600 text-white font-bold m-2 p-2 rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-wait" type="submit" value="Submit" disabled={showLoader}>
