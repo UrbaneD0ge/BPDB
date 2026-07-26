@@ -56,8 +56,10 @@ let avgDone = $derived.by(() => {
 
             <div class="flex flex-row justify-between">
                 <h1 class="font-rounded-extrabold">{peanut.resto_name}:<br>"{peanut.product}"</h1>
-                <Peanut size={22} clipHeight={avgOverall * 10} rotation={0} />
-                <!-- <h1>Overall: {peanut.avg_overall}</h1> -->
+                <div class="flex flex-col items-center justify-center">
+                <Peanut size={30} clipHeight={avgOverall * 10} rotation={0} />
+                <h2 class="text-green-600 text-3xl font-bold absolute">{avgOverall}</h2>
+                </div>
             </div>
 
             <div>
@@ -65,7 +67,7 @@ let avgDone = $derived.by(() => {
                 <p>Price: ${peanut?.price?.toFixed(2) || 'unknown'}</p>
                 <!-- <p>Location: {peanut.geopoint.x}, {peanut.geopoint.y}</p> -->
                 <p>Initially rated: {new Date(peanut.created_at).toLocaleDateString()}</p><br>
-                <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length >= 1 ? 's' : ''} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
+                <p><b>{ ratings[0] === null ? '0' : ratings.length}</b> rating{ratings.length === 1 ? '' : 's'} So Far: {#if data.session}<a href='/{peanut.id}/rate' class="bg-green-500 p-2 rounded-md text-nowrap">Add Yours!</a>{/if}</p>
 
             </div>
         </div>

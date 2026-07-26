@@ -50,7 +50,7 @@ let mapBounds = $derived.by(() => {
     ];
 });
 
-// $inspect(mapBounds, 'mapBounds');
+$inspect(data);
 </script>
 
 <svelte:head>
@@ -69,12 +69,16 @@ let mapBounds = $derived.by(() => {
 <h3>{data?.error}</h3>
 {/if}
 
-<div class="text-white lg:min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg">
-<!-- TODO: Turn this into a badge component -->
-    <h1>User: {data?.user?.display_name}</h1>
-    <h2>Joined: {new Date(data?.user?.request_user_created_at).toLocaleDateString()}</h2>
-    <h2>Average Rating: <b>{data?.user?.avg_overall_rating?.toFixed(2)}</b></h2>
-    <h2>Ratings so far: <b>{ratings.length >= 1 ? ratings.length : 'None!'}</b></h2>
+<div class="text-white lg:min-h-60 w-full lg:w-2/5 bg-gray-600/80 p-4 rounded-lg shadow-lg flex flex-row justify-between items-center gap-4">
+    <div>
+        <h1>User: {data?.user?.display_name}</h1>
+        <h2>Joined: {new Date(data?.user?.request_user_created_at).toLocaleDateString()}</h2>
+        <h2>Average Rating: <b>{data?.user?.avg_overall_rating?.toFixed(2)}</b></h2>
+        <h2>Ratings so far: <b>{ratings.length >= 1 ? ratings.length : 'None!'}</b></h2>
+    </div>
+    <div>
+        <Peanut size={30} clipHeight={100} rotation={0} fillHex={data?.user?.fillhex || '#a38226'} strokeHex={data?.user?.strokehex || '#765d1f'} />
+    </div>
 </div>
 
     {#key page.params.uuid}

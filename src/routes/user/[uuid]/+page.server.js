@@ -3,7 +3,7 @@ import { redirect } from "@sveltejs/kit";
 
 export async function load({ url }) {
     const uuid = url.pathname.split('/')[2].slice(1); // Extract the UUID from the URL
-    console.log(url.pathname.Number); // Extract the UUID from the URL
+    // console.log(url.pathname.Number); // Extract the UUID from the URL
 
     const { data: userInfo, error: userInfoError } = await supabase.rpc("get_user_info", {
             target_user_id: uuid
